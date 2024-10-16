@@ -1,13 +1,10 @@
 import { CardType } from '@/library/types'
 import React from 'react'
 import Card from './Card/Card'
+import { cards } from '../../public/cards'
 
 export default function Board() {
-    const currentCard:CardType = {
-        id:0,
-        power:'JUDGE',
-        color:'red',
-    }
+    const currentCard:CardType = cards[0]
     
 
     return (
