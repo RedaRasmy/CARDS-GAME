@@ -8,6 +8,7 @@ export default function Board() {
         power:'JUDGE',
         color:'red',
     }
+    
 
     return (
         <div className='sm:w-[clamp(300px,70%,1000px)] w-full sm:h-[40%] h-1/3 sm:border-2
@@ -19,7 +20,9 @@ export default function Board() {
                 <Card {...currentCard}></Card>
             </div>
             <div className=' flex flex-col items-center mt-2'>
-                <Card id={-1} color='black'/>
+                <div className='cursor-pointer'>
+                    <Card id={-1} color='black'/>
+                </div>
                 <p className='opacity-50 mt-1' title='Cards left'>&lt; <span>31</span> &gt;</p>
             </div>
         </div>

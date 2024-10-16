@@ -72,7 +72,7 @@ function Judge(){
             <div className="bg-blue-900 w-full h-full"></div>
             <div className="bg-yellow-700 w-full h-full"></div>
             <div className="bg-green-900 w-full h-full relative">
-                <h1 className=" pointer-events-none  absolute text-3xl -top-[18px] -left-[12px] font-extrabold text-black opacity-50 font-serif">X</h1>
+                <h1 className=" pointer-events-none select-none absolute text-3xl -top-[18px] -left-[12px] font-extrabold text-black opacity-50 font-serif">X</h1>
             </div>
             
         </div>
