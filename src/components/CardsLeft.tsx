@@ -1,6 +1,6 @@
 
 import React from 'react'
-import Card from './Card/Card'
+import Card from './Card/OldCard'
 import { cards } from '../../public/cards'
 
 export default function CardsLeft() {

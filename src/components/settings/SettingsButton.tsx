@@ -22,7 +22,7 @@ export default function SettingsButton() {
         <>
             <button 
             onClick={open}
-            className='w-12 h-12  rounded-full absolute right-2 top-2 text-center '>
+            className='w-12 h-12 rounded-full absolute right-2 top-2 text-center '>
                 <i 
                 className='bx bxs-cog text-4xl text-white settings transition-transform hover:rotate-45'/>
             </button>
@@ -32,10 +32,12 @@ export default function SettingsButton() {
             w-[clamp(250px,80%,500px)] bg-zinc-800 p-2 rounded-md text-white'>
                 <div className='flex flex-col justify-between'>
                     <div className='w-full flex justify-between'>
-                        {status !== 'SETTINGS' ? <button
-                        onClick={()=>{setStatus('SETTINGS')}}>
+                        {status !== 'SETTINGS' ?
+                        <button
+                            onClick={()=>{setStatus('SETTINGS')}}>
                             <i className='bx bx-arrow-back text-2xl text-red-900 font-bold w-7'></i>
-                        </button> : <div className='w-7'/>
+                        </button> 
+                        : <div className='w-7'/>
                         }
 
                         <h1 className='text-2xl font-bold  '>{status}</h1>

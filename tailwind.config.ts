@@ -8,9 +8,13 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'card-back': "url('/images/cardback.png')",
+      },
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        
       },
     },
   },

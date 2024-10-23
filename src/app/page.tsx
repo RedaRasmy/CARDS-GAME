@@ -1,15 +1,17 @@
 'use client'
-import Board from "@/components/Board";
-// import Card from "@/components/Card";
 import SettingsButton from "@/components/settings/SettingsButton";
+import { Provider } from "react-redux";
+import { store } from "@/library/store";
+import GameField from "@/components/GameField";
 
 
 export default function Home() {
     return (
-        <div className="flex justify-center items-center h-full">
+        <div className="flex flex-col justify-around items-center h-full">
             <SettingsButton/>
-            <Board/>
-            {/* <Card number={6} type="Flag"/> */}
+            <Provider store={store} >
+                <GameField/>
+            </Provider>
         </div>
     );
 }

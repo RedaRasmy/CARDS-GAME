@@ -1,12 +1,21 @@
-import { PowerType } from "@/library/types";
-import { cards } from "../../../public/cards";
-import { DragEvent } from "react";
+import { CardType, PowerType } from "@/library/types"
+import { Flag , Money, Star, Time ,  } from "./DefaultTypes"
+import { Container } from "./Container"
 
 
 
 
-export default function Card({id}:{id:number}) {
-    const {number,power,color} = cards[id]
+
+export default function OldCard({number,power,color}:CardType) {
+    let Element = <Star/>
+    if (color === 'red'){
+        Element = <Flag/>
+    }if (color === 'blue'){
+        Element =  <Time/>
+    }if (color === 'yellow'){
+        Element =  <Money/>
+    }
+
 
     const colorClasses: { [key: string]: string } = {
         red: 'bg-red-900',
@@ -17,21 +26,18 @@ export default function Card({id}:{id:number}) {
     };
     const backgroundColor = colorClasses[color];
 
-    function handleDrag(e:DragEvent,id:number){
-        e.dataTransfer.setData('cardId',String(id))
-    }
-
-
     return (
-        <div 
-        onDragStart={e=>handleDrag(e,id)}
-        draggable
-        className={ `${backgroundColor} p-[2px] w-[72px] h-[104px] rounded-[4px] flex justify-center items-center flex-col 
-        shadow-md shadow-slate-800 border-[3px] border-black border-opacity-15 cursor-grab
-        `}>
+        <div
+        className={ `${backgroundColor} p-[2px] w-[72px] h-[104px] rounded-[4px] flex justify-between items-center flex-col 
+        shadow-md shadow-slate-800 border-[3px] border-black border-opacity-15
+        `}
+        >
+            <div className="w-full flex justify-end">
+                {number && <Number>{number}</Number>}
+            </div>
             {
                 number ?
-                <Number>{number}</Number> :
+                <Container element={Element} number={number}/> :
                 <Power power={power} />
             }   
             {
@@ -43,13 +49,11 @@ export default function Card({id}:{id:number}) {
 }
 
 
-
 function Number({children}:{children:number|undefined}){
     return(
-        <div className=" bg-opacity-15 border-[3px] border-white border-opacity-5 
-        rounded-full
-        w-14 h-[70px] flex justify-center items-center">
-            <h1 className="font-extrabold opacity-50 text-[50px] font-mono select-none">{children}</h1>
+        <div className="bg-white bg-opacity-15 border-[2px] border-white border-opacity-5 
+        rounded-full w-4 h-4 flex justify-center items-center">
+            <h1 className="font-extrabold opacity-40 text-[14px] font-mono">{children}</h1>
         </div>
     )
 }
@@ -60,7 +64,6 @@ function Power({power}:{power:PowerType|undefined}) {
     if (power === 'SKIP') return <i className='bx bx-block text-[60px] opacity-50 rotate-90 font-bold text-black'/>
     if (power === '+3') return <h1 className="font-bold text-4xl text-black  text-opacity-50 -rotate-3">+3</h1>
 }
-
 
 function Judge(){
     return (
