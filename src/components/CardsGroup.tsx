@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, WheelEvent } from 'react'
+import React, { useEffect, useRef, WheelEvent } from 'react'
 import Card from './Card/Card'
 
 export default function CardsGroup({cardsIds}:{cardsIds:number[]}) {
