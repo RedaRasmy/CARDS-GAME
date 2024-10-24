@@ -20,3 +20,9 @@ body {
 /* .settings:hover {
   transform: rotateZ(90deg)
 } */
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+

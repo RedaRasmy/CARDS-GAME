@@ -5,38 +5,33 @@ import { DragEvent } from "react";
 
 
 
-export default function Card({id}:{id:number}) {
+export default function Card({id,isDraggable}:{id:number,isDraggable:boolean}) {
     const {number,power,color} = cards[id]
 
     const colorClasses: { [key: string]: string } = {
         red: 'bg-red-900',
         blue: 'bg-blue-900',
         yellow: 'bg-yellow-700',
-        green: 'bg-green-900', // Default background
-        black : 'bg-black'
+        green: 'bg-green-900',
     };
     const backgroundColor = colorClasses[color];
 
-    function handleDrag(e:DragEvent,id:number){
+    function handleDrag(e:DragEvent<HTMLDivElement>){
         e.dataTransfer.setData('cardId',String(id))
+        console.log(id)
     }
-
-
     return (
-        <div 
-        onDragStart={e=>handleDrag(e,id)}
-        draggable
-        className={ `${backgroundColor} p-[2px] w-[72px] h-[104px] rounded-[4px] flex justify-center items-center flex-col 
-        shadow-md shadow-slate-800 border-[3px] border-black border-opacity-15 cursor-grab
+        <div
+        draggable={isDraggable}
+        onDragStart={e=>handleDrag(e)}
+        className={ `${backgroundColor} ${isDraggable && 'cursor-grab'} p-[2px] w-[72px] h-[104px] rounded-[4px] flex justify-center items-center flex-col 
+        shadow-md shadow-slate-800 border-[3px] border-black border-opacity-15 shrink-0
         `}>
             {
                 number ?
                 <Number>{number}</Number> :
                 <Power power={power} />
-            }   
-            {
-                color === 'black' && <h1 className="text-6xl opacity-60 font-serif select-none">?</h1>
-            }
+            }  
             <div></div>
         </div>
     )
