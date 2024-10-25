@@ -8,7 +8,7 @@ type sortableProps = {
     id:number
 }
 export function SortableItem({children,id}:sortableProps) {
-    const {sorting,dragging} = useAppSelector(state=>state.settings)
+    const {dragging} = useAppSelector(state=>state.settings)
 
     
 
