@@ -11,8 +11,8 @@ export default function Home() {
     return (
         <div className="flex flex-col justify-around items-center h-full">
             <SettingsButton/>
-            <Provider store={store} >
-                { started? <GameField/> : <StartButton handleClick={()=>{setStarted(true)}}/> }
+            <Provider store={store}>
+                    {started? <GameField/> : <StartButton handleClick={()=>{setStarted(true)}}/>}
             </Provider>
         </div>
     );

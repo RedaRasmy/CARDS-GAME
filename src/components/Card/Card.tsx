@@ -1,11 +1,10 @@
 import { PowerType } from "@/library/types";
 import { cards } from "../../../public/cards";
-import { DragEvent } from "react";
 
 
 
 
-export default function Card({id,isDraggable}:{id:number,isDraggable:boolean}) {
+export default function Card({id}:{id:number}) {
     const {number,power,color} = cards[id]
 
     const colorClasses: { [key: string]: string } = {
@@ -16,15 +15,9 @@ export default function Card({id,isDraggable}:{id:number,isDraggable:boolean}) {
     };
     const backgroundColor = colorClasses[color];
 
-    function handleDrag(e:DragEvent<HTMLDivElement>){
-        e.dataTransfer.setData('cardId',String(id))
-        console.log(id)
-    }
     return (
         <div
-        draggable={isDraggable}
-        onDragStart={e=>handleDrag(e)}
-        className={ `${backgroundColor} ${isDraggable && 'cursor-grab'} p-[2px] w-[72px] h-[104px] rounded-[4px] flex justify-center items-center flex-col 
+        className={ `${backgroundColor} p-[2px] w-[72px] h-[104px] rounded-[4px] flex justify-center items-center flex-col 
         shadow-md shadow-slate-800 border-[3px] border-black border-opacity-15 shrink-0
         `}>
             {

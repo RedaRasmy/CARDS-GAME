@@ -2,6 +2,7 @@ import React, { DragEvent} from 'react'
 import Card from './Card/Card'
 import CardBack from './Card/CardBack'
 import useCard from '@/library/Hooks/useCard'
+import Droppable from '@/library/dnd-kit/droppable'
 
 export default function Board() {
     const {cardsLeft,handleDrop,currentCardId} = useCard()
@@ -24,7 +25,11 @@ export default function Board() {
             onDragOver={e=>handleDragOver(e)}
             onDrop={e=>handleDrop(e)}
             className='scale-[2] ml-10'>
-                {currentCardId !== null && <Card id={currentCardId} isDraggable={false} ></Card>}
+                {currentCardId !== null && 
+                <Droppable>
+                    <Card id={currentCardId} ></Card>
+                </Droppable>
+                }
             </div>
             <div className=' flex flex-col items-center mt-2'>
                 <div className='cursor-pointer'>
