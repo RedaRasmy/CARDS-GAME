@@ -36,9 +36,9 @@ const cardsFlow = createSlice({
                 currentCardId : action.payload
             }
         },
-        addCard:(state,action:PayloadAction<{cardId:number,player?:boolean}>)=>{
-            const {cardId,player=true} = action.payload
-            if (player){
+        addCard:(state,action:PayloadAction<{cardId:number,player:'player'|'bot'}>)=>{
+            const {cardId,player} = action.payload
+            if (player === 'player'){
                 return {
                     ...state,
                     playerCards:[...state.playerCards,cardId]
@@ -50,18 +50,19 @@ const cardsFlow = createSlice({
                 }
             }
         },
-        removeCard:(state,action:PayloadAction<number>,player=true)=>{
-            if (player){
-                const newCards = state.playerCards.filter(id=>id!==action.payload)
+        removeCard:(state,action:PayloadAction<{cardId:number,player:'player'|'bot'}>)=>{
+            const {cardId,player} = action.payload
+            if (player === 'player'){
+                const newCards = state.playerCards.filter(id=>id!==cardId)
                 return {
                     ...state,
-                    playerCards:newCards
+                    playerCards: newCards
                 }
             }else {
-                const newCards = state.botCards.filter(id=>id!==action.payload)
+                const newCards = state.botCards.filter(id=>id!==cardId)
                 return {
                     ...state,
-                    botCards:newCards
+                    botCards: newCards
                 }
             }
         },

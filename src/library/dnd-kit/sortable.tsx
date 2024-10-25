@@ -20,7 +20,7 @@ export function SortableItem({children,id}:sortableProps) {
         transition
         // isDragging
     } = useSortable({
-        id,
+        id
         // disabled:!isSortable
     })
 

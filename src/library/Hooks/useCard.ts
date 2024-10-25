@@ -15,18 +15,32 @@ export default function useCard() {
     const isSortable = useAppSelector(state=>state.settings.sorting)
 
     //// FUNCTIONS
+    function BotPlay(){
+        for (let card of botCards){
+            if (isIdentical(card,currentCardId)){
+                dispatch(changeCurrentCard(card))
+                dispatch(removeCard({cardId:card,player:'bot'}))
+                // return;
+            }
+        }
+        const randomId = randomIdFrom(cardsLeft) as number
+        dispatch(takeCard(randomId))
+        dispatch(addCard({cardId:randomId,player:'bot'}))
+    }
+
     function playWithClick(id:number){
         if(isIdentical(id,currentCardId)){
             dispatch(changeCurrentCard(id))
-            dispatch(removeCard(id))
+            dispatch(removeCard({cardId:id,player:'player'}))
         }
     }
     
     function playerTakeCard(){
         const randomId = randomIdFrom(cardsLeft) as number
         if (cardsLeft.length>0) {
-            dispatch(addCard({cardId:randomId}))
-            dispatch(takeCard(randomId))      
+            dispatch(addCard({cardId:randomId,player:'player'}))
+            dispatch(takeCard(randomId))    
+            // BotPlay()  
         }
     }
     const getCardIndex = (id:number) => playerCards.findIndex(cardId=> cardId === id)
@@ -36,7 +50,7 @@ export default function useCard() {
         const {active,over} = event
         const i1 = getCardIndex(Number(active.id))
         const i2 = getCardIndex(Number(over?.id))
-        // if ((active.id === over?.id) || !isSortable ) return;
+        
         if (isSortable && (active.id !== over?.id)){
             dispatch(changeCardOrder({index1:i1,index2:i2}))
         }
@@ -46,7 +60,8 @@ export default function useCard() {
             const cardIdToTest = Number(active.id)
             if(isIdentical(cardIdToTest,currentCardId)){
                 dispatch(changeCurrentCard(cardIdToTest))
-                dispatch(removeCard(cardIdToTest))
+                dispatch(removeCard({cardId:cardIdToTest,player:'player'}))
+                // BotPlay()
             }
         }
     }
@@ -59,6 +74,7 @@ export default function useCard() {
         // functions
             playerTakeCard,
             playWithClick,
+            BotPlay,
             handleDragEnd
     }
 }
