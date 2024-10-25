@@ -4,7 +4,7 @@ import CardBack from "./Card/CardBack";
 import CardsGroup from "./CardsGroup";
 import useCard from "@/library/Hooks/useCard";
 import { useAppDispatch, useAppSelector } from "@/library/redux/store";
-import { StartButton } from "@/app/page";
+import StartButton from "./StartButton";
 import { changeTheGameTo } from "@/library/redux/slices/cardsFlow";
 
 
@@ -20,7 +20,7 @@ export default function GameField() {
     }
     const win = playerCards.length === 0
 
-    
+
     if (win) {
         dipsatch(changeTheGameTo(false))
     }
