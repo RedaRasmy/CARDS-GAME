@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import startTheGame from "../functions/startTheGame";
+import startTheGame from "../../functions/startTheGame";
 import { arrayMove } from "@dnd-kit/sortable";
 
 
@@ -13,8 +13,15 @@ const cardsFlow = createSlice({
         playerCards: initialPayerCards ,
         botCards: initialBotCards ,
         cardsLeft: initialCardsLeft,
+        gameIsOn:false
     },
     reducers:{
+        changeTheGameTo:(state,action:PayloadAction<boolean>)=>{
+            return {
+                ...state,
+                gameIsOn:action.payload
+            }
+        },
         takeCard:(state,action:PayloadAction<number>)=>{
             const newCards = state.cardsLeft.filter(id=>id!==action.payload)
             return {
@@ -68,5 +75,5 @@ const cardsFlow = createSlice({
 })
 
 
-export const {takeCard,changeCurrentCard,addCard,removeCard,changeCardOrder} = cardsFlow.actions
+export const {takeCard,changeCurrentCard,addCard,removeCard,changeCardOrder,changeTheGameTo} = cardsFlow.actions
 export default cardsFlow.reducer

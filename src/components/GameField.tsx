@@ -1,32 +1,49 @@
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
+import { closestCenter, DndContext, PointerSensor,useSensor,useSensors  } from "@dnd-kit/core";
 import Board from "./Board";
 import CardBack from "./Card/CardBack";
 import CardsGroup from "./CardsGroup";
 import useCard from "@/library/Hooks/useCard";
-import { useAppDispatch } from "@/library/store";
-import { changeCardOrder } from "@/library/slices/cardsFlow";
+import { useAppDispatch, useAppSelector } from "@/library/redux/store";
+import { StartButton } from "@/app/page";
+import { changeTheGameTo } from "@/library/redux/slices/cardsFlow";
+
 
 export default function GameField() {
-    const dispatch = useAppDispatch()
-    const {playerCards,botCards} = useCard()
-    const cardsToMap=botCards.slice(0,4)
+    const gameIsOn = useAppSelector(state=>state.cardsFlow.gameIsOn)
+    const dipsatch = useAppDispatch()
+    const {playerCards,botCards,handleDragEnd} = useCard()
+    const cardsToMap = botCards.slice(0,4)
     const plus = botCards.length > 4 ? <i className='bx bx-plus text-5xl text-white'></i> : null 
-    const getCardIndex = (id:number) => playerCards.findIndex(cardId=> cardId === id)
 
-    const handleDragEnd = (event:DragEndEvent)=>{
-        const {active,over} = event
-        const i1 = getCardIndex(Number(active.id))
-        const i2 = getCardIndex(Number(over?.id))
-        if (active.id === over?.id) return;
-        dispatch(changeCardOrder({index1:i1,index2:i2}))
+    const startTheGame = () => {
+        dipsatch(changeTheGameTo(true))
+    }
+    const win = playerCards.length === 0
+
+    
+    if (win) {
+        dipsatch(changeTheGameTo(false))
     }
 
-    return (
+    // Define Sensors 
+    const sensors = useSensors(
+        useSensor(PointerSensor,{
+            activationConstraint:{
+                distance:10,
+            }
+        })
+    )
+
+    if (gameIsOn) return (
         <div className="w-full h-full flex flex-col justify-around items-center">
-            <DndContext onDragEnd={handleDragEnd}>
+            <DndContext 
+            collisionDetection={closestCenter} 
+            onDragEnd={handleDragEnd}
+            sensors={sensors}
+            >
                 {(botCards.length > 0) ? 
                     <div className="flex space-x-1 items-center">
-                        {cardsToMap.map(e => <div className="pointer-events-none"key={e}><CardBack/></div>)}
+                        {cardsToMap.map((e:number) => <div className="" key={e}><CardBack/></div>)}
                         {plus}
                     </div>
                     
@@ -37,4 +54,12 @@ export default function GameField() {
             
         </div>
     )
+    return (
+        <div>
+            {win && <h1 className="text-7xl text-yellow-500">YOU WIN</h1>}
+            <StartButton handleClick={startTheGame}/>
+        </div>
+
+        )
+    
 }

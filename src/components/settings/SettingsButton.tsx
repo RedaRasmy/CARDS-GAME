@@ -2,6 +2,9 @@ import React, { useRef, useState } from 'react'
 import Option from '../primary/Option'
 import Rules from './Rules'
 import Style from './Style'
+import SettingsToggle from './SettingsToggle'
+import { useAppDispatch, useAppSelector} from '@/library/redux/store'
+import { toggleClick, toggleDragging, toggleSorting } from '@/library/redux/slices/settings'
 
 export default function SettingsButton() {
     const dialogRef = useRef<HTMLDialogElement>(null)
@@ -39,9 +42,7 @@ export default function SettingsButton() {
                         </button> 
                         : <div className='w-7'/>
                         }
-
                         <h1 className='text-2xl font-bold  '>{status}</h1>
-
                         <button 
                         onClick={close}
                         className=''>
@@ -72,7 +73,19 @@ type HomeProps = {
     goToStyle: () => void
 }
 function Home({goToRules,goToStyle}:HomeProps){
-    // use context api
+    const dispatch = useAppDispatch()
+    const defaultSort = useAppSelector(state=>state.settings.sorting)
+    const defaultDrag = useAppSelector(state=>state.settings.dragging)
+    const defaultClick = useAppSelector(state=>state.settings.clicking)
+    const handleToggleSort =()=>{
+        dispatch(toggleSorting())
+    }
+    const handleToggleDrag =()=>{
+        dispatch(toggleDragging())
+    }
+    const handleToggleClick =()=>{
+        dispatch(toggleClick())
+    }
     return (
         <div className='flex flex-col justify-center items-center gap-2 p-4'>
             <Option 
@@ -80,9 +93,17 @@ function Home({goToRules,goToStyle}:HomeProps){
                 Rules
             </Option>
             <Option onClick={goToStyle}>Style</Option>
+            <div>
+                <SettingsToggle label='Cards Sorting' defaultValue={defaultSort} onToggle={handleToggleSort} />
+                <SettingsToggle label='Cards Dragging' defaultValue={defaultDrag} onToggle={handleToggleDrag} />
+                <SettingsToggle label='Cards Clicking' defaultValue={defaultClick} onToggle={handleToggleClick} />
+            </div>
+            
         </div>
     )
 }
+
+
 
 
 

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, WheelEvent } from 'react'
 import Card from './Card/Card'
 import {horizontalListSortingStrategy, SortableContext} from '@dnd-kit/sortable';
 import { SortableItem } from '@/library/dnd-kit/sortable';
+import Clickable from './settings/Clickable';
 
 export default function CardsGroup({cardsIds}:{cardsIds:number[]}) {
     const scrollRef = useRef<HTMLDivElement>(null)
@@ -25,15 +26,16 @@ export default function CardsGroup({cardsIds}:{cardsIds:number[]}) {
         <div 
         ref={scrollRef}
         onWheel={e=>handleScroll(e)}
-        className='flex space-x-1 max-w-[90%] sm:max-w-[50%] overflow-x-scroll scrollbar-hide'>
+        className='flex space-x-1 max-w-[90%] sm:max-w-[50%] overflow-y-hidden scrollbar-hide'>
             <SortableContext items={cardsIds} strategy={horizontalListSortingStrategy} >
                 {cardsIds.map(id=>
                     <SortableItem key={id} id={id}>
-                        <Card id={id} />
+                        <Clickable id={id}>
+                            <Card id={id} />
+                        </Clickable>
                     </SortableItem>
                 )}
             </SortableContext>
-
         </div>
     )
 }

@@ -8,7 +8,7 @@ export default function Droppable({children}:{children:ReactNode}) {
     });
     const style = {
         // backgroundColor: isOver ? 'green' : undefined,
-        transform: isOver ? "scale(1.1)" : undefined ,
+        transform: isOver ? "" : undefined ,
     };
     
     return (

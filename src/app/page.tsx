@@ -1,24 +1,27 @@
 'use client'
 import SettingsButton from "@/components/settings/SettingsButton";
 import { Provider } from "react-redux";
-import { store } from "@/library/store";
+import { store } from "@/library/redux/store";
 import GameField from "@/components/GameField";
 import { useState } from "react";
+import useCard from "@/library/Hooks/useCard";
 
 
 export default function Home() {
-    const [started,setStarted] = useState(false)
+
+
     return (
         <div className="flex flex-col justify-around items-center h-full">
-            <SettingsButton/>
+
             <Provider store={store}>
-                    {started? <GameField/> : <StartButton handleClick={()=>{setStarted(true)}}/>}
+                    <SettingsButton/>
+                    <GameField/>
             </Provider>
         </div>
     );
 }
 
-function StartButton({handleClick}:{handleClick:()=>void}) {
+export function StartButton({handleClick}:{handleClick:()=>void}) {
     return (
         <button 
         onClick={handleClick}

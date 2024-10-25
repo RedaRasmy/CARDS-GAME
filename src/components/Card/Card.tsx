@@ -25,7 +25,7 @@ export default function Card({id}:{id:number}) {
                 <Number>{number}</Number> :
                 <Power power={power} />
             }  
-            <div></div>
+            <div/>
         </div>
     )
 }
@@ -46,7 +46,7 @@ function Power({power}:{power:PowerType|undefined}) {
 
     if (power === 'JUDGE') return <Judge/>
     if (power === 'SKIP') return <i className='bx bx-block text-[60px] opacity-50 rotate-90 font-bold text-black'/>
-    if (power === '+3') return <h1 className="font-bold text-4xl text-black  text-opacity-50 -rotate-3">+3</h1>
+    if (power === '+3') return <h1 className="font-bold text-4xl text-black  text-opacity-50 -rotate-3 select-none">+3</h1>
 }
 
 
