@@ -23,8 +23,6 @@ body {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
-  width: 5px;
-  height: 5px;
 }
 
 

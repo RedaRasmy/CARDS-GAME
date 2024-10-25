@@ -3,8 +3,6 @@ import SettingsButton from "@/components/settings/SettingsButton";
 import { Provider } from "react-redux";
 import { store } from "@/library/redux/store";
 import GameField from "@/components/GameField";
-import { useState } from "react";
-import useCard from "@/library/Hooks/useCard";
 
 
 export default function Home() {
