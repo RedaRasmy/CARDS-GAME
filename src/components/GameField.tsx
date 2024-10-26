@@ -81,8 +81,11 @@ export default function GameField() {
                 <Board/>
                 <div className="max-w-[90%] sm:max-w-[70%]">
                     {(win || lose) && <StartButton handleClick={restart}/>}
-                    <div className="justify-end m-1 flex">
-                        {playerCards.length && <h1 className="bg-red-900 p-1 rounded-md font-extrabold ">{playerCards.length} cards</h1>}
+                    <div className="justify-end m-4 -mt-4 flex">
+                        {playerCards.length && 
+                        <h1 className="bg-red-900 p-1 rounded-md font-extrabold ">
+                            {playerCards.length} card{playerCards.length>1 && "s"}
+                        </h1>}
                     </div>
                     {playerCards.length > 0 ? <CardsGroup cardsIds={playerCards} /> : <div className="h-[104px]"></div>}
                 </div>
