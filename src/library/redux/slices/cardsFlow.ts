@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import startTheGame from "../../functions/startTheGame";
 import { arrayMove } from "@dnd-kit/sortable";
+import requirements, { Requirements } from "@/library/functions/requirements";
 
 
 const {initialCurrentCard,initialPayerCards,initialBotCards,initialCardsLeft} = startTheGame()
@@ -10,6 +11,7 @@ const cardsFlow = createSlice({
     name:'cardsFlow',
     initialState:{
         currentCardId: initialCurrentCard,
+        requirements:requirements(initialCurrentCard),
         playerCards: initialPayerCards ,
         botCards: initialBotCards ,
         cardsLeft: initialCardsLeft,
@@ -27,6 +29,7 @@ const cardsFlow = createSlice({
             return {
                 ...state,
                 currentCardId: initialCurrentCard,
+                requirements:requirements(initialCurrentCard),
                 playerCards: initialPayerCards ,
                 botCards: initialBotCards ,
                 cardsLeft: initialCardsLeft,
@@ -43,7 +46,14 @@ const cardsFlow = createSlice({
             return {
                 ...state,
                 cardsLeft:[...state.cardsLeft,state.currentCardId],
-                currentCardId : action.payload
+                currentCardId : action.payload,
+                // requirements:requirements(action.payload),
+            }
+        },
+        changeRequirements:(state,action:PayloadAction<Requirements>)=>{
+            return {
+                ...state,
+                requirements:action.payload
             }
         },
         addCard:(state,action:PayloadAction<{cardId:number,player:'player'|'bot'}>)=>{
@@ -86,5 +96,15 @@ const cardsFlow = createSlice({
 })
 
 
-export const {restartTheGame,takeCard,changeCurrentCard,addCard,removeCard,changeCardOrder,changeTheGameTo} = cardsFlow.actions
+export const {
+    changeRequirements,
+    restartTheGame,
+    takeCard,
+    changeCurrentCard,
+    addCard,
+    removeCard,
+    changeCardOrder,
+    changeTheGameTo
+} = cardsFlow.actions
+
 export default cardsFlow.reducer

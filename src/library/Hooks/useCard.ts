@@ -2,8 +2,9 @@
 import { useAppDispatch,useAppSelector } from "../redux/store"
 import randomIdFrom from "../functions/randomIdFrom"
 import isIdentical from "../functions/isIdentical"
-import { addCard, removeCard,changeCurrentCard,takeCard, changeCardOrder, } from "../redux/slices/cardsFlow"
+import { addCard, removeCard,changeCurrentCard,takeCard, changeCardOrder, changeRequirements, } from "../redux/slices/cardsFlow"
 import { DragEndEvent } from "@dnd-kit/core"
+import requirements from "../functions/requirements"
 
 export default function useCard() {
     const dispatch = useAppDispatch()
@@ -12,6 +13,7 @@ export default function useCard() {
     const cardsLeft = cardsFlow.cardsLeft
     const playerCards = cardsFlow.playerCards
     const botCards = cardsFlow.botCards
+    const requirementsValue = cardsFlow.requirements
     const isSortable = useAppSelector(state=>state.settings.sorting)
 
     //// FUNCTIONS
@@ -19,21 +21,18 @@ export default function useCard() {
         for (const card of botCards){
             if (isIdentical(card,currentCard)){
                 dispatch(changeCurrentCard(card))
+                dispatch(changeRequirements(requirements(card)))
                 dispatch(removeCard({cardId:card,player:'bot'}))
                 // +3 Card
                 if (card%10 === 7){
-                    const cardsToAdd = randomIdFrom(cardsLeft,3) as number[]
-                    dispatch(takeCard(cardsToAdd[0]))
-                    dispatch(addCard({cardId:cardsToAdd[0],player:"player"}))
-                    dispatch(takeCard(cardsToAdd[1]))
-                    dispatch(addCard({cardId:cardsToAdd[1],player:"player"}))
-                    dispatch(takeCard(cardsToAdd[2]))
-                    dispatch(addCard({cardId:cardsToAdd[2],player:"player"}))
+                    Add3CardsTo("player")
                 }
                 // Judge Card 
-                // else if (card%10 === 8){
-                //     // implement after
-                // }
+                else if (card%10 === 8){
+                    // for now Just Random
+                    const randomColor = ['Yellow',"Blue",'Red',"Green"][Math.floor(Math.random()*4)] 
+                    dispatch(changeRequirements([randomColor]))
+                }
                 // skip Card
                 if (card%10 === 9) {
                     BotPlay(card)
@@ -49,10 +48,24 @@ export default function useCard() {
     function playWithClick(id:number){
         if(isIdentical(id,currentCardId)){
             dispatch(changeCurrentCard(id))
+            dispatch(changeRequirements(requirements(id)))
             dispatch(removeCard({cardId:id,player:'player'}))
+            // +3 Card
+            if (id%10 === 7){
+                Add3CardsTo("bot")
+            }
             return true
         }
         return false
+    }
+    function Add3CardsTo(name:('player'|'bot')){
+        const cardsToAdd = randomIdFrom(cardsLeft,3) as number[]
+        dispatch(takeCard(cardsToAdd[0]))
+        dispatch(addCard({cardId:cardsToAdd[0],player:name}))
+        dispatch(takeCard(cardsToAdd[1]))
+        dispatch(addCard({cardId:cardsToAdd[1],player:name}))
+        dispatch(takeCard(cardsToAdd[2]))
+        dispatch(addCard({cardId:cardsToAdd[2],player:name}))
     }
     
     function playerTakeCard(){
@@ -92,6 +105,7 @@ export default function useCard() {
             playerCards,
             botCards,
             currentCardId,
+            requirementsValue,
         // functions
             playerTakeCard,
             playWithClick,

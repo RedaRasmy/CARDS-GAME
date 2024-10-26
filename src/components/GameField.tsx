@@ -79,7 +79,7 @@ export default function GameField() {
                 {win && <WinOrLoseMessage msg="YOU WIN" isVisible={isVisible}/> }
                 {lose && <WinOrLoseMessage msg="YOU LOSE" isVisible={isVisible}/>}
                 <Board/>
-                <div className="max-w-[90%] sm:max-w-[50%]">
+                <div className="max-w-[90%] sm:max-w-[70%]">
                     {(win || lose) && <StartButton handleClick={restart}/>}
                     <div className="justify-end m-1 flex">
                         {playerCards.length && <h1 className="bg-red-900 p-1 rounded-md font-extrabold ">{playerCards.length} cards</h1>}

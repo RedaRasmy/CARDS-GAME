@@ -5,9 +5,9 @@ import useCard from '@/library/Hooks/useCard'
 import Droppable from '@/library/dnd-kit/droppable'
 
 export default function Board() {
-    const {cardsLeft,currentCardId} = useCard()
+    const {cardsLeft,currentCardId,requirementsValue} = useCard()
     const cardsLeftNumber = cardsLeft.length
-
+    const ReqMsg = `${requirementsValue[0]} ${requirementsValue[1] ?" | "+ requirementsValue[1]:'' } `
     // Weird 
     // function handleDragOver(e:DragEvent){
     //     e.preventDefault()
@@ -20,16 +20,17 @@ export default function Board() {
         flex justify-between items-center py-4 px-6 border-y-2 text-white flex-wrap
         '>
             <div className='sm:block hidden'></div>
+
             <div 
-            // onDragOver={e=>handleDragOver(e)}
-            
-            className='scale-[1.8] ml-10'>
+            className='scale-[1.8] ml-10 flex flex-col justify-center items-center'>
+                <p className='font-mono opacity-50 text-[12px]'>{ReqMsg}</p>
                 {currentCardId !== null &&
                 <Droppable>
                     <Card id={currentCardId} ></Card>
                 </Droppable>
                 }
             </div>
+            
             <div className=' flex flex-col items-center mt-2'>
                 <div className='cursor-pointer'>
                     <CardBack/>

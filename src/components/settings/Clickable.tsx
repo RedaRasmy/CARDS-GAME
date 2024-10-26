@@ -9,7 +9,7 @@ export default function Clickable({children,id}:{children:ReactNode,id:number}) 
     const handleClick = () => {
         if (isClickable) {
             const isPlayed = playWithClick(id)
-            if (isPlayed) {
+            if (isPlayed && (id%10 !== 9)) { // if skip card
                 BotPlay(id)
             } 
             
