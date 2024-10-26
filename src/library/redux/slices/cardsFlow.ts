@@ -15,9 +15,16 @@ const cardsFlow = createSlice({
         playerCards: initialPayerCards ,
         botCards: initialBotCards ,
         cardsLeft: initialCardsLeft,
-        gameIsOn:false
+        gameIsOn:false,
+        playerTurn:true
     },
     reducers:{
+        toggleTurn:(state)=>{
+            return {
+                ...state,
+                playerTurn:!state.playerTurn
+            }
+        },
         changeTheGameTo:(state,action:PayloadAction<boolean>)=>{
             return {
                 ...state,
@@ -104,7 +111,8 @@ export const {
     addCard,
     removeCard,
     changeCardOrder,
-    changeTheGameTo
+    changeTheGameTo,
+    toggleTurn
 } = cardsFlow.actions
 
 export default cardsFlow.reducer

@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "@/library/redux/store";
 import StartButton from "./StartButton";
 import { changeTheGameTo, restartTheGame } from "@/library/redux/slices/cardsFlow";
 import { useEffect, useState } from "react";
+import ChooseAColor from "./ChooseAColor";
 
 
 export default function GameField() {
@@ -64,6 +65,7 @@ export default function GameField() {
 
     if (gameIsOn) return (
         <div className="w-full h-full flex flex-col justify-around items-center">
+            <ChooseAColor/>
             <DndContext 
             collisionDetection={closestCenter} 
             onDragEnd={handleDragEnd}
@@ -82,7 +84,7 @@ export default function GameField() {
                 <div className="max-w-[90%] sm:max-w-[70%]">
                     {(win || lose) && <StartButton handleClick={restart}/>}
                     <div className="justify-end m-4 -mt-4 flex">
-                        {playerCards.length && 
+                        {playerCards.length > 0 && 
                         <h1 className="bg-red-900 p-1 rounded-md font-extrabold ">
                             {playerCards.length} card{playerCards.length>1 && "s"}
                         </h1>}

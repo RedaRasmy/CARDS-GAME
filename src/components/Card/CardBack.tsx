@@ -1,10 +1,10 @@
 import useCard from "@/library/Hooks/useCard"
 
 export default function CardBack() {
-    const {playerTakeCard,BotPlay,currentCardId} = useCard()
+    const {playerTakeCard,BotPlay,currentCardId,playerTurn} = useCard()
     const handleTake = () =>{
-        const isPlayed = playerTakeCard()
-        if (isPlayed) {
+        playerTakeCard()
+        if (!playerTurn) {
             BotPlay(currentCardId)
         }
     }
