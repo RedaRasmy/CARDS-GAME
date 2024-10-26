@@ -5,7 +5,8 @@ import CardsGroup from "./CardsGroup";
 import useCard from "@/library/Hooks/useCard";
 import { useAppDispatch, useAppSelector } from "@/library/redux/store";
 import StartButton from "./StartButton";
-import { changeTheGameTo } from "@/library/redux/slices/cardsFlow";
+import { changeTheGameTo, restartTheGame } from "@/library/redux/slices/cardsFlow";
+import { useEffect, useState } from "react";
 
 
 export default function GameField() {
@@ -18,12 +19,16 @@ export default function GameField() {
     const startTheGame = () => {
         dipsatch(changeTheGameTo(true))
     }
+    const restart = ()=>{
+        dipsatch(restartTheGame())
+    }
+
     const win = playerCards.length === 0
     const lose = botCards.length ===0
 
-    // if (win) {
-    //     dipsatch(changeTheGameTo(false))
-    // }
+    if (win || lose) {
+        // dipsatch(changeTheGameTo(false))
+    }
 
     // Define Sensors 
     const sensors = useSensors(
@@ -33,6 +38,18 @@ export default function GameField() {
             }
         })
     )
+    const [isVisible, setIsVisible] = useState(true);
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            if (win || lose) {
+                setIsVisible(false);
+            }
+        }, 2000); // 2000ms = 2 seconds
+    
+        // Clean up the timer when the component unmounts
+        return () => clearTimeout(timer);
+    }, [lose,win]);
+    
 
     if (gameIsOn) return (
         <div className="w-full h-full flex flex-col justify-around items-center">
@@ -48,12 +65,12 @@ export default function GameField() {
                     </div>
                     
                 : <div className="h-[104px]"></div>}
-                {win && <h1 className="text-7xl text-yellow-500 absolute">YOU WIN</h1>}
-                {lose && <h1 className="text-7xl text-yellow-500 absolute">YOU LOSE</h1>}
+                {win && <WinOrLoseMessage msg="YOU WIN" isVisible={isVisible}/> }
+                {lose && <WinOrLoseMessage msg="YOU LOSE" isVisible={isVisible}/>}
                 <Board/>
+                {(win || lose) && <StartButton handleClick={restart}/>}
                 {playerCards.length > 0 ? <CardsGroup cardsIds={playerCards} /> : <div className="h-[104px]"></div>}
             </DndContext>
-            
         </div>
     )
     return (
@@ -63,4 +80,19 @@ export default function GameField() {
         </div>
         )
     
+}
+
+function WinOrLoseMessage({msg,isVisible}:{
+        msg:string,
+        isVisible:boolean
+    }){
+    return (
+        <h1 
+        className={`text-7xl font-extrabold text-yellow-500 
+        absolute transition-opacity duration-1000
+        ${isVisible ? "opacity-100" : "opacity-0"}
+        `}>
+            {msg}
+        </h1>
+    )
 }

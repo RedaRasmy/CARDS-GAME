@@ -22,6 +22,16 @@ const cardsFlow = createSlice({
                 gameIsOn:action.payload
             }
         },
+        restartTheGame:(state)=>{
+            const {initialCurrentCard,initialPayerCards,initialBotCards,initialCardsLeft} = startTheGame()
+            return {
+                ...state,
+                currentCardId: initialCurrentCard,
+                playerCards: initialPayerCards ,
+                botCards: initialBotCards ,
+                cardsLeft: initialCardsLeft,
+            }
+        },
         takeCard:(state,action:PayloadAction<number>)=>{
             const newCards = state.cardsLeft.filter(id=>id!==action.payload)
             return {
@@ -76,5 +86,5 @@ const cardsFlow = createSlice({
 })
 
 
-export const {takeCard,changeCurrentCard,addCard,removeCard,changeCardOrder,changeTheGameTo} = cardsFlow.actions
+export const {restartTheGame,takeCard,changeCurrentCard,addCard,removeCard,changeCardOrder,changeTheGameTo} = cardsFlow.actions
 export default cardsFlow.reducer
