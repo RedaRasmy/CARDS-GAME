@@ -10,7 +10,7 @@ export default function Clickable({children,id}:{children:ReactNode,id:number}) 
         if (isClickable) {
             const isPlayed = playWithClick(id)
             if (isPlayed) {
-                BotPlay()
+                BotPlay(id)
             } 
             
         }

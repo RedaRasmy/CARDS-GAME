@@ -23,8 +23,8 @@ export default function Board() {
             <div 
             // onDragOver={e=>handleDragOver(e)}
             
-            className=' ml-10'>
-                {currentCardId !== null && 
+            className='scale-[1.8] ml-10'>
+                {currentCardId !== null &&
                 <Droppable>
                     <Card id={currentCardId} ></Card>
                 </Droppable>

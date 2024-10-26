@@ -10,7 +10,7 @@ export default function SettingsToggle({label,onToggle,defaultValue}:SettingsOpt
         <div>
             <label className="label cursor-pointer">
                 <span className="label-text text-[18px] mr-3">{label}</span>
-                <input type="checkbox" className="toggle toggle-success " defaultChecked checked={defaultValue} onChange={onToggle}/>
+                <input type="checkbox" className="toggle toggle-success " checked={defaultValue} onChange={onToggle}/>
             </label>
         </div>
     )

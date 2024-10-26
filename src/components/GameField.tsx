@@ -15,20 +15,32 @@ export default function GameField() {
     const {playerCards,botCards,handleDragEnd} = useCard()
     const cardsToMap = botCards.slice(0,4)
     const plus = botCards.length > 4 ? <i className='bx bx-plus text-5xl text-white'></i> : null 
+    const [win,setWin] = useState(false)
+    const [lose,setLose] = useState(false)
+
+    useEffect(()=>{
+        if(playerCards.length === 0){
+            setWin(true)
+        }
+        if(botCards.length === 0){
+            setLose(true)
+        }
+    },[playerCards.length,botCards.length])
+
+    // let win = playerCards.length === 0
+    // let lose = botCards.length === 0
 
     const startTheGame = () => {
         dipsatch(changeTheGameTo(true))
     }
+    const [isVisible, setIsVisible] = useState(true);
     const restart = ()=>{
         dipsatch(restartTheGame())
+        setWin(false)
+        setLose(false)
+        setIsVisible(true)
     }
 
-    const win = playerCards.length === 0
-    const lose = botCards.length ===0
-
-    if (win || lose) {
-        // dipsatch(changeTheGameTo(false))
-    }
 
     // Define Sensors 
     const sensors = useSensors(
@@ -38,7 +50,6 @@ export default function GameField() {
             }
         })
     )
-    const [isVisible, setIsVisible] = useState(true);
     useEffect(() => {
         const timer = setTimeout(() => {
             if (win || lose) {
@@ -59,7 +70,7 @@ export default function GameField() {
             sensors={sensors}
             >
                 {(botCards.length > 0) ? 
-                    <div className="flex space-x-1 items-center">
+                    <div className="flex space-x-1 items-center pointer-events-none">
                         {cardsToMap.map((e:number) => <div className="" key={e}><CardBack/></div>)}
                         {plus}
                     </div>
@@ -68,8 +79,14 @@ export default function GameField() {
                 {win && <WinOrLoseMessage msg="YOU WIN" isVisible={isVisible}/> }
                 {lose && <WinOrLoseMessage msg="YOU LOSE" isVisible={isVisible}/>}
                 <Board/>
-                {(win || lose) && <StartButton handleClick={restart}/>}
-                {playerCards.length > 0 ? <CardsGroup cardsIds={playerCards} /> : <div className="h-[104px]"></div>}
+                <div className="max-w-[90%] sm:max-w-[50%]">
+                    {(win || lose) && <StartButton handleClick={restart}/>}
+                    <div className="justify-end m-1 flex">
+                        {playerCards.length && <h1 className="bg-red-900 p-1 rounded-md font-extrabold ">{playerCards.length} cards</h1>}
+                    </div>
+                    {playerCards.length > 0 ? <CardsGroup cardsIds={playerCards} /> : <div className="h-[104px]"></div>}
+                </div>
+                
             </DndContext>
         </div>
     )
@@ -89,7 +106,7 @@ function WinOrLoseMessage({msg,isVisible}:{
     return (
         <h1 
         className={`text-7xl font-extrabold text-yellow-500 
-        absolute transition-opacity duration-1000
+        absolute transition-opacity duration-1000 z-50
         ${isVisible ? "opacity-100" : "opacity-0"}
         `}>
             {msg}

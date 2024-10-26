@@ -15,9 +15,9 @@ export default function useCard() {
     const isSortable = useAppSelector(state=>state.settings.sorting)
 
     //// FUNCTIONS
-    function BotPlay(){
+    function BotPlay(currentCard:number){
         for (const card of botCards){
-            if (isIdentical(card,currentCardId)){
+            if (isIdentical(card,currentCard)){
                 dispatch(changeCurrentCard(card))
                 dispatch(removeCard({cardId:card,player:'bot'}))
                 return;
@@ -41,9 +41,10 @@ export default function useCard() {
         const randomId = randomIdFrom(cardsLeft) as number
         if (cardsLeft.length>0) {
             dispatch(addCard({cardId:randomId,player:'player'}))
-            dispatch(takeCard(randomId))    
-            // BotPlay()  
+            dispatch(takeCard(randomId))
+            return true  
         }
+        return false
     }
     const getCardIndex = (id:number) => playerCards.findIndex(cardId=> cardId === id)
 
