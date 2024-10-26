@@ -16,11 +16,11 @@ export default function useCard() {
 
     //// FUNCTIONS
     function BotPlay(){
-        for (let card of botCards){
+        for (const card of botCards){
             if (isIdentical(card,currentCardId)){
                 dispatch(changeCurrentCard(card))
                 dispatch(removeCard({cardId:card,player:'bot'}))
-                // return;
+                return;
             }
         }
         const randomId = randomIdFrom(cardsLeft) as number
@@ -32,7 +32,9 @@ export default function useCard() {
         if(isIdentical(id,currentCardId)){
             dispatch(changeCurrentCard(id))
             dispatch(removeCard({cardId:id,player:'player'}))
+            return true
         }
+        return false
     }
     
     function playerTakeCard(){

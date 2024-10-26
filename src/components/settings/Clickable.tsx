@@ -8,8 +8,11 @@ export default function Clickable({children,id}:{children:ReactNode,id:number}) 
 
     const handleClick = () => {
         if (isClickable) {
-            playWithClick(id)
-            BotPlay()
+            const isPlayed = playWithClick(id)
+            if (isPlayed) {
+                BotPlay()
+            } 
+            
         }
     }
     return (

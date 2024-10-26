@@ -19,11 +19,11 @@ export default function GameField() {
         dipsatch(changeTheGameTo(true))
     }
     const win = playerCards.length === 0
+    const lose = botCards.length ===0
 
-
-    if (win) {
-        dipsatch(changeTheGameTo(false))
-    }
+    // if (win) {
+    //     dipsatch(changeTheGameTo(false))
+    // }
 
     // Define Sensors 
     const sensors = useSensors(
@@ -48,6 +48,8 @@ export default function GameField() {
                     </div>
                     
                 : <div className="h-[104px]"></div>}
+                {win && <h1 className="text-7xl text-yellow-500 absolute">YOU WIN</h1>}
+                {lose && <h1 className="text-7xl text-yellow-500 absolute">YOU LOSE</h1>}
                 <Board/>
                 {playerCards.length > 0 ? <CardsGroup cardsIds={playerCards} /> : <div className="h-[104px]"></div>}
             </DndContext>
@@ -59,7 +61,6 @@ export default function GameField() {
             {win && <h1 className="text-7xl text-yellow-500">YOU WIN</h1>}
             <StartButton handleClick={startTheGame}/>
         </div>
-
         )
     
 }
