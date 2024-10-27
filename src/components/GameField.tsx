@@ -12,7 +12,7 @@ import { toggleGame, toggleModal } from "@/library/redux/slices/gameFlow";
 
 
 export default function GameField() {
-    // const [isModalOpen,setIsModalOpen]= useState(false)
+    const [firstGame,setFirstGame]= useState(false)
     const gameIsOn = useAppSelector(state=>state.gameFlow.gameIsOn)
     const dispatch = useAppDispatch()
     const {playerCards,botCards,handleDragEnd} = useCard()
@@ -25,11 +25,15 @@ export default function GameField() {
     useEffect(()=>{
         if(playerCards.length === 0){
             setWin(true)
+            dispatch(toggleGame())
+            setFirstGame(true)
         }
         if(botCards.length === 0){
             setLose(true)
+            dispatch(toggleGame())
+            setFirstGame(true)
         }
-    },[playerCards.length,botCards.length])
+    },[playerCards.length,botCards.length,dispatch])
 
     // let win = playerCards.length === 0
     // let lose = botCards.length === 0
@@ -65,7 +69,7 @@ export default function GameField() {
         return () => clearTimeout(timer);
     }, [lose,win]);
     
-    if (gameIsOn) return (
+    if (gameIsOn || firstGame) return (
         <div className="w-full h-full flex flex-col justify-around items-center">
             {modalOpen && <ChooseAColor onClose={()=>dispatch(toggleModal())} />}
             <DndContext
@@ -99,7 +103,7 @@ export default function GameField() {
     )
     return (
         <div>
-            {win && <h1 className="text-7xl text-yellow-500">YOU WIN</h1>}
+            {/* {win && <h1 className="text-7xl text-yellow-500">YOU WIN</h1>} */}
             <StartButton handleClick={startTheGame}/>
         </div>
         )

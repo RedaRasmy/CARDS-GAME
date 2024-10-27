@@ -16,7 +16,6 @@ export default function Clickable({children,id}:{children:ReactNode,id:number}) 
             playWithClick(id)
         }
     }
-
     return (
         <div onClick={handleClick}>
             {children}
