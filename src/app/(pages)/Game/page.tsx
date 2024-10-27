@@ -7,10 +7,10 @@ import GameField from "@/components/GameField";
 export default function page() {
     return (
         <div className="flex flex-col justify-around items-center h-full">    
-        <Provider store={store}>
-                <SettingsButton/>
-                <GameField/>
-        </Provider>
+            <Provider store={store}>
+                    <SettingsButton/>
+                    <GameField/>
+            </Provider>
     </div>
     )
 }
