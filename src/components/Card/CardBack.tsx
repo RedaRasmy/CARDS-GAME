@@ -2,10 +2,10 @@ import useCard from "@/library/Hooks/useCard"
 import { useAppSelector } from "@/library/redux/store"
 
 export default function CardBack() {
-    const gameIsOn = useAppSelector(state=>state.gameFlow.gameIsOn)
-    const playerTurn = useAppSelector(state=>state.gameFlow.playerTurn)
+    const {gameIsOn,playerTurn} = useAppSelector(state=>state.gameFlow)
     const {playerTakeCard,BotPlay,requirementsValue} = useCard()
     const handleTake = () =>{
+        // console.log('GAME IS ON: ',gameIsOn)
         if (gameIsOn){
             playerTakeCard()
             if (!playerTurn) {

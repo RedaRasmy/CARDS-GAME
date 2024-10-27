@@ -5,9 +5,16 @@ const settings = createSlice({
     initialState:{
         sorting:false,
         dragging:false,
-        clicking:true
+        clicking:true,
+        alwaysShowRequirements:true,
     },
     reducers:{
+        toggleRequirements:(state)=>{
+            return {
+                ...state,
+                alwaysShowRequirements:!state.alwaysShowRequirements
+            }
+        },
         toggleSorting:(state)=>{
             return {
                 ...state,
@@ -31,4 +38,9 @@ const settings = createSlice({
 
 
 export default settings.reducer
-export const  {toggleSorting,toggleDragging,toggleClick} = settings.actions
+export const  {
+    toggleSorting,
+    toggleDragging,
+    toggleClick,
+    toggleRequirements
+} = settings.actions

@@ -1,4 +1,5 @@
 // import React, { DragEvent} from 'react'
+import { useAppSelector } from '@/library/redux/store'
 import Card from './Card/Card'
 import CardBack from './Card/CardBack'
 import useCard from '@/library/Hooks/useCard'
@@ -6,6 +7,9 @@ import Droppable from '@/library/dnd-kit/droppable'
 
 export default function Board() {
     const {cardsLeft,currentCardId,requirementsValue} = useCard()
+    const showReqSetting = useAppSelector(state=>state.settings.alwaysShowRequirements)
+    const showReq = showReqSetting || (currentCardId % 10 === 8) // only if is a judge card
+
     const cardsLeftNumber = cardsLeft.length
     const ReqMsg = `${requirementsValue[0]} ${requirementsValue[1] ?" | "+ requirementsValue[1]:'' } `
     // Weird 
@@ -23,7 +27,7 @@ export default function Board() {
 
             <div 
             className='scale-[1.8] ml-10 flex flex-col justify-center items-center'>
-                <p className='font-mono opacity-50 text-[12px]'>{ReqMsg}</p>
+                {showReq && <p className='font-mono opacity-50 text-[12px]'>{ReqMsg}</p>}
                 {currentCardId !== null &&
                 <Droppable>
                     <Card id={currentCardId} ></Card>

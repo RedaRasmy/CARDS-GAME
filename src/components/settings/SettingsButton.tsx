@@ -4,7 +4,7 @@ import Rules from './Rules'
 import Style from './Style'
 import SettingsToggle from './SettingsToggle'
 import { useAppDispatch, useAppSelector} from '@/library/redux/store'
-import { toggleClick, toggleDragging, toggleSorting } from '@/library/redux/slices/settings'
+import { toggleClick, toggleDragging, toggleRequirements, toggleSorting } from '@/library/redux/slices/settings'
 
 export default function SettingsButton() {
     const dialogRef = useRef<HTMLDialogElement>(null)
@@ -74,9 +74,7 @@ type HomeProps = {
 }
 function Home({goToRules,goToStyle}:HomeProps){
     const dispatch = useAppDispatch()
-    const defaultSort = useAppSelector(state=>state.settings.sorting)
-    const defaultDrag = useAppSelector(state=>state.settings.dragging)
-    const defaultClick = useAppSelector(state=>state.settings.clicking)
+    const {sorting,dragging,clicking,alwaysShowRequirements} = useAppSelector(state=>state.settings)
     const handleToggleSort =()=>{
         dispatch(toggleSorting())
     }
@@ -86,6 +84,9 @@ function Home({goToRules,goToStyle}:HomeProps){
     const handleToggleClick =()=>{
         dispatch(toggleClick())
     }
+    const handleReq =()=>{
+        dispatch(toggleRequirements())
+    }
     return (
         <div className='flex flex-col justify-center items-center gap-2 p-4'>
             <Option 
@@ -94,9 +95,10 @@ function Home({goToRules,goToStyle}:HomeProps){
             </Option>
             <Option onClick={goToStyle}>Style</Option>
             <div>
-                <SettingsToggle label='Cards Sorting' defaultValue={defaultSort} onToggle={handleToggleSort} />
-                <SettingsToggle label='Cards Dragging' defaultValue={defaultDrag} onToggle={handleToggleDrag} />
-                <SettingsToggle label='Cards Clicking' defaultValue={defaultClick} onToggle={handleToggleClick} />
+                <SettingsToggle label='Cards Sorting' defaultValue={sorting} onToggle={handleToggleSort} />
+                <SettingsToggle label='Cards Dragging' defaultValue={dragging} onToggle={handleToggleDrag} />
+                <SettingsToggle label='Cards Clicking' defaultValue={clicking} onToggle={handleToggleClick} />
+                <SettingsToggle label='Always Show Requirements' defaultValue={alwaysShowRequirements} onToggle={handleReq} />
             </div>
             
         </div>

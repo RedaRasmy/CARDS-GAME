@@ -25,13 +25,13 @@ export default function GameField() {
     useEffect(()=>{
         if(playerCards.length === 0){
             setWin(true)
-            dispatch(toggleGame())
             setFirstGame(true)
+            dispatch(toggleGame())
         }
         if(botCards.length === 0){
             setLose(true)
-            dispatch(toggleGame())
             setFirstGame(true)
+            dispatch(toggleGame())
         }
     },[playerCards.length,botCards.length,dispatch])
 
@@ -43,6 +43,7 @@ export default function GameField() {
 
     const restart = ()=>{
         dispatch(redistribute())
+        dispatch(toggleGame())
         setWin(false)
         setLose(false)
         setIsVisible(true)
