@@ -8,7 +8,7 @@ export default function Clickable({children,id}:{children:ReactNode,id:number}) 
     const {playWithClick,BotPlay,requirementsValue} = useCard()
 
 
-    if(!playerTurn && (id%10 !== 9)) {
+    if(!playerTurn) {
         BotPlay(requirementsValue)
     }
     const handleClick = () => {
@@ -16,6 +16,7 @@ export default function Clickable({children,id}:{children:ReactNode,id:number}) 
             playWithClick(id)
         }
     }
+
     return (
         <div onClick={handleClick}>
             {children}

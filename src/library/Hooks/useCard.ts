@@ -69,10 +69,12 @@ export default function useCard() {
                 if (id % 10 === 7){
                     Add3CardsTo("bot")
                 }
+                if (id % 10 === 9) { // if BLOCK card (dont toggle turn)
+                    return;
+                }
                 dispatch(toggleTurn())
             }
-            // Judge
-            else {
+            else { // if JUDGE card
                 dispatch(removeCard({cardId:id,player:'player'}))
                 dispatch(changeCurrentCard(id))
                 dispatch(toggleModal())
