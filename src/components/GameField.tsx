@@ -35,8 +35,6 @@ export default function GameField() {
         }
     },[playerCards.length,botCards.length,dispatch])
 
-    // let win = playerCards.length === 0
-    // let lose = botCards.length === 0
 
     const startTheGame = () => {
         dispatch(toggleGame())
@@ -89,9 +87,9 @@ export default function GameField() {
                 <Board/>
                 <div className="max-w-[90%] sm:max-w-[70%]">
                     {(win || lose) && <StartButton handleClick={restart}/>}
-                    <div className="justify-end m-4 -mt-4 flex">
+                    <div className="justify-end m-4 -mt-4 flex  -mr-1">
                         {playerCards.length > 0 && 
-                        <h1 className="bg-red-900 p-1 rounded-md font-extrabold ">
+                        <h1 className="bg-red-900  p-1 rounded-md font-extrabold ">
                             {playerCards.length} card{playerCards.length>1 && "s"}
                         </h1>}
                     </div>

@@ -27,7 +27,7 @@ export default function useCard() {
         }
     
 
-    function BotPlay(requ:Requirements,){
+    function BotPlay(requ:Requirements){
         for (const card of botCards){
             if (isIdentical(card,requ)){
                 dispatch(changeCurrentCard(card))
@@ -45,9 +45,9 @@ export default function useCard() {
                     dispatch(changeRequirements([randomColor]))
                 }
                 // skip Card
-                // if (card % 10 === 9) {
-                //     BotPlay(card)
-                // }
+                if (card % 10 === 9) {
+                    return true
+                }
                 dispatch(toggleTurn())
                 return;
             }

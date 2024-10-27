@@ -7,9 +7,11 @@ export default function Clickable({children,id}:{children:ReactNode,id:number}) 
     const playerTurn = useAppSelector(state=>state.gameFlow.playerTurn)
     const {playWithClick,BotPlay,requirementsValue} = useCard()
 
-
     if(!playerTurn) {
-        BotPlay(requirementsValue)
+        const isBlock = BotPlay(requirementsValue)
+        if (isBlock){
+            BotPlay([requirementsValue[0]])
+        }
     }
     const handleClick = () => {
         if (isClickable && playerTurn) {
