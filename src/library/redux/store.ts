@@ -1,14 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import cardsFlow from "./slices/cardsFlow"
 import settings from './slices/settings'
+import gameFlow from './slices/gameFlow'
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
 
 export const store = configureStore({
     reducer: {
-        cardsFlow:cardsFlow,
-        settings
+        cardsFlow,
+        settings,
+        gameFlow
     }
 })
 

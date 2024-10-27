@@ -4,10 +4,12 @@ import { ReactNode } from 'react'
 
 export default function Clickable({children,id}:{children:ReactNode,id:number}) {
     const isClickable = useAppSelector(state=>state.settings.clicking)
-    const {playWithClick,BotPlay,playerTurn} = useCard()
+    const playerTurn = useAppSelector(state=>state.gameFlow.playerTurn)
+    const {playWithClick,BotPlay,requirementsValue} = useCard()
+
 
     if(!playerTurn && (id%10 !== 9)) {
-        BotPlay(id)
+        BotPlay(requirementsValue)
     }
     const handleClick = () => {
         if (isClickable && playerTurn) {

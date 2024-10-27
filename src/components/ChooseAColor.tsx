@@ -1,16 +1,16 @@
 import useCard from '@/library/Hooks/useCard'
 import React from 'react'
 
-export default function ChooseAColor() {
-    const {colorRef,chooseColor} = useCard()
+export default function ChooseAColor({onClose}:{onClose:()=>void}) {
+    const {chooseColor} = useCard()
     function handleChoose(str:string){
         chooseColor(str)
-        colorRef.current?.close()
+        onClose()
+        // colorRef.current?.close()
     }
     return (
         <dialog
-        // open
-        ref={colorRef}
+        open
         className='shadow-xl rounded-lg grid bg-transparent grid-cols-2 grid-rows-2 w-[300px] h-[300px] gap-2 z-50'
         >
             <div

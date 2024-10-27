@@ -5,19 +5,22 @@ import CardsGroup from "./CardsGroup";
 import useCard from "@/library/Hooks/useCard";
 import { useAppDispatch, useAppSelector } from "@/library/redux/store";
 import StartButton from "./StartButton";
-import { changeTheGameTo, restartTheGame } from "@/library/redux/slices/cardsFlow";
 import { useEffect, useState } from "react";
 import ChooseAColor from "./ChooseAColor";
+import { redistribute } from "@/library/redux/slices/cardsFlow";
+import { toggleGame, toggleModal } from "@/library/redux/slices/gameFlow";
 
 
 export default function GameField() {
-    const gameIsOn = useAppSelector(state=>state.cardsFlow.gameIsOn)
-    const dipsatch = useAppDispatch()
+    // const [isModalOpen,setIsModalOpen]= useState(false)
+    const gameIsOn = useAppSelector(state=>state.gameFlow.gameIsOn)
+    const dispatch = useAppDispatch()
     const {playerCards,botCards,handleDragEnd} = useCard()
     const cardsToMap = botCards.slice(0,4)
     const plus = botCards.length > 4 ? <i className='bx bx-plus text-5xl text-white'></i> : null 
     const [win,setWin] = useState(false)
     const [lose,setLose] = useState(false)
+    const modalOpen = useAppSelector(state=>state.gameFlow.modalOpen)
 
     useEffect(()=>{
         if(playerCards.length === 0){
@@ -32,16 +35,16 @@ export default function GameField() {
     // let lose = botCards.length === 0
 
     const startTheGame = () => {
-        dipsatch(changeTheGameTo(true))
+        dispatch(toggleGame())
     }
     const [isVisible, setIsVisible] = useState(true);
+
     const restart = ()=>{
-        dipsatch(restartTheGame())
+        dispatch(redistribute())
         setWin(false)
         setLose(false)
         setIsVisible(true)
     }
-
 
     // Define Sensors 
     const sensors = useSensors(
@@ -62,11 +65,10 @@ export default function GameField() {
         return () => clearTimeout(timer);
     }, [lose,win]);
     
-
     if (gameIsOn) return (
         <div className="w-full h-full flex flex-col justify-around items-center">
-            <ChooseAColor/>
-            <DndContext 
+            {modalOpen && <ChooseAColor onClose={()=>dispatch(toggleModal())} />}
+            <DndContext
             collisionDetection={closestCenter} 
             onDragEnd={handleDragEnd}
             sensors={sensors}

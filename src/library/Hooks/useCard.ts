@@ -2,10 +2,10 @@
 import { useAppDispatch,useAppSelector } from "../redux/store"
 import randomIdFrom from "../functions/randomIdFrom"
 import isIdentical from "../functions/isIdentical"
-import { addCard, removeCard,changeCurrentCard,takeCard, changeCardOrder, changeRequirements, toggleTurn, } from "../redux/slices/cardsFlow"
+import { addCard, removeCard,changeCurrentCard,takeCard, changeCardOrder, changeRequirements, } from "../redux/slices/cardsFlow"
+import { toggleModal, toggleTurn } from "../redux/slices/gameFlow"
 import { DragEndEvent } from "@dnd-kit/core"
-import requirements from "../functions/requirements"
-import { useRef } from "react"
+import requirements, { Requirements } from "../functions/requirements"
 import capitalize from "../functions/capitalize"
 
 export default function useCard() {
@@ -17,22 +17,19 @@ export default function useCard() {
     const botCards = cardsFlow.botCards
     const requirementsValue = cardsFlow.requirements
     const isSortable = useAppSelector(state=>state.settings.sorting)
-    const colorRef = useRef<(HTMLDialogElement | null)>(null)
-    const playerTurn = useAppSelector(state=>state.cardsFlow.playerTurn)
+    const playerTurn = useAppSelector(state=>state.gameFlow.playerTurn)
 
 
     //// FUNCTIONS
     function chooseColor(color:string){
-        if(colorRef.current) {
-            dispatch(changeRequirements([capitalize(color)]))
-            colorRef.current.close()
-            dispatch(toggleTurn())
+        dispatch(changeRequirements([capitalize(color)]))
+        dispatch(toggleTurn())
         }
-    }
+    
 
-    function BotPlay(currentCard:number,){
+    function BotPlay(requ:Requirements,){
         for (const card of botCards){
-            if (isIdentical(card,requirements(currentCard))){
+            if (isIdentical(card,requ)){
                 dispatch(changeCurrentCard(card))
                 console.log('requirements :',requirementsValue)
                 dispatch(changeRequirements(requirements(card)))
@@ -75,8 +72,10 @@ export default function useCard() {
                 dispatch(toggleTurn())
             }
             // Judge
-            else if (  colorRef.current  ){
-                colorRef.current.showModal()
+            else {
+                dispatch(removeCard({cardId:id,player:'player'}))
+                dispatch(changeCurrentCard(id))
+                dispatch(toggleModal())
             }
         }
     }
@@ -96,7 +95,7 @@ export default function useCard() {
         if (cardsLeft.length>0) {
             dispatch(addCard({cardId:randomId,player:'player'}))
             dispatch(takeCard(randomId))
-            dispatch(toggleTurn()) 
+            dispatch(toggleTurn())
         }
     }
     const getCardIndex = (id:number) => playerCards.findIndex(cardId=> cardId === id)
@@ -129,8 +128,6 @@ export default function useCard() {
             currentCardId,
             requirementsValue,
             playerTurn,
-        // Refs
-            colorRef,
         // functions
             playerTakeCard,
             playWithClick,
