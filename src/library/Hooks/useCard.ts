@@ -19,14 +19,12 @@ export default function useCard() {
     const isSortable = useAppSelector(state=>state.settings.sorting)
     const playerTurn = useAppSelector(state=>state.gameFlow.playerTurn)
 
-
     //// FUNCTIONS
     function chooseColor(color:string){
         dispatch(changeRequirements([capitalize(color)]))
         dispatch(toggleTurn())
         }
     
-
     function BotPlay(requ:Requirements){
         for (const card of botCards){
             if (isIdentical(card,requ)){
