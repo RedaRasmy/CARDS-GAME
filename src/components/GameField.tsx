@@ -15,7 +15,7 @@ export default function GameField() {
     const [firstGame,setFirstGame]= useState(false)
     const gameIsOn = useAppSelector(state=>state.gameFlow.gameIsOn)
     const dispatch = useAppDispatch()
-    const {playerCards,botCards,handleDragEnd} = useCard()
+    const {playerCards,botCards,handleDragEnd,cardsLeft} = useCard()
     const cardsToMap = botCards.slice(0,4)
     const plus = botCards.length > 4 ? <i className='bx bx-plus text-5xl text-white'></i> : null 
     const [win,setWin] = useState(false)
@@ -23,6 +23,17 @@ export default function GameField() {
     const modalOpen = useAppSelector(state=>state.gameFlow.modalOpen)
 
     useEffect(()=>{
+        if(cardsLeft.length===0){
+            if(playerCards.length > botCards.length){
+                setLose(true)
+                setFirstGame(true)
+                dispatch(toggleGame())
+            }else{
+                setWin(true)
+                setFirstGame(true)
+                dispatch(toggleGame())
+            }
+        }
         if(playerCards.length === 0){
             setWin(true)
             setFirstGame(true)
@@ -33,7 +44,8 @@ export default function GameField() {
             setFirstGame(true)
             dispatch(toggleGame())
         }
-    },[playerCards.length,botCards.length,dispatch])
+    },[playerCards.length,botCards.length,dispatch,cardsLeft.length])
+
 
 
     const startTheGame = () => {
