@@ -8,7 +8,7 @@ import GameBackground from "@/components/backgrounds/gameBackground";
 export default function page() {
     return (
         <GameBackground>
-            <div className="flex flex-col justify-around items-center h-full z-10">    
+            <div className="flex flex-col justify-around items-center h-full z-10 overflow-hidden">    
                 <Provider store={store}>
                         <SettingsButton/>
                         <GameField/>

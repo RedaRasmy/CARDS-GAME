@@ -81,7 +81,6 @@ export default function GameField() {
                         {cardsToMap.map((e:number) => <div className="" key={e}><CardBack/></div>)}
                         {plus}
                     </div>
-                    
                 : <div className="h-[104px]"></div>}
                 {win && <WinOrLoseMessage msg="YOU WIN" isVisible={isVisible}/> }
                 {lose && <WinOrLoseMessage msg="YOU LOSE" isVisible={isVisible}/>}
@@ -94,7 +93,9 @@ export default function GameField() {
                             {playerCards.length} card{playerCards.length>1 && "s"}
                         </h1>}
                     </div>
-                    {playerCards.length > 0 ? <CardsGroup cardsIds={playerCards} /> : <div className="h-[104px]"></div>}
+                    <div className="">
+                        {playerCards.length > 0 ? <CardsGroup cardsIds={playerCards} /> : <div className="h-[104px]"></div>}
+                    </div>
                 </div>
                 
             </DndContext>

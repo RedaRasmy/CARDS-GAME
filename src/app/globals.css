@@ -11,7 +11,7 @@
 
 body {
   height: 100vh;
-  height:100dvh;
+  height:100svh;
   background-color: black;
   /* background-image: url('/images/background.png'); */
   /* color: white; */
@@ -32,6 +32,6 @@ body {
   outline: 2px green solid;
 } */
 
-/* * {
+* {
   outline: 2px green solid;
-} */
+}

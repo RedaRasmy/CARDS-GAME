@@ -7,6 +7,7 @@ import { toggleModal, toggleTurn } from "../redux/slices/gameFlow"
 import { DragEndEvent } from "@dnd-kit/core"
 import requirements, { Requirements } from "../functions/requirements"
 import capitalize from "../functions/capitalize"
+import { useState } from "react"
 
 export default function useCard() {
     const dispatch = useAppDispatch()
@@ -18,6 +19,7 @@ export default function useCard() {
     const requirementsValue = cardsFlow.requirements
     const isSortable = useAppSelector(state=>state.settings.sorting)
     const playerTurn = useAppSelector(state=>state.gameFlow.playerTurn)
+    const [scrollIntoView,setscrollIntoView] = useState(false)
 
     //// FUNCTIONS
     function chooseColor(color:string){
@@ -35,6 +37,7 @@ export default function useCard() {
                 // +3 Card
                 if (card%10 === 7){
                     Add3CardsTo("player")
+                    setscrollIntoView(true)
                 }
                 // Judge Card 
                 else if (card%10 === 8){
@@ -93,6 +96,7 @@ export default function useCard() {
     function playerTakeCard(){
         const randomId = randomIdFrom(cardsLeft) as number
         if (cardsLeft.length>0) {
+            setscrollIntoView(true)
             dispatch(addCard({cardId:randomId,player:'player'}))
             dispatch(takeCard(randomId))
             dispatch(toggleTurn())
@@ -122,6 +126,7 @@ export default function useCard() {
     }
     return {
         // infos
+            scrollIntoView,
             cardsLeft,
             playerCards,
             botCards,
