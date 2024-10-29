@@ -12,7 +12,8 @@
 body {
   height: 100vh;
   height:100dvh;
-  background-image: url('/images/background.png');
+  background-color: black;
+  /* background-image: url('/images/background.png'); */
   /* color: white; */
 }
 
