@@ -15,6 +15,7 @@ const cardsFlow = createSlice({
         playerCards: initialPayerCards ,
         botCards: initialBotCards ,
         cardsLeft: initialCardsLeft,
+        scrollIntoLastCard:false
     },
     reducers:{
         redistribute:(state)=>{
@@ -54,6 +55,7 @@ const cardsFlow = createSlice({
             if (player === 'player'){
                 return {
                     ...state,
+                    scrollIntoLastCard:true,
                     playerCards:[...state.playerCards,cardId]
                 }
             } else {
@@ -69,6 +71,7 @@ const cardsFlow = createSlice({
                 const newCards = state.playerCards.filter(id=>id!==cardId)
                 return {
                     ...state,
+                    scrollIntoLastCard:false,
                     playerCards: newCards
                 }
             }else {

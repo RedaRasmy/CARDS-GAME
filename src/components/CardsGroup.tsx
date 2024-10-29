@@ -3,10 +3,11 @@ import Card from './Card/Card'
 import {horizontalListSortingStrategy, SortableContext} from '@dnd-kit/sortable';
 import { SortableItem } from '@/library/dnd-kit/sortable';
 import Clickable from './settings/Clickable';
-import useCard from '@/library/Hooks/useCard';
+// import useCard from '@/library/Hooks/useCard';
+import { useAppSelector } from '@/library/redux/store';
 
 export default function CardsGroup({cardsIds}:{cardsIds:number[]}) {
-    const {scrollIntoView} = useCard()
+    const scrollIntoLastCard = useAppSelector(state=>state.cardsFlow.scrollIntoLastCard)
     const scrollRef = useRef<HTMLDivElement>(null)
 
     function handleScroll(e:WheelEvent<HTMLDivElement>) {
@@ -18,7 +19,7 @@ export default function CardsGroup({cardsIds}:{cardsIds:number[]}) {
     }
 
     useEffect(()=>{
-        if (scrollIntoView) {
+        if (scrollIntoLastCard) {
             const newLastCard = scrollRef.current?.lastChild as HTMLElement
             newLastCard?.scrollIntoView({
                 behavior:'smooth',
@@ -30,7 +31,7 @@ export default function CardsGroup({cardsIds}:{cardsIds:number[]}) {
         <div 
         ref={scrollRef}
         onWheel={e=>handleScroll(e)}
-        className='flex space-x-1 overflow-hidden '>
+        className='flex space-x-1 overflow-x-scroll '>
             <SortableContext items={cardsIds} strategy={horizontalListSortingStrategy} >
                 {cardsIds.map(id=>
                     <SortableItem key={id} id={id}>
