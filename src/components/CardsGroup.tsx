@@ -17,7 +17,6 @@ export default function CardsGroup({cardsIds}:{cardsIds:number[]}) {
             scrollRef.current.scrollLeft -= 50
         }
     }
-
     useEffect(()=>{
         if (scrollIntoLastCard) {
             const newLastCard = scrollRef.current?.lastChild as HTMLElement
@@ -26,7 +25,6 @@ export default function CardsGroup({cardsIds}:{cardsIds:number[]}) {
             })
         }
     },)
-
     return (
         <div 
         ref={scrollRef}
