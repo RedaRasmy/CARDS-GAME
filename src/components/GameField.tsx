@@ -72,7 +72,7 @@ export default function GameField() {
         <div className="w-full h-full flex flex-col justify-around items-center">
             {modalOpen && <ChooseAColor onClose={()=>dispatch(toggleModal())} />}
             <DndContext
-            collisionDetection={closestCenter} 
+            collisionDetection={closestCenter}
             onDragEnd={handleDragEnd}
             sensors={sensors}
             >
@@ -86,10 +86,10 @@ export default function GameField() {
                 {lose && <WinOrLoseMessage msg="YOU LOSE" isVisible={isVisible}/>}
                 <Board/>
                 <div className="max-w-[90%] sm:max-w-[70%]">
-                    {(win || lose) && <StartButton handleClick={restart}/>}
-                    <div className="justify-end m-4 -mt-4 flex  -mr-1">
+                    <div className="justify-end m-4 -mt-4 flex gap-5 -mr-1">
+                        {(win || lose) && <StartButton handleClick={restart} text="REPLAY"/>}
                         {playerCards.length > 0 && 
-                        <h1 className="bg-red-900  p-1 rounded-md font-extrabold ">
+                        <h1 className="bg-red-900 flex items-center p-1 px-2 rounded-md font-extrabold ">
                             {playerCards.length} card{playerCards.length>1 && "s"}
                         </h1>}
                     </div>
@@ -104,7 +104,7 @@ export default function GameField() {
     return (
         <div>
             {/* {win && <h1 className="text-7xl text-yellow-500">YOU WIN</h1>} */}
-            <StartButton handleClick={startTheGame}/>
+            <StartButton handleClick={startTheGame} text={"PLAY"}/>
         </div>
         )
     

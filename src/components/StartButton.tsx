@@ -1,9 +1,9 @@
-export default function StartButton({handleClick}:{handleClick:()=>void}) {
+export default function StartButton({handleClick,text}:{handleClick:()=>void,text:string}) {
     return (
         <button 
         onClick={handleClick}
-        className="bg-red-900 px-5 py-3 rounded-md">
-            START
+        className=" btn btn-outline btn-secondary ">
+            {text}
         </button>
     )
 }

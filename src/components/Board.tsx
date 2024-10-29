@@ -19,9 +19,9 @@ export default function Board() {
 
 
     return (
-        <div className='sm:w-[clamp(300px,70%,1000px)] w-full sm:h-[40%] h-1/3 sm:border-2
+        <div className='sm:w-[clamp(300px,70%,1000px)] w-full sm:min-h-[40%] min-h-[30%] sm:border-2
         border-white border-opacity-20 bg-gray-900 sm:rounded-[10px]
-        flex justify-between items-center py-4 px-6 border-y-2 text-white flex-wrap
+        flex justify-between items-center py-16 px-6 border-y-2 text-white flex-wrap
         '>
             <div className='sm:block hidden'></div>
 
