@@ -19,7 +19,7 @@ export default function GameBackground({children}:{children:ReactNode}) {
         <motion.div style={{
             backgroundImage,
         }}
-        className="relative grid w-full min-h-screen py-10 bg-gray-950"
+        className="relative grid w-full h-full  py-10 bg-gray-950"
         >
 
             <div className="absolute inset-0 ">
