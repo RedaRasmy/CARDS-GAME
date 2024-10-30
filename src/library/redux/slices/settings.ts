@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-let isTouchDevice
+let isTouchDevice = false
 if (typeof window !== 'undefined') {
     isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 }
