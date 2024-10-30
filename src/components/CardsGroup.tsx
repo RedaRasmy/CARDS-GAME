@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, WheelEvent } from 'react'
+import React, { useEffect, useRef, WheelEvent } from 'react'
 import Card from './Card/Card'
 import {horizontalListSortingStrategy, SortableContext} from '@dnd-kit/sortable';
 import { SortableItem } from '@/library/dnd-kit/sortable';
@@ -6,7 +6,7 @@ import Clickable from './settings/Clickable';
 // import useCard from '@/library/Hooks/useCard';
 import { useAppSelector } from '@/library/redux/store';
 import Draggable from '@/library/dnd-kit/draggable';
-import { DragOverlay, UniqueIdentifier } from '@dnd-kit/core';
+import { DragOverlay } from '@dnd-kit/core';
 
 export default function CardsGroup({cardsIds,activeId}:{cardsIds:number[],activeId:number}) {
     const scrollIntoLastCard = useAppSelector(state=>state.cardsFlow.scrollIntoLastCard)
