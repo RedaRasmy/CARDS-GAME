@@ -95,13 +95,13 @@ export default function GameField() {
                             {plus}
                         </div>
                     : <div className="h-[104px]"></div>}
-                    {win && <WinOrLoseMessage msg="YOU WIN" isVisible={isVisible}/> }
-                    {lose && <WinOrLoseMessage msg="YOU LOSE" isVisible={isVisible}/>}
+
                 </div>
                 <div className="flex justify-center items-center w-full">
                     <Board/>
+                    {win && <WinOrLoseMessage msg="YOU WIN" isVisible={isVisible}/> }
+                    {lose && <WinOrLoseMessage msg="YOU LOSE" isVisible={isVisible}/>}
                 </div>
-
                 <div className="flex flex-col justify-center items-center h-[30%]">
                     <div className="flex w-full justify-center items-center mt-10">
                         {(win || lose) && <StartButton handleClick={restart} text="REPLAY"/>}
