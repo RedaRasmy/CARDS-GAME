@@ -10,6 +10,7 @@ import capitalize from "../functions/capitalize"
 import { useState } from "react"
 
 export default function useCard() {
+    // const gameIsOn = useAppSelector(state=>state.gameFlow.gameIsOn)
     const dispatch = useAppDispatch()
     const cardsFlow = useAppSelector((state)=>state.cardsFlow)
     const currentCardId = cardsFlow.currentCardId
@@ -84,7 +85,11 @@ export default function useCard() {
             else { // if JUDGE card
                 dispatch(removeCard({cardId:id,player:'player'}))
                 dispatch(changeCurrentCard(id))
-                dispatch(toggleModal())
+                if (playerCards.length >1){
+                    dispatch(toggleModal())
+                }else {
+                    dispatch(changeRequirements(requirements(id)))
+                }
             }
         }
     }

@@ -17,7 +17,7 @@ export default function GameField() {
     const dispatch = useAppDispatch()
     const {playerCards,botCards,handleDragEnd,cardsLeft} = useCard()
     const cardsToMap = botCards.slice(0,4)
-    const plus = botCards.length > 4 ? <i className='bx bx-plus text-5xl text-white'></i> : null 
+    const plus = botCards.length > 4 ? <i className='bx bx-plus opacity-50 text-5xl text-white'></i> : null 
     const [win,setWin] = useState(false)
     const [lose,setLose] = useState(false)
     const modalOpen = useAppSelector(state=>state.gameFlow.modalOpen)
