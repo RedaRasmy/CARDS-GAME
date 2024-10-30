@@ -99,7 +99,7 @@ function Home({goToRules,goToStyle}:HomeProps){
             </Option>
             <Option onClick={goToStyle}>Style</Option>
             <div>
-                <SettingsToggle label='Cards Sorting' defaultValue={sorting} onToggle={handleToggleSort} />
+                {!isTouchDevice &&<SettingsToggle label='Cards Sorting' defaultValue={sorting} onToggle={handleToggleSort} />}
                 {!isTouchDevice && <SettingsToggle label='Cards Dragging' defaultValue={dragging} onToggle={handleToggleDrag} />}
                 {!isTouchDevice &&<SettingsToggle label='Cards Clicking' defaultValue={clicking} onToggle={handleToggleClick} />}
                 <SettingsToggle label='Always Show Requirements' defaultValue={alwaysShowRequirements} onToggle={handleReq} />

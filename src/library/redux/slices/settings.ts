@@ -5,7 +5,7 @@ const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
 const settings = createSlice({
     name:'settings',
     initialState:{
-        sorting:true,
+        sorting:!isTouchDevice,
         dragging:!isTouchDevice,
         clicking:true,
         alwaysShowRequirements:true,
