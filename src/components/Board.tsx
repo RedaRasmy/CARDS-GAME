@@ -53,3 +53,5 @@ export default function Board() {
         </div>
     )
 }
+
+// function CardsIndicator
