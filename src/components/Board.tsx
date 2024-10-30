@@ -6,7 +6,9 @@ import useCard from '@/library/Hooks/useCard'
 import Droppable from '@/library/dnd-kit/droppable'
 
 export default function Board() {
-    const {cardsLeft,currentCardId,requirementsValue} = useCard()
+    const {cardsLeft,currentCardId,requirementsValue,playerCards,botCards} = useCard()
+    const pCards = playerCards.length
+    const bCards = botCards.length
     const showReqSetting = useAppSelector(state=>state.settings.alwaysShowRequirements)
     const showReq = showReqSetting || (currentCardId % 10 === 8) // only if is a judge card
 
@@ -18,12 +20,12 @@ export default function Board() {
     // }
 
 
-    return (
-        <div className='sm:w-[clamp(300px,70%,1000px)] w-full sm:min-h-[40%] min-h-[30%] sm:border-2
-        border-white border-opacity-20 bg-gray-900 sm:rounded-[10px]
-        flex justify-between items-center py-16 px-6 border-y-2 text-white flex-wrap
+    return ( // create board container , ...
+        <div className='board sm:w-[clamp(300px,70%,1000px)] w-full sm:min-h-[40%] min-h-[30%]
+        sm:border-2 border-white border-opacity-10 sm:rounded-[10px] 
+        flex justify-between items-center  px-6 border-y-2 text-white flex-wrap
         '>
-            <div className='sm:block hidden'></div>
+            <div className='sm:block hidden'/>
 
             <div 
             className='scale-[1.8] ml-10 flex flex-col justify-center items-center'>
@@ -35,11 +37,18 @@ export default function Board() {
                 }
             </div>
             
-            <div className=' flex flex-col items-center mt-2'>
-                <div className='cursor-pointer'>
-                    <CardBack/>
+            <div className=' flex flex-col items-center mt-2 justify-between py-2 h-full'>
+                <div className='h-[50px]'/>
+                <div className='flex flex-col items-center'>
+                    <div className='cursor-pointer'>
+                        <CardBack/>
+                    </div>
+                    <p className='opacity-50 mt-1' title='Cards left'>&lt; <span>{cardsLeftNumber}</span> &gt;</p>
                 </div>
-                <p className='opacity-50 mt-1' title='Cards left'>&lt; <span>{cardsLeftNumber}</span> &gt;</p>
+                <div className='flex justify-end flex-col h-[50px] opacity-50 py-[5px]'>
+                    <p>bot : {bCards} card{bCards > 1 && 's'}</p>
+                    <p>player : {pCards} card{pCards > 1 && 's'}</p>
+                </div>
             </div>
         </div>
     )

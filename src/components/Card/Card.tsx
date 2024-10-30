@@ -17,8 +17,9 @@ export default function Card({id}:{id:number}) {
 
     return (
         <div
-        className={ `${backgroundColor} p-[2px] w-[72px] h-[104px] rounded-[4px] flex justify-center items-center flex-col 
-        shadow-md shadow-slate-800 border-[3px] border-black border-opacity-15 shrink-0
+        className={ `${backgroundColor}  p-[2px] w-[72px] h-[104px] 
+        rounded-[4px] flex justify-center items-center flex-col 
+        shadow-slate-800 border-[3px] border-black border-opacity-15 shrink-0
         `}>
             {
                 number ?

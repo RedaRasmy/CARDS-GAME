@@ -36,3 +36,48 @@ html ,body {
 /* * {
   outline: 2px green solid;
 } */
+
+.board {
+  /* background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); */
+  background: transparent;
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(10px);
+  /* position: relative; */
+}
+
+.my-card-border{
+  position: relative;
+}
+@property --angle{
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.my-card-border::after,.my-card-border::before{
+  content: '';
+  position: absolute;
+  height: 109%;
+  width: 115%;
+  /* background:red; */
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  z-index:-1;
+  padding: 3px;
+  border-radius: 5px;
+  background-image: conic-gradient(from var(--angle),transparent 10%,red);
+  animation: 1s spin linear infinite;
+}
+.my-card-border::before{
+  filter: blur(.5rem);
+  opacity: 0.5;
+}
+@keyframes spin {
+  from{
+    --angle:0deg;
+  }
+  to {
+    --angle : 360deg;
+  }
+}
+/* some colors : #DD335C,#13FFAA,#CE84CF,#1E67C6 */
