@@ -90,7 +90,11 @@ function Home({goToRules,goToStyle}:HomeProps){
     const handleIndicators =()=>{
         dispatch(toggleIndicators())
     }
-    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+    let isTouchDevice
+    if (typeof window !== 'undefined') {
+        isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+    }
+    
     return (
         <div className='flex flex-col justify-center items-center gap-2 p-4 '>
             <Option 
