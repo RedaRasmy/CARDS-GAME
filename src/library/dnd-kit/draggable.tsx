@@ -14,7 +14,7 @@ export default function Draggable({children,id}:{children:ReactNode,id:number}) 
     } : undefined;
     
     return (
-        <div className='touch-manipulation' ref={setNodeRef} style={style} {...listeners} {...attributes} >
+        <div className='' ref={setNodeRef} style={style} {...listeners} {...attributes} >
             {children}
         </div>
 
