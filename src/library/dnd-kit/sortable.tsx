@@ -21,7 +21,7 @@ export function SortableItem({children,id}:sortableProps) {
         transition
         // 
     } = useSortable({
-        id
+        id:id,
         // disabled:!isSortable
     })
     // const position = isDragging? 'absolute':undefined

@@ -39,7 +39,7 @@ export default function CardsGroup({cardsIds,activeId}:{cardsIds:number[],active
                     <>
                         <Draggable key={id} id={id}>
                             <SortableItem  id={id} >
-                                <Clickable id={id} key={id}>
+                                <Clickable id={id} >
                                     <Card id={id} />
                                 </Clickable>
                             </SortableItem>

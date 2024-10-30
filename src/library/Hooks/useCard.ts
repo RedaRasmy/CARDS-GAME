@@ -96,12 +96,10 @@ export default function useCard() {
 
     function Add3CardsTo(name:('player'|'bot')){
         const cardsToAdd = randomIdFrom(cardsLeft,3) as number[]
-        dispatch(takeCard(cardsToAdd[0]))
-        dispatch(addCard({cardId:cardsToAdd[0],player:name}))
-        dispatch(takeCard(cardsToAdd[1]))
-        dispatch(addCard({cardId:cardsToAdd[1],player:name}))
-        dispatch(takeCard(cardsToAdd[2]))
-        dispatch(addCard({cardId:cardsToAdd[2],player:name}))
+        for (let i=0 ; i<3 ; i++) {
+            dispatch(takeCard(cardsToAdd[i]))
+            dispatch(addCard({cardId:cardsToAdd[i],player:name}))
+        }
     }
     
     function playerTakeCard(){

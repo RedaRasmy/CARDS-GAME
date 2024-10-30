@@ -116,7 +116,6 @@ export default function GameField() {
                             {plus}
                         </div>
                     : <div className="h-[104px]"></div>}
-
                 </div>
                 <div className="flex justify-center items-center w-full">
                     <Board/>
