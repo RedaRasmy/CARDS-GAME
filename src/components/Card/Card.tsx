@@ -1,12 +1,17 @@
 import { PowerType } from "@/library/types";
 import { cards } from "../../../public/cards";
+import useCard from "@/library/Hooks/useCard";
 
 
 
 
 export default function Card({id}:{id:number}) {
+    const {goodCards} = useCard()
     const {number,power,color} = cards[id]
+    
 
+    const style = goodCards.includes(id) ? 'my-card-border' : undefined
+    
     const colorClasses: { [key: string]: string } = {
         red: 'bg-red-900',
         blue: 'bg-blue-900',
@@ -17,7 +22,7 @@ export default function Card({id}:{id:number}) {
 
     return (
         <div
-        className={ `${backgroundColor}  p-[2px] w-[72px] h-[104px] 
+        className={ `${backgroundColor} ${style} p-[2px] w-[72px] h-[104px] 
         rounded-[4px] flex justify-center items-center flex-col 
         shadow-slate-800 border-[3px] border-black border-opacity-15 shrink-0
         `}>

@@ -90,7 +90,7 @@ export default function GameField() {
             >
                 {(botCards.length > 0) ? 
                     <div className="flex space-x-1 items-center pointer-events-none">
-                        {cardsToMap.map((e:number) => <div className="" key={e}><CardBack/></div>)}
+                        {cardsToMap.map((e:number) => <div className="" key={e}><CardBack toTake={false}/></div>)}
                         {plus}
                     </div>
                 : <div className="h-[104px]"></div>}

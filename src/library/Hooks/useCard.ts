@@ -20,6 +20,12 @@ export default function useCard() {
     const isSortable = useAppSelector(state=>state.settings.sorting)
     const playerTurn = useAppSelector(state=>state.gameFlow.playerTurn)
     const [scrollIntoView,setscrollIntoView] = useState(false)
+    const goodCards:number[] = []
+    for(const card of playerCards) {
+        if (isIdentical(card,requirementsValue)){
+            goodCards.push(card)
+        }
+    }
 
     //// FUNCTIONS
     function chooseColor(color:string){
@@ -133,6 +139,7 @@ export default function useCard() {
             currentCardId,
             requirementsValue,
             playerTurn,
+            goodCards,
         // functions
             playerTakeCard,
             playWithClick,
