@@ -1,15 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-let isTouchDevice = false
-if (typeof window !== 'undefined') {
-    isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-}
+// let isTouchDevice = false
+// if (typeof window !== 'undefined') {
+//     isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+// }
 
 const settings = createSlice({
     name:'settings',
     initialState:{
-        sorting:!isTouchDevice,
-        dragging:!isTouchDevice,
+        sorting:true,
+        dragging:true,
         clicking:true,
         alwaysShowRequirements:true,
         indicators:true,

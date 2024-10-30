@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Option from '../primary/Option'
 import Rules from './Rules'
 import Style from './Style'
@@ -90,10 +90,12 @@ function Home({goToRules,goToStyle}:HomeProps){
     const handleIndicators =()=>{
         dispatch(toggleIndicators())
     }
-    let isTouchDevice
-    if (typeof window !== 'undefined') {
-        isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
-    }
+    const [isTouchDevice,setIsTouchDevice] = useState(false) 
+    useEffect(()=>{
+        if (typeof window !== 'undefined') {
+            setIsTouchDevice(window.matchMedia("(pointer: coarse)").matches)
+        }
+    },[])
     
     return (
         <div className='flex flex-col justify-center items-center gap-2 p-4 '>

@@ -4,9 +4,9 @@ import { Provider } from "react-redux";
 import { store } from "@/library/redux/store";
 import GameField from "@/components/GameField";
 import GameBackground from "@/components/backgrounds/gameBackground";
-// import { DndContext } from "@dnd-kit/core";
 
 export default function page() {
+
     return (
         // <DndContext>
             <GameBackground>

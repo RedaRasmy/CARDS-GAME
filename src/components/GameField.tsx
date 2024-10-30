@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import ChooseAColor from "./ChooseAColor";
 import { redistribute } from "@/library/redux/slices/cardsFlow";
 import { toggleGame, toggleModal } from "@/library/redux/slices/gameFlow";
+import { toggleDragging, toggleSorting } from "@/library/redux/slices/settings";
 
 
 export default function GameField() {
@@ -22,6 +23,16 @@ export default function GameField() {
     const [lose,setLose] = useState(false)
     const modalOpen = useAppSelector(state=>state.gameFlow.modalOpen)
 
+    // const dispatch = useAppDispatch()
+    useEffect(()=>{
+        if(typeof window !== 'undefined'){
+            const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+            if (isTouchDevice){
+                dispatch(toggleDragging())
+                dispatch(toggleSorting())
+            }
+        }
+    },[])
     useEffect(()=>{
         if(cardsLeft.length===0){
             if(playerCards.length > botCards.length){
