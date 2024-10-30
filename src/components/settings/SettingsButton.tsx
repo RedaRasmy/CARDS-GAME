@@ -50,7 +50,7 @@ export default function SettingsButton() {
                         </button>
                     </div>
                     {/* main content */}
-                    <div className='border w-full flex-1  p-2'>
+                    <div className=' w-full flex-1 p-2 max-h-[200px] overflow-y-scroll scrollbar-hide'>
                         {['SETTINGS','RULES','STYLE'].map((e,i)=>(
                             status === e &&
                             [
@@ -91,7 +91,7 @@ function Home({goToRules,goToStyle}:HomeProps){
         dispatch(toggleIndicators())
     }
     return (
-        <div className='flex flex-col justify-center items-center gap-2 p-4'>
+        <div className='flex flex-col justify-center items-center gap-2 p-4 '>
             <Option 
             onClick={goToRules}>
                 Rules
