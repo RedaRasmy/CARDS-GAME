@@ -1,7 +1,7 @@
 import  {ReactNode } from 'react';
 import {useDroppable} from '@dnd-kit/core';
 import isIdentical from '../functions/isIdentical';
-import requirements from '../functions/requirements';
+// import requirements from '../functions/requirements';
 import useCard from '../Hooks/useCard';
 import { useAppSelector } from '../redux/store';
 
