@@ -127,7 +127,7 @@ export default function GameField() {
                     <div className="flex w-full justify-center items-center mt-10">
                         {(win || lose) && <StartButton handleClick={restart} text="REPLAY"/>}
                     </div>
-                    <div className="max-w-[100%] sm:max-w-[70%] ">
+                    <div className="max-w-[90%] sm:max-w-[70%] ">
                         {playerCards.length > 0 ? <CardsGroup activeId={activeId as number} cardsIds={playerCards} /> : <div className="h-[104px]"></div>}
                     </div>
                 </div>

@@ -21,7 +21,7 @@ export default function CardBack({toTake=true}) {
         onClick={handleTake}
         className={`${style}  bg-card-back bg-cover bg-center box-border w-[72px] h-[104px]
         rounded-[4px] border-[3px] 
-        border-black border-opacity-15
+        border-black border-opacity-15 touch-manipulation
         `}>
         </div>
     )

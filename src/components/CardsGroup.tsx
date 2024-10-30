@@ -33,7 +33,7 @@ export default function CardsGroup({cardsIds,activeId}:{cardsIds:number[],active
             <div 
             ref={scrollRef}
             onWheel={e=>handleScroll(e)}
-            className='flex gap-1 p-5 space-x-1 overflow-x-scroll scrollbar-hide'>
+            className='flex   gap-0 p-5 space-x-1 overflow-x-scroll scrollbar-hide'>
                 <SortableContext items={cardsIds} strategy={horizontalListSortingStrategy} >
                     {cardsIds.map(id=>
                     <>
