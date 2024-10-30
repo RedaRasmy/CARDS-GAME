@@ -7,8 +7,15 @@ const settings = createSlice({
         dragging:false,
         clicking:true,
         alwaysShowRequirements:true,
+        indicators:true,
     },
     reducers:{
+        toggleIndicators:(state)=>{
+            return {
+                ...state,
+                indicators:!state.indicators
+            }
+        },
         toggleRequirements:(state)=>{
             return {
                 ...state,
@@ -42,5 +49,6 @@ export const  {
     toggleSorting,
     toggleDragging,
     toggleClick,
-    toggleRequirements
+    toggleRequirements,
+    toggleIndicators
 } = settings.actions

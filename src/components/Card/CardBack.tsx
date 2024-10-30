@@ -3,6 +3,7 @@ import { useAppSelector } from "@/library/redux/store"
 
 export default function CardBack({toTake=true}) {
     const {gameIsOn,playerTurn,modalOpen} = useAppSelector(state=>state.gameFlow)
+    const indicators = useAppSelector(state=>state.settings.indicators)
     const {playerTakeCard,BotPlay,requirementsValue,goodCards} = useCard()
     // const modalOpen = useAppSelector(state=>state.gameFlow.modalOpen)
     const handleTake = () =>{
@@ -14,7 +15,7 @@ export default function CardBack({toTake=true}) {
             }
         }
     }
-    const style = (goodCards.length === 0 && toTake && gameIsOn && !modalOpen) && 'my-card-border'
+    const style = (goodCards.length === 0 && toTake && gameIsOn && !modalOpen && indicators) && 'my-card-border'
     return (
         <div
         onClick={handleTake}

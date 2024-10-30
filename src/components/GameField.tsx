@@ -81,27 +81,32 @@ export default function GameField() {
     }, [lose,win]);
     
     if (gameIsOn || firstGame) return (
-        <div className="w-full h-full flex flex-col justify-around items-center">
+        <div className="w-full h-full grid  grid-cols-1  grid-rows-3  justify-center items-center">
             {modalOpen && <ChooseAColor onClose={()=>dispatch(toggleModal())} />}
             <DndContext
             collisionDetection={closestCenter}
             onDragEnd={handleDragEnd}
             sensors={sensors}
             >
-                {(botCards.length > 0) ? 
-                    <div className="flex space-x-1 items-center pointer-events-none">
-                        {cardsToMap.map((e:number) => <div className="" key={e}><CardBack toTake={false}/></div>)}
-                        {plus}
-                    </div>
-                : <div className="h-[104px]"></div>}
-                {win && <WinOrLoseMessage msg="YOU WIN" isVisible={isVisible}/> }
-                {lose && <WinOrLoseMessage msg="YOU LOSE" isVisible={isVisible}/>}
-                <Board/>
-                <div className="max-w-[90%] sm:max-w-[70%] ">
-                    <div className="flex w-full justify-center items-center h-[50px] mb-6 -mt-2">
+                <div className="flex justify-center items-center w-full">
+                    {(botCards.length > 0) ? 
+                        <div className="flex space-x-1 items-center pointer-events-none">
+                            {cardsToMap.map((e:number) => <div className="" key={e}><CardBack toTake={false}/></div>)}
+                            {plus}
+                        </div>
+                    : <div className="h-[104px]"></div>}
+                    {win && <WinOrLoseMessage msg="YOU WIN" isVisible={isVisible}/> }
+                    {lose && <WinOrLoseMessage msg="YOU LOSE" isVisible={isVisible}/>}
+                </div>
+                <div className="flex justify-center items-center w-full">
+                    <Board/>
+                </div>
+
+                <div className="flex flex-col justify-center items-center h-[30%]">
+                    <div className="flex w-full justify-center items-center mt-10">
                         {(win || lose) && <StartButton handleClick={restart} text="REPLAY"/>}
                     </div>
-                    <div className="">
+                    <div className="max-w-[90%] sm:max-w-[70%] ">
                         {playerCards.length > 0 ? <CardsGroup cardsIds={playerCards} /> : <div className="h-[104px]"></div>}
                     </div>
                 </div>

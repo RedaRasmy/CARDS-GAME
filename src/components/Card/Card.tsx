@@ -1,17 +1,19 @@
 import { PowerType } from "@/library/types";
 import { cards } from "../../../public/cards";
 import useCard from "@/library/Hooks/useCard";
+import { useAppSelector } from "@/library/redux/store";
 
 
 
 
 export default function Card({id}:{id:number}) {
     const {goodCards} = useCard()
+    const indicators = useAppSelector(state=>state.settings.indicators)
     const {number,power,color} = cards[id]
     
 
-    const style = goodCards.includes(id) ? 'my-card-border' : undefined
-    
+    const style = goodCards.includes(id) && indicators ? 'my-card-border' : undefined
+
     const colorClasses: { [key: string]: string } = {
         red: 'bg-red-900',
         blue: 'bg-blue-900',

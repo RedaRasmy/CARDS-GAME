@@ -4,7 +4,7 @@ import Rules from './Rules'
 import Style from './Style'
 import SettingsToggle from './SettingsToggle'
 import { useAppDispatch, useAppSelector} from '@/library/redux/store'
-import { toggleClick, toggleDragging, toggleRequirements, toggleSorting } from '@/library/redux/slices/settings'
+import { toggleClick, toggleDragging, toggleIndicators, toggleRequirements, toggleSorting } from '@/library/redux/slices/settings'
 
 export default function SettingsButton() {
     const dialogRef = useRef<HTMLDialogElement>(null)
@@ -74,7 +74,7 @@ type HomeProps = {
 }
 function Home({goToRules,goToStyle}:HomeProps){
     const dispatch = useAppDispatch()
-    const {sorting,dragging,clicking,alwaysShowRequirements} = useAppSelector(state=>state.settings)
+    const {sorting,dragging,clicking,alwaysShowRequirements,indicators} = useAppSelector(state=>state.settings)
     const handleToggleSort =()=>{
         dispatch(toggleSorting())
     }
@@ -86,6 +86,9 @@ function Home({goToRules,goToStyle}:HomeProps){
     }
     const handleReq =()=>{
         dispatch(toggleRequirements())
+    }
+    const handleIndicators =()=>{
+        dispatch(toggleIndicators())
     }
     return (
         <div className='flex flex-col justify-center items-center gap-2 p-4'>
@@ -99,6 +102,7 @@ function Home({goToRules,goToStyle}:HomeProps){
                 <SettingsToggle label='Cards Dragging' defaultValue={dragging} onToggle={handleToggleDrag} />
                 <SettingsToggle label='Cards Clicking' defaultValue={clicking} onToggle={handleToggleClick} />
                 <SettingsToggle label='Always Show Requirements' defaultValue={alwaysShowRequirements} onToggle={handleReq} />
+                <SettingsToggle label='Indicators' defaultValue={indicators} onToggle={handleIndicators} />
             </div>
             
         </div>
