@@ -9,7 +9,8 @@
   font-family: "Nunito", sans-serif;
 }
 
-body {
+
+html ,body {
   height: 100vh;
   height:100dvh;
   background-color: black;
