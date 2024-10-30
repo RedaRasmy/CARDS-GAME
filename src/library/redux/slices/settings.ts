@@ -1,10 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
+
 const settings = createSlice({
     name:'settings',
     initialState:{
-        sorting:false,
-        dragging:false,
+        sorting:true,
+        dragging:!isTouchDevice,
         clicking:true,
         alwaysShowRequirements:true,
         indicators:true,
@@ -29,12 +31,26 @@ const settings = createSlice({
             }
         },
         toggleDragging:(state)=>{
+            if (state.clicking === false){
+                return {
+                    ...state,
+                    dragging:!state.dragging,
+                    clicking:true
+                }
+            }
             return {
                 ...state,
                 dragging:!state.dragging
             }
         },
         toggleClick:(state)=>{
+            if (state.dragging === false){
+                return {
+                    ...state,
+                    clicking:!state.clicking,
+                    dragging:true
+                }
+            }
             return {
                 ...state,
                 clicking:!state.clicking

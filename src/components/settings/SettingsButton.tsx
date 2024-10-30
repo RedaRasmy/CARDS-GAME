@@ -90,6 +90,7 @@ function Home({goToRules,goToStyle}:HomeProps){
     const handleIndicators =()=>{
         dispatch(toggleIndicators())
     }
+    const isTouchDevice = window.matchMedia("(pointer: coarse)").matches;
     return (
         <div className='flex flex-col justify-center items-center gap-2 p-4 '>
             <Option 
@@ -99,8 +100,8 @@ function Home({goToRules,goToStyle}:HomeProps){
             <Option onClick={goToStyle}>Style</Option>
             <div>
                 <SettingsToggle label='Cards Sorting' defaultValue={sorting} onToggle={handleToggleSort} />
-                <SettingsToggle label='Cards Dragging' defaultValue={dragging} onToggle={handleToggleDrag} />
-                <SettingsToggle label='Cards Clicking' defaultValue={clicking} onToggle={handleToggleClick} />
+                {!isTouchDevice && <SettingsToggle label='Cards Dragging' defaultValue={dragging} onToggle={handleToggleDrag} />}
+                {!isTouchDevice &&<SettingsToggle label='Cards Clicking' defaultValue={clicking} onToggle={handleToggleClick} />}
                 <SettingsToggle label='Always Show Requirements' defaultValue={alwaysShowRequirements} onToggle={handleReq} />
                 <SettingsToggle label='Indicators' defaultValue={indicators} onToggle={handleIndicators} />
             </div>

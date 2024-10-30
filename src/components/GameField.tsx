@@ -1,4 +1,4 @@
-import { closestCenter, DndContext, PointerSensor,useSensor,useSensors  } from "@dnd-kit/core";
+import { closestCenter, DndContext, DragEndEvent, DragStartEvent, PointerSensor,UniqueIdentifier,useSensor,useSensors  } from "@dnd-kit/core";
 import Board from "./Board";
 import CardBack from "./Card/CardBack";
 import CardsGroup from "./CardsGroup";
@@ -79,13 +79,23 @@ export default function GameField() {
         // Clean up the timer when the component unmounts
         return () => clearTimeout(timer);
     }, [lose,win]);
-    
+
+    const [activeId, setActiceId] = useState<UniqueIdentifier|null>(null);
+    function handleDragStart(event:DragStartEvent){
+        setActiceId(event.active.id)
+    }
+    function BeforeHandleDragEnd(event:DragEndEvent){
+        handleDragEnd(event)
+        setActiceId(null)
+
+    }
     if (gameIsOn || firstGame) return (
         <div className="w-full h-full grid  grid-cols-1  grid-rows-3  justify-center items-center">
             {modalOpen && <ChooseAColor onClose={()=>dispatch(toggleModal())} />}
             <DndContext
             collisionDetection={closestCenter}
-            onDragEnd={handleDragEnd}
+            onDragStart={handleDragStart}
+            onDragEnd={BeforeHandleDragEnd}
             sensors={sensors}
             >
                 <div className="flex justify-center items-center w-full">
@@ -102,12 +112,12 @@ export default function GameField() {
                     {win && <WinOrLoseMessage msg="YOU WIN" isVisible={isVisible}/> }
                     {lose && <WinOrLoseMessage msg="YOU LOSE" isVisible={isVisible}/>}
                 </div>
-                <div className="flex flex-col justify-center items-center h-[30%]">
+                <div className="flex flex-col justify-center items-center ">
                     <div className="flex w-full justify-center items-center mt-10">
                         {(win || lose) && <StartButton handleClick={restart} text="REPLAY"/>}
                     </div>
                     <div className="max-w-[100%] sm:max-w-[70%] ">
-                        {playerCards.length > 0 ? <CardsGroup cardsIds={playerCards} /> : <div className="h-[104px]"></div>}
+                        {playerCards.length > 0 ? <CardsGroup activeId={activeId as number} cardsIds={playerCards} /> : <div className="h-[104px]"></div>}
                     </div>
                 </div>
                 

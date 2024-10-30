@@ -18,7 +18,7 @@ export default function useCard() {
     const playerCards = cardsFlow.playerCards
     const botCards = cardsFlow.botCards
     const requirementsValue = cardsFlow.requirements
-    const isSortable = useAppSelector(state=>state.settings.sorting)
+    const {sorting,dragging} = useAppSelector(state=>state.settings)
     const playerTurn = useAppSelector(state=>state.gameFlow.playerTurn)
     const [scrollIntoView,setscrollIntoView] = useState(false)
     const goodCards:number[] = []
@@ -121,17 +121,37 @@ export default function useCard() {
         const i1 = getCardIndex(Number(active.id))
         const i2 = getCardIndex(Number(over?.id))
         
-        if (isSortable && (active.id !== over?.id)){
+        if (sorting && (active.id !== over?.id)){
             dispatch(changeCardOrder({index1:i1,index2:i2}))
         }
         // Dropping Logic
-        if (over && (over.id === 'droppable')){
+        if (over && dragging && (over.id === 'droppable')){
             // Test
-            const cardIdToTest = Number(active.id)
-            if(isIdentical(cardIdToTest,requirementsValue)){
-                dispatch(changeCurrentCard(cardIdToTest))
-                dispatch(removeCard({cardId:cardIdToTest,player:'player'}))
-                // BotPlay()
+            const id = Number(active.id)
+            if(isIdentical(id,requirementsValue)){
+                if (id % 10 !== 8) {
+                    dispatch(changeCurrentCard(id))
+                    console.log('requirements :',requirementsValue)
+                    dispatch(changeRequirements(requirements(id)))
+                    dispatch(removeCard({cardId:id,player:'player'}))
+                    // +3 Card
+                    if (id % 10 === 7){
+                        Add3CardsTo("bot")
+                    }
+                    if (id % 10 === 9) { // if BLOCK card (dont toggle turn)
+                        return;
+                    }
+                    dispatch(toggleTurn())
+                }
+                else { // if JUDGE card
+                    dispatch(removeCard({cardId:id,player:'player'}))
+                    dispatch(changeCurrentCard(id))
+                    if (playerCards.length >1){
+                        dispatch(toggleModal())
+                    }else {
+                        dispatch(changeRequirements(requirements(id)))
+                    }
+                }
             }
         }
     }
