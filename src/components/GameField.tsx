@@ -8,8 +8,9 @@ import StartButton from "./StartButton";
 import { useEffect, useState } from "react";
 import ChooseAColor from "./ChooseAColor";
 import { redistribute } from "@/library/redux/slices/cardsFlow";
-import { toggleGame, toggleModal } from "@/library/redux/slices/gameFlow";
+import { clearHistory, toggleGame, toggleModal } from "@/library/redux/slices/gameFlow";
 import { toggleDragging, toggleSorting } from "@/library/redux/slices/settings";
+import PreGame from "./PreGame";
 
 
 export default function GameField() {
@@ -58,10 +59,6 @@ export default function GameField() {
     },[playerCards.length,botCards.length,dispatch,cardsLeft.length])
 
 
-
-    const startTheGame = () => {
-        dispatch(toggleGame())
-    }
     const [isVisible, setIsVisible] = useState(true);
 
     const restart = ()=>{
@@ -102,9 +99,6 @@ export default function GameField() {
     }
     if (gameIsOn || firstGame) return (
         <div className="w-full h-full grid  grid-cols-1  grid-rows-3  justify-center items-center">
-            <div className="mt-10 z-50 absolute left-[50%] translate-x-[-50%] translate-y-[-50%] ">
-                {(win || lose) && <StartButton handleClick={restart} text="REPLAY"/>}
-            </div>
             {modalOpen && <ChooseAColor onClose={()=>dispatch(toggleModal())} />}
             <DndContext
             collisionDetection={closestCenter}
@@ -127,9 +121,9 @@ export default function GameField() {
                     {lose && <WinOrLoseMessage msg="YOU LOSE" isVisible={isVisible}/>}
                 </div>
                 <div className="flex flex-col justify-center items-center ">
-                    {/* <div className="flex w-full justify-center items-center mt-10 z-50 absolute">
+                    <div className="flex w-[200px] justify-center items-center mt-10 z-50 ">
                         {(win || lose) && <StartButton handleClick={restart} text="REPLAY"/>}
-                    </div> */}
+                    </div>
                     <div className="max-w-[90%] sm:max-w-[70%] ">
                         {playerCards.length > 0 ? <CardsGroup activeId={activeId as number} cardsIds={playerCards} /> : <div className="h-[104px]"></div>}
                     </div>
@@ -139,10 +133,7 @@ export default function GameField() {
         </div>
     )
     return (
-        <div>
-            {/* {win && <h1 className="text-7xl text-yellow-500">YOU WIN</h1>} */}
-            <StartButton handleClick={startTheGame} text={"PLAY"}/>
-        </div>
+        <PreGame/>
         )
     
 }

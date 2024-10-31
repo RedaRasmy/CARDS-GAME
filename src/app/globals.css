@@ -42,12 +42,17 @@ html ,body {
 /* * {
   outline: 2px green solid;
 } */
-
+@media (min-width:640px) {
+  .board {
+    grid-template-columns: 1fr 160px 1fr;
+  }
+}
 .board {
-  /* background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0)); */
+  grid-template-columns: 1fr 1fr;
+  /* background: linear-gradient(135deg, rgba(4, 50, 22, 0.159), rgba(69, 12, 12, 0.392)); */
   background: transparent;
   backdrop-filter: blur(3px);
-  -webkit-backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(3px);
   /* position: relative; */
 }
 

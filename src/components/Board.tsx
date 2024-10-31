@@ -24,14 +24,16 @@ export default function Board() {
     return ( // create board container , ...
         <div className='board sm:w-[clamp(300px,70%,1000px)] w-full sm:min-h-[40%] min-h-[30%]
         sm:border-2 border-white border-opacity-10 sm:rounded-[10px] 
-        flex justify-between items-center  px-6 border-y-2 text-white flex-wrap
+        justify-between items-center  px-6 border-y-2 text-white flex-wrap
+        grid sm:grid-cols-3 grid-cols-2
         '>
             <div className='sm:block hidden lg:hidden'/>
             <div className='hidden lg:block'>
                 <GameHistory/>
             </div>
+
             <div 
-            className='lg:-ml-32 sm:ml-28 ml-10 scale-[1.8]  flex flex-col justify-center items-center'>
+            className=' scale-[1.8]  flex flex-col justify-center items-center'>
                 {showReq && <p className='font-mono opacity-50 text-[12px]'>{ReqMsg}</p>}
                 {currentCardId !== null &&
                 <Droppable>
