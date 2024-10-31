@@ -67,6 +67,7 @@ export default function GameField() {
         setWin(false)
         setLose(false)
         setIsVisible(true)
+        dispatch(clearHistory())
     }
 
     // Define Sensors 
