@@ -13,8 +13,11 @@ export default function Card({id}:{id:number}) {
     const {number,power,color} = cards[id]
     
 
-    const style = goodCards.includes(id) && indicators && gameIsOn ? 'my-card-border' : undefined
+    const style = (goodCards.includes(id) && indicators && gameIsOn) 
+    ? 'my-card-border' 
+    : undefined
 
+    
     const colorClasses: { [key: string]: string } = {
         red: 'bg-red-900',
         blue: 'bg-blue-900',

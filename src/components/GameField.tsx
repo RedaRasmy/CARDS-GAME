@@ -102,6 +102,9 @@ export default function GameField() {
     }
     if (gameIsOn || firstGame) return (
         <div className="w-full h-full grid  grid-cols-1  grid-rows-3  justify-center items-center">
+            <div className="mt-10 z-50 absolute left-[50%] translate-x-[-50%] translate-y-[-50%] ">
+                {(win || lose) && <StartButton handleClick={restart} text="REPLAY"/>}
+            </div>
             {modalOpen && <ChooseAColor onClose={()=>dispatch(toggleModal())} />}
             <DndContext
             collisionDetection={closestCenter}
@@ -109,6 +112,7 @@ export default function GameField() {
             onDragEnd={BeforeHandleDragEnd}
             sensors={sensors}
             >
+
                 <div className="flex justify-center items-center w-full">
                     {(botCards.length > 0) ? 
                         <div className="flex space-x-1 items-center pointer-events-none">
@@ -123,9 +127,9 @@ export default function GameField() {
                     {lose && <WinOrLoseMessage msg="YOU LOSE" isVisible={isVisible}/>}
                 </div>
                 <div className="flex flex-col justify-center items-center ">
-                    <div className="flex w-full justify-center items-center mt-10 z-50">
+                    {/* <div className="flex w-full justify-center items-center mt-10 z-50 absolute">
                         {(win || lose) && <StartButton handleClick={restart} text="REPLAY"/>}
-                    </div>
+                    </div> */}
                     <div className="max-w-[90%] sm:max-w-[70%] ">
                         {playerCards.length > 0 ? <CardsGroup activeId={activeId as number} cardsIds={playerCards} /> : <div className="h-[104px]"></div>}
                     </div>
