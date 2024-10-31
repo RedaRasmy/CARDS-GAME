@@ -3,9 +3,9 @@ import { useAppDispatch,useAppSelector } from "../redux/store"
 import randomIdFrom from "../functions/randomIdFrom"
 import isIdentical from "../functions/isIdentical"
 import { addCard, removeCard,changeCurrentCard,takeCard, changeCardOrder, changeRequirements, } from "../redux/slices/cardsFlow"
-import { toggleModal, toggleTurn } from "../redux/slices/gameFlow"
+import { addTurn, toggleModal, toggleTurn } from "../redux/slices/gameFlow"
 import { DragEndEvent } from "@dnd-kit/core"
-import requirements, { Requirements } from "../functions/requirements"
+import requirements from "../functions/requirements"
 import capitalize from "../functions/capitalize"
 import { useState } from "react"
 
@@ -34,40 +34,15 @@ export default function useCard() {
         dispatch(toggleTurn())
         }
     
-    function BotPlay(requ:Requirements){
-        for (const card of botCards){
-            if (isIdentical(card,requ)){
-                dispatch(changeCurrentCard(card))
-                console.log('requirements :',requirementsValue)
-                dispatch(changeRequirements(requirements(card)))
-                dispatch(removeCard({cardId:card,player:'bot'}))
-                // +3 Card
-                if (card%10 === 7){
-                    Add3CardsTo("player")
-                    setscrollIntoView(true)
-                }
-                // Judge Card 
-                else if (card%10 === 8){
-                    // for now Just Random
-                    const randomColor = ['Yellow',"Blue",'Red',"Green"][Math.floor(Math.random()*4)] 
-                    dispatch(changeRequirements([randomColor]))
-                }
-                // skip Card
-                if (card % 10 === 9) {
-                    return true
-                }
-                dispatch(toggleTurn())
-                return;
-            }
-        }
-        const randomId = randomIdFrom(cardsLeft) as number
-        dispatch(takeCard(randomId))
-        dispatch(addCard({cardId:randomId,player:'bot'}))
-        dispatch(toggleTurn())
-    }
 
     function playWithClick(id:number){
         if(isIdentical(id,requirementsValue)){
+            // save turn's data
+            dispatch(addTurn({
+                player: 'player',
+                action: '-Card',
+                cardId: id,
+            }))
             if (id % 10 !== 8) {
                 dispatch(changeCurrentCard(id))
                 console.log('requirements :',requirementsValue)
@@ -109,6 +84,12 @@ export default function useCard() {
             dispatch(addCard({cardId:randomId,player:'player'}))
             dispatch(takeCard(randomId))
             dispatch(toggleTurn())
+            // save turn's data
+            dispatch(addTurn({
+                player: 'player',
+                action: '+Card',
+                cardId: randomId,
+            }))
         }
     }
     const getCardIndex = (id:number) => playerCards.findIndex(cardId=> cardId === id)
@@ -127,6 +108,12 @@ export default function useCard() {
             // Test
             const id = Number(active.id)
             if(isIdentical(id,requirementsValue)){
+                // save turn's data
+                dispatch(addTurn({
+                    player: 'player',
+                    action: '-Card',
+                    cardId: id,
+                }))
                 if (id % 10 !== 8) {
                     dispatch(changeCurrentCard(id))
                     console.log('requirements :',requirementsValue)
@@ -164,9 +151,9 @@ export default function useCard() {
             playerTurn,
             goodCards,
         // functions
+            Add3CardsTo,
             playerTakeCard,
             playWithClick,
-            BotPlay,
             handleDragEnd,
             chooseColor
     }

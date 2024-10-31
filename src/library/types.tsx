@@ -8,3 +8,9 @@ export type CardType ={
     number?: number,
     power?: PowerType 
 }
+
+export type Turn = {
+    player : 'player' | 'bot',
+    action: '-Card' | '+Card'
+    cardId : number ,
+}

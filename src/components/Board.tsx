@@ -4,6 +4,7 @@ import Card from './Card/Card'
 import CardBack from './Card/CardBack'
 import useCard from '@/library/Hooks/useCard'
 import Droppable from '@/library/dnd-kit/droppable'
+import GameHistory from './GameHistory'
 
 export default function Board() {
     const {cardsLeft,currentCardId,requirementsValue,playerCards,botCards} = useCard()
@@ -25,10 +26,12 @@ export default function Board() {
         sm:border-2 border-white border-opacity-10 sm:rounded-[10px] 
         flex justify-between items-center  px-6 border-y-2 text-white flex-wrap
         '>
-            <div className='sm:block hidden'/>
-
+            <div className='sm:block hidden lg:hidden'/>
+            <div className='hidden lg:block'>
+                <GameHistory/>
+            </div>
             <div 
-            className='scale-[1.8] ml-10 flex flex-col justify-center items-center'>
+            className='lg:-ml-32 sm:ml-28 ml-10 scale-[1.8]  flex flex-col justify-center items-center'>
                 {showReq && <p className='font-mono opacity-50 text-[12px]'>{ReqMsg}</p>}
                 {currentCardId !== null &&
                 <Droppable>

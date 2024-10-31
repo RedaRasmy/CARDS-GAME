@@ -1,6 +1,7 @@
 
 
 export type Requirements = (string | number)[]
+
 export default function requirements(id:number) {
     const output:Requirements = []
     // color 

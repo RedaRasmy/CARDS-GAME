@@ -1,17 +1,22 @@
+import useBot from "@/library/Hooks/useBot"
 import useCard from "@/library/Hooks/useCard"
 import { useAppSelector } from "@/library/redux/store"
 
 export default function CardBack({toTake=true}) {
     const {gameIsOn,playerTurn,modalOpen} = useAppSelector(state=>state.gameFlow)
     const indicators = useAppSelector(state=>state.settings.indicators)
-    const {playerTakeCard,BotPlay,requirementsValue,goodCards} = useCard()
+    const {playerTakeCard,requirementsValue,goodCards} = useCard()
+    const {BotPlay} = useBot('easy')
     // const modalOpen = useAppSelector(state=>state.gameFlow.modalOpen)
     const handleTake = () =>{
         // console.log('GAME IS ON: ',gameIsOn)
         if (gameIsOn && !modalOpen ){
             playerTakeCard()
             if (!playerTurn) {
-                BotPlay(requirementsValue)
+                const isBlock = BotPlay(requirementsValue)
+                if (isBlock){
+                    BotPlay([requirementsValue[0]]) // only the color
+                }
             }
         }
     }
