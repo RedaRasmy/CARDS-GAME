@@ -123,7 +123,7 @@ export default function GameField() {
                     {lose && <WinOrLoseMessage msg="YOU LOSE" isVisible={isVisible}/>}
                 </div>
                 <div className="flex flex-col justify-center items-center ">
-                    <div className="flex w-full justify-center items-center mt-10">
+                    <div className="flex w-full justify-center items-center mt-10 z-50">
                         {(win || lose) && <StartButton handleClick={restart} text="REPLAY"/>}
                     </div>
                     <div className="max-w-[90%] sm:max-w-[70%] ">
