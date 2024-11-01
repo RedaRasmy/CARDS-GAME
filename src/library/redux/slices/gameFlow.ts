@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { Turn } from "@/library/types";
-import { Mode } from "@/library/functions/bot";
+import { Difficulty} from "@/library/functions/bot";
 
 const gameFlow = createSlice({
     name:'gameFlow',
@@ -9,7 +9,7 @@ const gameFlow = createSlice({
         playerTurn:true, // if true : player turn , if false : bot turn
         modalOpen:false, // if true the player can choose color (JUDGE)
         turns:[] as Turn[] ,
-        mode: 'easy' as Mode
+        difficulty: 'easy' as Difficulty
     },
     reducers:{
         toggleGame:(state)=>{
@@ -42,10 +42,10 @@ const gameFlow = createSlice({
                 turns:[]
             }
         },
-        changeMode:(state,action:PayloadAction<Mode>)=>{
+        changeDiff:(state,action:PayloadAction<Difficulty>)=>{
             return {
                 ...state,
-                mode:action.payload
+                difficulty:action.payload
             }
         }
     }
@@ -59,5 +59,5 @@ export const {
     toggleTurn,
     addTurn,
     clearHistory,
-    changeMode
+    changeDiff
 } = gameFlow.actions

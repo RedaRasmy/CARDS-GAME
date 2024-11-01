@@ -5,10 +5,10 @@ import { ReactNode } from 'react'
 
 export default function Clickable({children,id}:{children:ReactNode,id:number}) {
     const isClickable = useAppSelector(state=>state.settings.clicking)
-    const {playerTurn,mode} = useAppSelector(state=>state.gameFlow)
+    const {playerTurn,difficulty} = useAppSelector(state=>state.gameFlow)
     const {playWithClick,requirementsValue} = useCard()
     const {modalOpen,gameIsOn} = useAppSelector(state=>state.gameFlow)
-    const {BotPlay} = useBot(mode)
+    const {BotPlay} = useBot(difficulty)
 
     if(!playerTurn) {
         const isBlock = BotPlay(requirementsValue)

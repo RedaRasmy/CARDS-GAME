@@ -1,5 +1,5 @@
 
-import bot, { botJudge, Mode } from "../functions/bot"
+import bot, { botJudge,  Difficulty } from "../functions/bot"
 // import isIdentical from "../functions/isIdentical"
 import randomIdFrom from "../functions/randomIdFrom"
 import requirements, { Requirements } from "../functions/requirements"
@@ -8,9 +8,9 @@ import { addTurn, toggleTurn } from "../redux/slices/gameFlow"
 import { useAppDispatch, useAppSelector } from "../redux/store"
 import useCard from "./useCard"
 
-export default function useBot(mode:Mode) {
+export default function useBot(diff:Difficulty) {
     const dispatch = useAppDispatch()
-    const {Add3CardsTo} = useCard()
+    const {Add3CardsTo,playerCards} = useCard()
     const {
         // requirements:requirementsValue, // to not conflect with requirements() fct
         botCards,
@@ -19,7 +19,7 @@ export default function useBot(mode:Mode) {
 
 
     function BotPlay(requ:Requirements){
-        const card = bot(botCards,requ,mode)
+        const card = bot(botCards,requ,diff,playerCards.length)
         if (card===undefined){
             const randomId = randomIdFrom(cardsLeft) as number
             dispatch(takeCard(randomId))
@@ -48,7 +48,7 @@ export default function useBot(mode:Mode) {
             }
             /// if Judge Card
             else if (card%10 === 8){
-                const color = botJudge(botCards,mode) as string
+                const color = botJudge(botCards,diff) as string
                 dispatch(changeRequirements([color]))
             }
             // skip Card
