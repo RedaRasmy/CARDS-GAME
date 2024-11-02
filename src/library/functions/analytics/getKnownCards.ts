@@ -11,7 +11,7 @@ export default function getKnownCards(turns:Turn[],selfCards:number[],CC:number)
     for (const turn of reversedTurns) {
         if ((turn.player === enemey) && (turn.action === '+Card')){
             return output
-        }else if (turn.cardId !== CC) {
+        }else if (!output.includes(turn.cardId) && (turn.action ==='-Card') ) {
             output.push(turn.cardId)
         }
     }

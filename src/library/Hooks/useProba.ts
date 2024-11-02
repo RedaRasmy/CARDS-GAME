@@ -8,9 +8,9 @@ export default function useProba(CTP:number) {
     const turns = useAppSelector(state=>state.gameFlow.turns)
     const {playerCards,currentCardId,botCards} = useAppSelector(state=>state.cardsFlow)
     const KC = getKnownCards(turns,playerCards,currentCardId)
-    const playProba = Number(playProb(CTP,KC,botCards.length).toFixed(2))*100
-    const numberChangeProba = Number(numberChangingProb(CTP,KC,botCards.length).toFixed(2))*100
-    const colorChangeProba = Number(colorChangingProb(CTP,KC,botCards.length).toFixed(2))*100
+    const playProba = parseFloat(playProb(CTP,KC,botCards.length).toFixed(2))*100
+    const numberChangeProba = parseFloat(numberChangingProb(CTP,KC,botCards.length).toFixed(2))*100
+    const colorChangeProba = parseFloat(colorChangingProb(CTP,KC,botCards.length).toFixed(2))*100
 
     return {
         playProba,

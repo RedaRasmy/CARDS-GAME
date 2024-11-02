@@ -7,7 +7,7 @@ export default function colorChangingProb(CTP:number,KC:number[],ECN:number) {
         card=>((card.power === 'JUDGE') && (card.color === cards[CTP].color))
     )[0].id
     if (!KC.includes(JudgeCardWithCTPcolor)){
-        p1 = ECN/(40-KC.length)
+        p1 = ECN/(40-KC.length)*0.75
     }
     if (cards[CTP].number) {
         const Exception = KC.filter(
