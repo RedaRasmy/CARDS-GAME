@@ -1,4 +1,4 @@
-import isIdentical from "./isIdentical";
+import getGoodCards from "./analytics/getGoodCards";
 import requirements, { Requirements } from "./requirements"
 
 export type Difficulty = 'easy' | 'medium' | 'hard' | 'hacker'
@@ -90,15 +90,7 @@ export default function bot(
 
 // function isCardExist(cards,cardCondition)
 
-function getGoodCards(cards:number[],requ:Requirements) {
-    const output:number[] = []
-    for (const card of cards){
-        if (isIdentical(card,requ)){
-            output.push(card)
-        }
-    }
-    return output
-}
+
 
 export function botJudge(botCards:number[],diff:Difficulty){ // return color
     switch (diff) {

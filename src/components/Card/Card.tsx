@@ -2,6 +2,7 @@ import { PowerType } from "@/library/types";
 import { cards } from "../../../public/cards";
 import useCard from "@/library/Hooks/useCard";
 import { useAppSelector } from "@/library/redux/store";
+import useProba from "@/library/Hooks/useProba";
 
 
 
@@ -14,9 +15,8 @@ export default function Card({id}:{id:number}) {
     
 
     const style = (goodCards.includes(id) && indicators && gameIsOn) 
-    ? 'my-card-border' 
+    ? 'my-card-border'
     : undefined
-
     
     const colorClasses: { [key: string]: string } = {
         red: 'bg-red-900',
@@ -26,8 +26,16 @@ export default function Card({id}:{id:number}) {
     };
     const backgroundColor = colorClasses[color];
 
+    const {playProba,colorChangeProba,numberChangeProba} = useProba(id)
+
+    const title = goodCards.includes(id) 
+    ? `play proba : ${playProba}%\nchange color porba : ${colorChangeProba}%\nchange number porba : ${numberChangeProba}%` 
+    : undefined
+
+
     return (
         <div
+        title={title}
         className={ `${backgroundColor} ${style} p-[2px] w-[72px] h-[104px] 
         rounded-[4px] flex justify-center items-center flex-col 
         shadow-slate-800 border-[3px] border-black border-opacity-15 shrink-0
