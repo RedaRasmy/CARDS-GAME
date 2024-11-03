@@ -87,10 +87,7 @@ export default function bot(
             }
     }
 }
-
 // function isCardExist(cards,cardCondition)
-
-
 
 export function botJudge(botCards:number[],diff:Difficulty){ // return color
     switch (diff) {
@@ -106,7 +103,6 @@ export function botJudge(botCards:number[],diff:Difficulty){ // return color
         case "hacker":
     }
 }
-
 
 export function maxColor(colors:string[]){
     const colorsExist:string[] = []
