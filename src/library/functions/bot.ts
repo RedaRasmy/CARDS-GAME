@@ -61,8 +61,9 @@ export default function bot(
             const JudgeCard = goodCards.filter(card=>card%10 ===8)[0]
             const SkipCard = goodCards.filter(card=>card%10 ===9)[0]
             /// if bot had 2 cards or less
-            if (cards.length<3) {
+            if (checkWin(cards)) {
                 // check the win 
+                
             }
             /// if player has 2 cards or less
             if (PCN<3) {
@@ -133,3 +134,14 @@ export function minColor(colors:string[]){
     const index = counts.findIndex(value=>value===minCount)
     return colorsExist[index]
 }
+
+export function checkWin(botCards:number[]) {
+    let firstCondition = false
+    for (const card of botCards) {
+        if (card%10 === 9) {
+            firstCondition = true
+        }
+    }
+    return firstCondition && botCards.length === 2
+}
+

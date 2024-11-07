@@ -19,9 +19,8 @@ export default function GameBackground({children}:{children:ReactNode}) {
         <motion.div style={{
             backgroundImage,
         }}
-        className="relative grid w-full h-full  py-10 bg-gray-950"
+        className="relative grid w-full h-full  py-10 bg-gray-950 "
         >
-
             <div className="absolute inset-0 ">
             <Canvas>
                 <Stars radius={50} count={2500} factor={4} fade speed={2}/>

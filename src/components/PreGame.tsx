@@ -4,6 +4,7 @@ import React, { ChangeEvent } from 'react'
 import StartButton from './StartButton'
 import { Difficulty} from '@/library/functions/bot'
 
+
 export default function PreGame() {
 
     const dispatch = useAppDispatch()
@@ -17,8 +18,8 @@ export default function PreGame() {
         dispatch(clearHistory())
     }
     return (
-        <div className='rounded-md  flex justify-center flex-col items-center gap-2 w-[100%]
-        max-w-[500px] py-10 border-white  border-opacity-10 '>
+        <div className='rounded-md flex justify-center flex-col items-center gap-2 w-[100%]
+        max-w-[500px] py-10 border-white border-opacity-10 '>
             <select 
             value={difficulty}
             onChange={handleChange}
