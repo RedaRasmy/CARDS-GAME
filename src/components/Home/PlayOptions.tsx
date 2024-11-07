@@ -37,9 +37,9 @@ function HomeStartButton({onClick}:{onClick:()=>void}) {
 
 function OfflineSide() {
     return (
-        <div className='flex flex-col justify-between items-center'>
+        <div className=''>
             <Title title='OFFLINE'/>
-            <div className='flex-1 m-10'>
+            <div className=' m-10'>
                 
             </div>
         </div>
@@ -47,14 +47,17 @@ function OfflineSide() {
 }
 function OnlineSide() {
     return (
-        <div></div>
+        <div>
+            <Title title='ONLINE'/>
+        </div>
     )
 }
 
 function Title({title}:{title:string}){
     return (
         <h1
-        className=''
+        className='font-bold bg-opacity-50 text-white bg-sky-500
+        py-2 px-[15%] rounded-md text-center'
         >{title}</h1>
     )
 }
