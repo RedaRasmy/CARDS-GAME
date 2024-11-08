@@ -8,7 +8,6 @@ import { clearHistory, toggleGame } from '@/library/redux/slices/gameFlow'
 
 
 export default function PlayOptions() {
-
     return (
         <div 
         style={{
@@ -16,13 +15,12 @@ export default function PlayOptions() {
         }}
         className='grid grid-cols-3 h-[200px] w-full'>
             <OfflineSide/>
-            <Median/>
+            <Middle/>
             <OnlineSide/>
         </div>
     )
 }
-
-function Median(){
+function Middle(){
     const dispatch = useAppDispatch()
     function handleStart(){
         dispatch(toggleGame())

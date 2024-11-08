@@ -1,7 +1,7 @@
 // import React, { ReactNode } from 'react'
 
 import { ReactNode } from "react"
-import PlayOptions from "../pre-game/PlayOptions"
+// import PlayOptions from "../pre-game/PlayOptions"
 
 export default function MainMenu() {
     function handlePlay() {
@@ -38,7 +38,7 @@ export default function MainMenu() {
                 {/* <MainMenuButton >ABOUT </MainMenuButton> */}
             </div>
             {/* ndi play modal l pre-game */}
-            <Modal id="playModal"><PlayOptions/></Modal>
+            {/* <Modal id="playModal"><PlayOptions/></Modal> */}
             <Modal id="settingsModal">...</Modal>
             <Modal id="signModal">...</Modal>
         </div>
