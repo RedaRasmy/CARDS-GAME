@@ -10,7 +10,7 @@ import ChooseAColor from "./ChooseAColor";
 import { redistribute } from "@/library/redux/slices/cardsFlow";
 import { clearHistory, toggleGame, toggleModal } from "@/library/redux/slices/gameFlow";
 import { toggleDragging, toggleSorting } from "@/library/redux/slices/settings";
-import PreGame from "./PreGame";
+import PreGame from "./pre-game/PreGame";
 
 
 export default function GameField() {

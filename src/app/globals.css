@@ -23,12 +23,12 @@ html ,body {
   transform: rotateZ(90deg)
 } */
 
-.scrollbar-hide{
+body,.scrollbar-hide{
   /* overflow: auto; */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
 }
-.scrollbar-hide::-webkit-scrollbar {
+body::-webkit-scrollbar,.scrollbar-hide::-webkit-scrollbar {
   height: 0px;
   display: none; /* Chrome, Safari, Edge */
 }
@@ -93,4 +93,6 @@ html ,body {
 }
 /* some colors : #DD335C,#13FFAA,#CE84CF,#1E67C6 */
 
-
+.blueSnake {
+  position: relative;
+}

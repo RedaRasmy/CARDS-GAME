@@ -1,11 +1,12 @@
 // import React, { ReactNode } from 'react'
 
 import { ReactNode } from "react"
-import PlayOptions from "./PlayOptions"
+import PlayOptions from "../pre-game/PlayOptions"
 
 export default function MainMenu() {
     function handlePlay() {
         (document.getElementById('playModal') as HTMLDialogElement).showModal()
+        // change path to /Game
     }
     function handleAccount(){
         // check if already signed in
@@ -36,6 +37,7 @@ export default function MainMenu() {
                 </MainMenuButton>
                 {/* <MainMenuButton >ABOUT </MainMenuButton> */}
             </div>
+            {/* ndi play modal l pre-game */}
             <Modal id="playModal"><PlayOptions/></Modal>
             <Modal id="settingsModal">...</Modal>
             <Modal id="signModal">...</Modal>
@@ -44,13 +46,20 @@ export default function MainMenu() {
 }
 
 
+
+////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 type ModalPorps = {
     id:string,
     children : ReactNode
 }
 function Modal({id,children}:ModalPorps) {
     return (
-        <dialog 
+        <dialog
         id={id} className="modal">
             <div className="modal-box">
                 {children}
