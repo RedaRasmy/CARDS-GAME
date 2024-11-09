@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { store } from "@/library/redux/store";
 import GameField from "@/components/GameField";
 import GameBackground from "@/components/backgrounds/gameBackground";
+import ExitButton from "@/components/ExitButton";
 
 export default function page() {
 
@@ -13,6 +14,7 @@ export default function page() {
                 <div className="flex flex-col justify-around items-center h-full z-10 overflow-hidden">    
                     <Provider store={store}>
                             <SettingsButton/>
+                            {/* <ExitButton/> */}
                             <GameField/>
                     </Provider>
                 </div>

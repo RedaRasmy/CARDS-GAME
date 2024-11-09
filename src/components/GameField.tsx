@@ -107,7 +107,6 @@ export default function GameField() {
             onDragEnd={BeforeHandleDragEnd}
             sensors={sensors}
             >
-
                 <div className="flex justify-center items-center w-full">
                     {(botCards.length > 0) ? 
                         <div className="flex space-x-1 items-center pointer-events-none">

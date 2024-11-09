@@ -1,13 +1,10 @@
-// import React, { ReactNode } from 'react'
 
+
+import Link from "next/link"
 import { ReactNode } from "react"
-// import PlayOptions from "../pre-game/PlayOptions"
+
 
 export default function MainMenu() {
-    function handlePlay() {
-        (document.getElementById('playModal') as HTMLDialogElement).showModal()
-        // change path to /Game
-    }
     function handleAccount(){
         // check if already signed in
 
@@ -24,10 +21,11 @@ export default function MainMenu() {
             <div 
             className='w-[300px] py-8 rounded-lg flex justify-center flex-col items-center gap-3'
             >
-                <MainMenuButton
-                onClick={handlePlay}>
-                    PLAY
-                </MainMenuButton>
+                <Link href={'/Game'}>
+                    <MainMenuButton>
+                        PLAY
+                    </MainMenuButton>
+                </Link>
                 <MainMenuButton 
                 onClick={handleAccount}>
                     ACCOUNT
@@ -37,8 +35,6 @@ export default function MainMenu() {
                 </MainMenuButton>
                 {/* <MainMenuButton >ABOUT </MainMenuButton> */}
             </div>
-            {/* ndi play modal l pre-game */}
-            {/* <Modal id="playModal"><PlayOptions/></Modal> */}
             <Modal id="settingsModal">...</Modal>
             <Modal id="signModal">...</Modal>
         </div>
@@ -72,7 +68,7 @@ function Modal({id,children}:ModalPorps) {
 }
 
 type MainMenuButtonProps = {
-    onClick:()=>void
+    onClick?:()=>void
     children?:ReactNode
 }
 function MainMenuButton({children,onClick}:MainMenuButtonProps) {

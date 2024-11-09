@@ -13,6 +13,7 @@ export default function Board() {
     const pCards = playerCards.length
     const bCards = botCards.length
     const showReqSetting = useAppSelector(state=>state.settings.alwaysShowRequirements)
+    const difficulty = useAppSelector(state=>state.gameFlow.difficulty)
     const showReq = showReqSetting || (currentCardId % 10 === 8) // only if is a judge card
 
     const cardsLeftNumber = cardsLeft.length
@@ -23,37 +24,44 @@ export default function Board() {
     // }
 
 
-    return ( // create board container , ...
-        <BoardContainer>
-            <div className='sm:block hidden lg:hidden'/>
-            <div className='hidden lg:block'>
-                <GameHistory/>
+    return ( 
+        <div className='w-full flex flex-col items-center'>
+            <div className='flex items-center justify-center gap-4 -mb-4 sm:w-[clamp(250px,70%,1000px)] w-[90%]'>
+                <Infos type='player' infos={{name:'player'}}/>
+                <VS/>
+                <Infos type='enemey' infos={{name:`${difficulty} bot`}} />
             </div>
+            <BoardContainer>
+                <div className='sm:block hidden lg:hidden'/>
+                <div className='hidden lg:block'>
+                    <GameHistory/>
+                </div>
 
-            <div 
-            className=' scale-[1.8]  flex flex-col justify-center items-center'>
-                {showReq && <p className='font-mono opacity-50 text-[12px]'>{ReqMsg}</p>}
-                {currentCardId !== null &&
-                <Droppable>
-                    <Card id={currentCardId} ></Card>
-                </Droppable>
-                }
-            </div>
-            
-            <div className=' flex flex-col items-center mt-2 justify-between py-2 h-full'>
-                <div className='h-[50px]'/>
-                <div className='flex flex-col items-center'>
-                    <div className='cursor-pointer'>
-                        <CardBack/>
+                <div 
+                className=' scale-[1.8]  flex flex-col justify-center items-center'>
+                    {showReq && <p className='font-mono opacity-50 text-[12px]'>{ReqMsg}</p>}
+                    {currentCardId !== null &&
+                    <Droppable>
+                        <Card id={currentCardId} ></Card>
+                    </Droppable>
+                    }
+                </div>
+                
+                <div className=' flex flex-col items-center mt-2 justify-between py-2 h-full'>
+                    <div className='h-[50px]'/>
+                    <div className='flex flex-col items-center'>
+                        <div className='cursor-pointer'>
+                            <CardBack/>
+                        </div>
+                        <p className='opacity-50 mt-1' title='Cards left'>&lt; <span>{cardsLeftNumber}</span> &gt;</p>
                     </div>
-                    <p className='opacity-50 mt-1' title='Cards left'>&lt; <span>{cardsLeftNumber}</span> &gt;</p>
+                    <div className='flex justify-end flex-col h-[50px] opacity-50 py-[5px]'>
+                        <p>bot : {bCards} card{bCards > 1 && 's'}</p>
+                        <p>player : {pCards} card{pCards > 1 && 's'}</p>
+                    </div>
                 </div>
-                <div className='flex justify-end flex-col h-[50px] opacity-50 py-[5px]'>
-                    <p>bot : {bCards} card{bCards > 1 && 's'}</p>
-                    <p>player : {pCards} card{pCards > 1 && 's'}</p>
-                </div>
-            </div>
-        </BoardContainer>
+            </BoardContainer>
+        </div>
     )
 }
 
@@ -70,11 +78,6 @@ function BoardContainer({children}:{
         grid sm:grid-cols-3 grid-cols-2
         '>
             {children}
-            {/* <div className='flex items-center'>
-                <Infos type='player' infos={{name:'reda'}}/>
-                <VS/>
-                <Infos type='enemey' infos={{name:'bot'}} />
-            </div> */}
         </div>
     )
 }
@@ -93,13 +96,13 @@ function Infos({type,infos}:{
     }
 }) {
     if (type ==='player') return (
-        <div className='flex -space-x-10 items-center'>
+        <div className='flex -space-x-8 items-center w-full'>
             <Avatar src={infos.src} />
             <NameField name={infos.name} />
         </div>
     )
     return (
-        <div className='flex -space-x-10 items-center'>
+        <div className='flex -space-x-8 items-center w-full'>
         <NameField name={infos.name} />
         <Avatar src={infos.src} />
     </div>
@@ -110,7 +113,7 @@ export function Avatar({src}:{
     src?:string
 }) {
     return (
-        <div className="avatar  rounded-full">
+        <div className="avatar  rounded-full shrink-0">
             <div className=" rounded-full bg-opacity-20  bg-white">
                 <Image alt='' src={src || '/images/default-avatar.png'} width={40}height={40} />
             </div>
@@ -122,8 +125,8 @@ function NameField({name}:{
     name:string
 }) {
     return (
-        <div className='min-w-[100px] px-12 h-[33px] bg-opacity-20  bg-white rounded-md '>
-            <p className='text-[20px] font-bold text-center'>{name}</p>
+        <div className=' w-full px-12 h-[33px] bg-opacity-20  bg-white rounded-md flex justify-center'>
+            <p className='text-[20px] font-bold  text-nowrap'>{name}</p>
         </div>
     )
 }
