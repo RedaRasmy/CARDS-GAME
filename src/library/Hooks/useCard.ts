@@ -76,7 +76,9 @@ export default function useCard() {
             dispatch(addCard({cardId:cardsToAdd[i],player:name}))
         }
     }
-    
+    function handleTakeCard(){
+        dispatch(startTakeCard(true))
+    }
     function playerTakeCard(){
         const randomId = randomIdFrom(cardsLeft) as number
         if (cardsLeft.length>0) {

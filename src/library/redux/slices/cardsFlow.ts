@@ -15,9 +15,17 @@ const cardsFlow = createSlice({
         playerCards: initialPayerCards ,
         botCards: initialBotCards ,
         cardsLeft: initialCardsLeft,
-        scrollIntoLastCard:false
+        scrollIntoLastCard:false,
+        startTaking:false
     },
     reducers:{
+        startTakingCard:(state)=>{
+            return {
+                ...state,
+                startTaking:true
+            }
+        },
+        endTakingCard
         redistribute:(state)=>{
             const {initialCurrentCard,initialPayerCards,initialBotCards,initialCardsLeft} = startTheGame()
             return {
