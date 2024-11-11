@@ -1,9 +1,12 @@
 import Image from 'next/image'
 import React, { InputHTMLAttributes } from 'react'
 
-export default function RegisterForm() {
+export default function RegisterForm({onToggle}:{
+    onToggle:()=>void
+}) {
     return (
         <div className=''>
+            <button onClick={onToggle} >Sign In</button>
             <Input/>
             <ImageInput/>
         </div>

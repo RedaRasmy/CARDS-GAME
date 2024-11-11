@@ -67,7 +67,6 @@ export default function Board() {
 
 
 
-
 function BoardContainer({children}:{
     children:ReactNode
 }) {
