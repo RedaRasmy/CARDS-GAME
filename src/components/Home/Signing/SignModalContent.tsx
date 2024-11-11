@@ -12,7 +12,7 @@ export default function SignModalContent() {
         }
     }
     return (
-        <div className="w-">
+        <div className=" ">
             {status === 'sign-in'
             ? <SignInForm onToggle={handleToggle}/>
             : <RegisterForm onToggle={handleToggle}/>

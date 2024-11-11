@@ -19,7 +19,7 @@ function ImageInput(){
     return (
         <div className="avatar">
             <div className="w-24 rounded-full">
-                <Image alt='' src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                <Image alt='' width={50} height={50} src="" />
             </div>
         </div>
     )

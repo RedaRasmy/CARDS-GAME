@@ -20,7 +20,9 @@ export default function MainMenu() {
     }
     return (
         <div className=''>
-            <dialog ref={signRef}><SignModalContent/></dialog>
+            <dialog 
+            className="w-[clamp(250px,90%,1000px)] rounded-md"
+            ref={signRef}><SignModalContent/></dialog>
             <div 
             className='w-[300px] py-8 rounded-lg flex justify-center flex-col items-center gap-3'
             >

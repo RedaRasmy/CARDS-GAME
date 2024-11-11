@@ -1,6 +1,7 @@
 
 import { useAppDispatch, useAppSelector} from '../store'
-import { toggleGame } from './gameFlow'
+import { redistribute } from './cardsFlow'
+import { clearHistory, toggleGame } from './gameFlow'
 
 export default function useGame() {
     const {gameIsOn} = useAppSelector(state=>state.gameFlow)
@@ -9,6 +10,9 @@ export default function useGame() {
     function quitGame() {
         if (gameIsOn) {
             dispatch(toggleGame())
+            dispatch(clearHistory())
+            dispatch(redistribute())
+
         }
     }
     return {
