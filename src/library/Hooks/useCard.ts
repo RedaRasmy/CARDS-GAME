@@ -140,6 +140,8 @@ export default function useCard() {
             }
         }
     }
+
+
     return {
         // infos
             scrollIntoView,

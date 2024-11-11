@@ -25,7 +25,7 @@ export default function SettingsButton() {
         <>
             <button 
             onClick={open}
-            className='w-12 h-12 rounded-full absolute right-2 top-2 text-center '>
+            className='w-12 h-12 rounded-full text-center '>
                 <i 
                 className='bx bxs-cog text-4xl text-white settings transition-transform hover:rotate-45'/>
             </button>
