@@ -6,7 +6,11 @@ export default function SignInForm({onToggle}:{
 ) {
     return (
         <div className='w-full'>
-            <button className='' onClick={onToggle}>Register</button>
+            <button 
+            className='flex w-full justify-end underline' 
+            onClick={onToggle}>
+                Register
+            </button>
         </div>
     )
 }

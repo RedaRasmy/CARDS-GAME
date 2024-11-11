@@ -12,7 +12,6 @@ export default function useGame() {
             dispatch(toggleGame())
             dispatch(clearHistory())
             dispatch(redistribute())
-
         }
     }
     return {

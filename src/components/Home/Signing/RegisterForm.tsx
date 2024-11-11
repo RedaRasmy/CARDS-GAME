@@ -5,8 +5,12 @@ export default function RegisterForm({onToggle}:{
     onToggle:()=>void
 }) {
     return (
-        <div className=''>
-            <button onClick={onToggle} >Sign In</button>
+        <div className=' '>
+            <button 
+            onClick={onToggle} 
+            className='flex w-full justify-end underline'>
+                Sign In
+            </button>
             <Input/>
             <ImageInput/>
         </div>
