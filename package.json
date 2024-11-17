@@ -21,6 +21,7 @@
     "firebase": "^11.0.1",
     "lucide-react": "^0.454.0",
     "mini-svg-data-uri": "^1.4.4",
+    "motion": "^11.11.17",
     "next": "14.2.15",
     "react": "^18",
     "react-dom": "^18",

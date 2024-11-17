@@ -19,7 +19,7 @@ export default function page() {
                         <SettingsButton/>
                         <ExitButton/>
                     </IconsContainer>
-                        <GameField/>
+                    <GameField/>
                 </Provider>
             </div>
         </GameBackground>

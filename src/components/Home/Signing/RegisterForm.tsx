@@ -42,11 +42,13 @@ export default function RegisterForm({onToggle}:{
         <form 
         onSubmit={handleSubmit}
         className='flex flex-col items-center '>
-            <button 
-            onClick={onToggle} 
-            className='flex w-full justify-end underline opacity-30'>
-                Sign In
-            </button>
+            <div className='w-full flex justify-end'>
+                <button 
+                className=' underline opacity-30 mb-2' 
+                onClick={onToggle}>
+                    Sign In
+                </button>
+            </div>
             <div className='flex items-center flex-col gap-4 w-[clamp(250px,50%,500px)]'>
                 <div className='flex items-center gap-2 w-full -mb-3'>
                     <ImageInput name='avatar' onChange={handleImageChange} img={formValues.avatar}/>

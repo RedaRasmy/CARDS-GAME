@@ -8,6 +8,7 @@ import { DragEndEvent } from "@dnd-kit/core"
 import requirements from "../functions/requirements"
 import capitalize from "../functions/capitalize"
 import { useState } from "react"
+import { startTakingCard } from "../redux/slices/animations"
 
 export default function useCard() {
     // const gameIsOn = useAppSelector(state=>state.gameFlow.gameIsOn)
@@ -33,8 +34,6 @@ export default function useCard() {
         dispatch(changeRequirements([capitalize(color)]))
         dispatch(toggleTurn())
         }
-    
-
     function playWithClick(id:number){
         if(isIdentical(id,requirementsValue)){
             // save turn's data
@@ -82,6 +81,7 @@ export default function useCard() {
     function playerTakeCard(){
         const randomId = randomIdFrom(cardsLeft) as number
         if (cardsLeft.length>0) {
+            // dispatch(startTakingCard())
             setscrollIntoView(true)
             dispatch(addCard({cardId:randomId,player:'player'}))
             dispatch(takeCard(randomId))

@@ -1,6 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { Input } from './RegisterForm'
 
+
 export default function SignInForm({onToggle}:{
     onToggle:()=>void
 }
@@ -23,11 +24,13 @@ export default function SignInForm({onToggle}:{
         <form 
         onSubmit={handleSubmit}
         className='flex flex-col items-center'>
-            <button 
-            className='flex w-full justify-end underline opacity-30 mb-2' 
-            onClick={onToggle}>
-                Register
-            </button>
+            <div className='w-full flex justify-end'>
+                <button 
+                className=' underline opacity-30 mb-2' 
+                onClick={onToggle}>
+                    Register
+                </button>
+            </div>
             <div className='flex items-center flex-col gap-4 w-[clamp(250px,50%,500px)]'>
                 <Input  required type='email' name='email' placeholder='Email' onChange={handleChange} value={formValues.email}/>
                 <Input required type='password' name='password' placeholder='Password' onChange={handleChange} value={formValues.password}/>
