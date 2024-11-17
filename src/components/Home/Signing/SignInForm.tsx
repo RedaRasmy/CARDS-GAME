@@ -24,15 +24,11 @@ export default function SignInForm({onToggle}:{
         onSubmit={handleSubmit}
         className='flex flex-col items-center'>
             <button 
-            className='flex w-full justify-end underline opacity-30' 
+            className='flex w-full justify-end underline opacity-30 mb-2' 
             onClick={onToggle}>
                 Register
             </button>
             <div className='flex items-center flex-col gap-4 w-[clamp(250px,50%,500px)]'>
-                {/* <div className='flex items-center gap-2 w-full -mb-3'>
-                    <ImageInput name='avatar' onChange={handleImageChange} img={formValues.avatar}/>
-                    <Input required name='username' placeholder='Username' onChange={handleChange} value={formValues.username}/>
-                </div> */}
                 <Input  required type='email' name='email' placeholder='Email' onChange={handleChange} value={formValues.email}/>
                 <Input required type='password' name='password' placeholder='Password' onChange={handleChange} value={formValues.password}/>
                 <button className='btn btn-accent btn-outline w-full'>Sign In</button>

@@ -69,12 +69,12 @@ function ImageInput({img,...props}:{img:string|null} & InputHTMLAttributes<HTMLI
     return (
         <label>
             <div className="avatar cursor-pointer ">
-                <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-accent">
+                <div className="w-16 h-16 rounded-full overflow-hidden ">
                     <Image 
                     className='object-cover w-full h-full' 
-                    alt='' 
-                    width={500} 
-                    height={500} 
+                    alt=''
+                    width={500}
+                    height={500}
                     src={img || "/images/default-avatar.png"} />
                 </div>
             </div>
@@ -86,7 +86,7 @@ function ImageInput({img,...props}:{img:string|null} & InputHTMLAttributes<HTMLI
 export function Input(props:InputHTMLAttributes<HTMLInputElement>) {
     return (
         <input 
-        className='input w-full input-accent'
+        className='input w-full '
         {...props} />
     )
 }
