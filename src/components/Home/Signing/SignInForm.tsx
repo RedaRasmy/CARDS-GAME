@@ -1,7 +1,6 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { Input } from './RegisterForm'
 
-
 export default function SignInForm({onToggle}:{
     onToggle:()=>void
 }
