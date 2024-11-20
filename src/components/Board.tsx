@@ -6,14 +6,13 @@ import useCard from '@/library/Hooks/useCard'
 import Droppable from '@/library/dnd-kit/droppable'
 import GameHistory from './GameHistory'
 import { ReactNode } from 'react'
-import Image from 'next/image'
 
 export default function Board() {
     const {cardsLeft,currentCardId,requirementsValue,playerCards,botCards} = useCard()
     const pCards = playerCards.length
     const bCards = botCards.length
     const showReqSetting = useAppSelector(state=>state.settings.alwaysShowRequirements)
-    const difficulty = useAppSelector(state=>state.gameFlow.difficulty)
+    // const difficulty = useAppSelector(state=>state.gameFlow.difficulty)
     const showReq = showReqSetting || (currentCardId % 10 === 8) // only if is a judge card
 
     const cardsLeftNumber = cardsLeft.length
@@ -80,51 +79,51 @@ function BoardContainer({children}:{
     )
 }
 
-function VS(){
-    return (
-        <p className='font-bold text-[30px] text-yellow-500 rotate-6'>VS</p>
-    )
-}
+// function VS(){
+//     return (
+//         <p className='font-bold text-[30px] text-yellow-500 rotate-6'>VS</p>
+//     )
+// }
 
-function Infos({type,infos}:{
-    type: 'player' | 'enemey',
-    infos:{
-        src?:string,
-        name:string
-    }
-}) {
-    if (type ==='player') return (
-        <div className='flex -space-x-8 items-center w-full'>
-            <Avatar src={infos.src} />
-            <NameField name={infos.name} />
-        </div>
-    )
-    return (
-        <div className='flex -space-x-8 items-center w-full'>
-        <NameField name={infos.name} />
-        <Avatar src={infos.src} />
-    </div>
-    )
-}
+// function Infos({type,infos}:{
+//     type: 'player' | 'enemey',
+//     infos:{
+//         src?:string,
+//         name:string
+//     }
+// }) {
+//     if (type ==='player') return (
+//         <div className='flex -space-x-8 items-center w-full'>
+//             <Avatar src={infos.src} />
+//             <NameField name={infos.name} />
+//         </div>
+//     )
+//     return (
+//         <div className='flex -space-x-8 items-center w-full'>
+//         <NameField name={infos.name} />
+//         <Avatar src={infos.src} />
+//     </div>
+//     )
+// }
 
-export function Avatar({src}:{
-    src?:string
-}) {
-    return (
-        <div className="avatar  rounded-full shrink-0">
-            <div className=" rounded-full bg-opacity-20  bg-white">
-                <Image alt='' src={src || '/images/default-avatar.png'} width={40}height={40} />
-            </div>
-        </div>
-    )
-}
+// export function Avatar({src}:{
+//     src?:string
+// }) {
+//     return (
+//         <div className="avatar  rounded-full shrink-0">
+//             <div className=" rounded-full bg-opacity-20  bg-white">
+//                 <Image alt='' src={src || '/images/default-avatar.png'} width={40}height={40} />
+//             </div>
+//         </div>
+//     )
+// }
 
-function NameField({name}:{
-    name:string
-}) {
-    return (
-        <div className=' w-full px-12 h-[33px] bg-opacity-20  bg-white rounded-md flex justify-center'>
-            <p className='text-[20px] font-bold  text-nowrap'>{name}</p>
-        </div>
-    )
-}
+// function NameField({name}:{
+//     name:string
+// }) {
+//     return (
+//         <div className=' w-full px-12 h-[33px] bg-opacity-20  bg-white rounded-md flex justify-center'>
+//             <p className='text-[20px] font-bold  text-nowrap'>{name}</p>
+//         </div>
+//     )
+// }
