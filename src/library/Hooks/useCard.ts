@@ -8,7 +8,9 @@ import { DragEndEvent } from "@dnd-kit/core"
 import requirements from "../functions/requirements"
 import capitalize from "../functions/capitalize"
 import { useState } from "react"
-import { startTakingCard } from "../redux/slices/animations"
+import { playSound } from "../functions/playSounds"
+// import playCardSound from '/sounds/playCardSound.wav'
+// import { startTakingCard } from "../redux/slices/animations"
 
 export default function useCard() {
     // const gameIsOn = useAppSelector(state=>state.gameFlow.gameIsOn)
@@ -33,9 +35,11 @@ export default function useCard() {
     function chooseColor(color:string){
         dispatch(changeRequirements([capitalize(color)]))
         dispatch(toggleTurn())
-        }
+    }
+
     function playWithClick(id:number){
         if(isIdentical(id,requirementsValue)){
+            playSound('/sounds/playCardSound.wav')
             // save turn's data
             dispatch(addTurn({
                 player: 'player',
@@ -81,6 +85,7 @@ export default function useCard() {
     function playerTakeCard(){
         const randomId = randomIdFrom(cardsLeft) as number
         if (cardsLeft.length>0) {
+            playSound('/sounds/takeCardSound.wav')
             // dispatch(startTakingCard())
             setscrollIntoView(true)
             dispatch(addCard({cardId:randomId,player:'player'}))
@@ -92,7 +97,9 @@ export default function useCard() {
                 action: '+Card',
                 cardId: randomId,
             }))
+            return randomId
         }
+        return null
     }
     const getCardIndex = (id:number) => playerCards.findIndex(cardId=> cardId === id)
 

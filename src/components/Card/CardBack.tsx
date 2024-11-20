@@ -7,6 +7,7 @@ export default function CardBack({toTake=true}) {
     const indicators = useAppSelector(state=>state.settings.indicators)
     const {playerTakeCard,requirementsValue,goodCards} = useCard()
     const {BotPlay} = useBot(difficulty)
+    // const [cardTaked,setCardTaked] = useState<number | null>(null)
     const handleTake = () =>{
         // console.log('GAME IS ON: ',gameIsOn)
         if (gameIsOn && !modalOpen ){
@@ -22,6 +23,7 @@ export default function CardBack({toTake=true}) {
     const style = (goodCards.length === 0 && toTake && gameIsOn && !modalOpen && indicators) && 'my-card-border'
     return (
         <div
+        id="stack"
         onClick={handleTake}
         className={`${style}  bg-card-back bg-cover bg-center box-border w-[72px] h-[104px]
         rounded-[4px] border-[3px] 

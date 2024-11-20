@@ -69,7 +69,6 @@ export default function GameField() {
         setIsVisible(true)
         dispatch(clearHistory())
     }
-
     // Define Sensors 
     const sensors = useSensors(
         useSensor(PointerSensor,{
@@ -96,7 +95,6 @@ export default function GameField() {
     function BeforeHandleDragEnd(event:DragEndEvent){
         handleDragEnd(event)
         setActiceId(null)
-
     }
     if (gameIsOn || firstGame) return (
         <div className="w-full h-full grid  grid-cols-1  grid-rows-3  justify-center items-center">
@@ -128,7 +126,6 @@ export default function GameField() {
                         {playerCards.length > 0 ? <CardsGroup activeId={activeId as number} cardsIds={playerCards} /> : <div className="h-[104px]"></div>}
                     </div>
                 </div>
-                
             </DndContext>
         </div>
     )

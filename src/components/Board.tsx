@@ -26,18 +26,17 @@ export default function Board() {
 
     return ( 
         <div className='w-full flex flex-col items-center'>
-            <div className='flex items-center justify-center gap-4 -mb-4 sm:w-[clamp(250px,70%,1000px)] w-[90%]'>
+            {/* <div className='flex items-center justify-center gap-4 -mb-4 sm:w-[clamp(250px,70%,1000px)] w-[90%]'>
                 <Infos type='player' infos={{name:'player'}}/>
                 <VS/>
                 <Infos type='enemey' infos={{name:`${difficulty} bot`}} />
-            </div>
+            </div> */}
             <BoardContainer>
                 <div className='sm:block hidden lg:hidden'/>
                 <div className='hidden lg:block'>
                     <GameHistory/>
                 </div>
-
-                <div 
+                <div
                 className=' scale-[1.8]  flex flex-col justify-center items-center'>
                     {showReq && <p className='font-mono opacity-50 text-[12px]'>{ReqMsg}</p>}
                     {currentCardId !== null &&
