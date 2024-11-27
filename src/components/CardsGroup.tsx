@@ -21,32 +21,6 @@ export default function CardsGroup({cardsIds,activeId}:{cardsIds:number[],active
             scrollRef.current.scrollLeft -= 50
         }
     }
-    // const duration = 5000
-    // const [cardsToShow,setCardsToShow] = useState(cardsIds.slice(0,cardsIds.length-1)) 
-    // const [tempCard, setTempCard] = useState<number | null>(null);
-    // // const [x,SetX] = useState(0)
-    // const [stackPos,setStackPos] = useState({x:0,y:0})
-    // useEffect(()=>{
-    //     const rect = document.getElementById('stack')?.getBoundingClientRect()
-    //     console.log(rect)
-    //     if (rect) {
-    //         setStackPos({
-    //             x:rect.x,
-    //             y:rect.top 
-    //         })
-    //     }
-    // },[])
-
-    // const [isAnimating,setIsAnimating] = useState(false)
-    // useEffect(()=>{
-    //     setTempCard(cardsIds[cardsIds.length-1])
-    //     setIsAnimating(true)
-    //     setTimeout(() => {
-    //         setCardsToShow(cardsIds)
-    //         setTempCard(null)
-    //         setIsAnimating(false)
-    //     }, duration);
-    // },[cardsIds])
 
     useEffect(()=>{
         if (scrollIntoLastCard) {
@@ -83,20 +57,6 @@ export default function CardsGroup({cardsIds,activeId}:{cardsIds:number[],active
                                 </Draggable>
                             // </div>
                             )}
-                        {/* { tempCard &&
-                        <motion.div
-                            style={{position:'absolute'}}
-                            initial={{
-                                position:'absolute',
-                                right:0,
-                                // x: `100px`,
-                                y: `-200%`,
-                            }}
-                            animate={{x:0,y:0}}
-                            transition={{duration:duration/1000}}
-                        >
-                            <Card id={tempCard} />
-                        </motion.div>} */}
                     </SortableContext>
                 
             </div>

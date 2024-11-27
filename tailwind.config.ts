@@ -17,6 +17,9 @@ const config: Config = {
         foreground: "var(--foreground)",
         
       },
+      // gridTemplateColumns :{
+      //   'game-cols':'',
+      // }
     },
   },
   plugins: [

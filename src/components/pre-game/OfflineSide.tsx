@@ -28,14 +28,14 @@ type OptionProps = {
     checked:boolean,
     onChange:(event: ChangeEvent<HTMLInputElement>)=>void
 }
-function Option({label,checked,onChange}:OptionProps) {
+export function Option({label,checked,onChange}:OptionProps) {
     return (
         <label className="cursor-pointer flex items-center gap-5">
-            <input type="checkbox" className="checkbox checkbox-info"
+            <span className="label-text">{label}</span>
+            <input type="checkbox" className="checkbox checkbox-sm checkbox-info"
             value={label.toLowerCase()}
             checked={checked}
             onChange={onChange} />
-            <span className="label-text">{label}</span>
         </label>
     )
 }

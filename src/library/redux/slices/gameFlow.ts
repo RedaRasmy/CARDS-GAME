@@ -2,16 +2,32 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import type { Turn } from "@/library/types";
 import { Difficulty} from "@/library/functions/bot";
 
+export type PlayersNumber = 2 | 3 |4
+
 const gameFlow = createSlice({
     name:'gameFlow',
     initialState:{
+        isPreGame: true,
         gameIsOn:false, // true only bewteen starting the game and win/lose
         playerTurn:true, // if true : player turn , if false : bot turn
         modalOpen:false, // if true the player can choose color (JUDGE)
         turns:[] as Turn[] ,
-        difficulty: 'easy' as Difficulty
+        difficulty: 'easy' as Difficulty,
+        playersNumber: 2 as PlayersNumber,
     },
     reducers:{
+        changePlayersNumber : (state,action:PayloadAction<PlayersNumber>)=>{
+            return {
+                ...state,
+                playersNumber:action.payload
+            }
+        },
+        setIsPreGame:(state,action:PayloadAction<boolean>) =>{
+            return {
+                ...state,
+                isPreGame :action.payload
+            }
+        },
         toggleGame:(state)=>{
             return {
                 ...state,
@@ -59,5 +75,7 @@ export const {
     toggleTurn,
     addTurn,
     clearHistory,
-    changeDiff
+    changeDiff,
+    changePlayersNumber,
+    setIsPreGame
 } = gameFlow.actions

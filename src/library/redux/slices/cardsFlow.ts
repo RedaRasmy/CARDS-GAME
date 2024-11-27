@@ -5,6 +5,7 @@ import { arrayMove } from "@dnd-kit/sortable";
 import requirements, { Requirements } from "@/library/functions/requirements";
 
 
+
 const {initialCurrentCard,initialPayerCards,initialBotCards,initialCardsLeft} = startTheGame()
 
 const cardsFlow = createSlice({
@@ -15,12 +16,10 @@ const cardsFlow = createSlice({
         playerCards: initialPayerCards ,
         botCards: initialBotCards ,
         cardsLeft: initialCardsLeft,
-        scrollIntoLastCard:false,
-        startTaking:false
     },
     reducers:{
         redistribute:(state)=>{
-            const {initialCurrentCard,initialPayerCards,initialBotCards,initialCardsLeft} = startTheGame()
+            const {initialCurrentCard,initialPayerCards,initialBotCards,initialCardsLeft} = startTheGame(playersNumber)
             return {
                 ...state,
                 currentCardId: initialCurrentCard,

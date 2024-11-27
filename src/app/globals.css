@@ -4,13 +4,21 @@
 
 @import 'boxicons/css/boxicons.min.css';
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=DynaPuff:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=DynaPuff:wght@400..700&family=Germania+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=DynaPuff:wght@400..700&family=Germania+One&family=Sevillana&display=swap');
 
 :root {
-  font-family: "Nunito", sans-serif;
+  --font-dancing-script : 'Dancing Sript' ;
+  --font-germania-one : 'Germania One'
+  /* font-family: "Sevillana", cursive;
+  font-style: normal; */
 }
 
 
 html ,body {
+  font-family:  cursive ;
+  font-style: normal;
   height: 100vh;
   height:100dvh;
   background-color: black;
@@ -18,7 +26,11 @@ html ,body {
   /* color: white; */
 }
 
-
+.game-grid {
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+  grid-template-rows: 30% 40% 30%;
+}
 /* .settings:hover {
   transform: rotateZ(90deg)
 } */
@@ -33,8 +45,8 @@ body::-webkit-scrollbar,.scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Edge */
 }
 
-/* 
-*::before,*::after {
+
+/* *::before,*::after,* {
   box-sizing: border-box;
   outline: 2px green solid;
 } */
@@ -56,7 +68,7 @@ body::-webkit-scrollbar,.scrollbar-hide::-webkit-scrollbar {
   /* position: relative; */
 }
 
-.my-card-border{
+/* .my-card-border{
   position: relative;
 }
 @property --angle{
@@ -69,7 +81,6 @@ body::-webkit-scrollbar,.scrollbar-hide::-webkit-scrollbar {
   position: absolute;
   height: 109%;
   width: 115%;
-  /* background:red; */
   top: 50%;
   left: 50%;
   translate: -50% -50%;
@@ -90,9 +101,47 @@ body::-webkit-scrollbar,.scrollbar-hide::-webkit-scrollbar {
   to {
     --angle : 360deg;
   }
-}
+} */
 /* some colors : #DD335C,#13FFAA,#CE84CF,#1E67C6 */
 
-.blueSnake {
+/* .blueSnake {
   position: relative;
+} */
+
+/* ...................................... */
+.coolBorder {
+  position: relative ;
+  /* background-color: #31393c; */
+}
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.coolBorder::after {
+  --animatin-color : rgb(0, 174, 255);
+  content: '';
+  width: 102%;
+  height: 105%;
+  background-image: conic-gradient(
+      from var(--angle), 
+      var(--animatin-color) 30deg,
+      transparent 30deg 180deg,
+      var(--animatin-color) 180deg 210deg,
+      transparent 210deg 360deg ) ;
+  border-radius: inherit;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: -1;
+  translate: -50% -50%;
+  animation: spin 2s linear infinite;
+}
+@keyframes spin {
+  from {
+      --angle :0deg
+  }
+  to {
+      --angle:360deg
+   }
 }
