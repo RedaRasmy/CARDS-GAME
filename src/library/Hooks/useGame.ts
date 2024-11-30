@@ -1,11 +1,17 @@
 import { useAppDispatch, useAppSelector } from "../redux/store";
-import { redistribute } from "../redux/slices/cardsFlow";
-import { changeDiff, changePlayersNumber, clearHistory, PlayersNumber, setIsPreGame, toggleGame } from "../redux/slices/gameFlow";
+import { changePlayersNumber2, redistribute } from "../redux/slices/cardsFlow";
+import { changeDiff, changePlayersNumber, clearHistory, PlayersNumber, setIsPreGame, toggleGame, toggleModal } from "../redux/slices/gameFlow";
 import { Difficulty } from "../functions/bot";
 
 export default function useGame() {
     const dispatch = useAppDispatch();
-    const { gameIsOn,difficulty,isPreGame,playersNumber} = useAppSelector((state) => state.gameFlow);
+    const { 
+        gameIsOn,
+        difficulty,
+        isPreGame,
+        playersNumber,
+        modalOpen
+    } = useAppSelector((state) => state.gameFlow);
 
     function changeDifficulty(diff:Difficulty) {
         dispatch(changeDiff(diff))
@@ -14,6 +20,7 @@ export default function useGame() {
     const cornersPlayersCondition = (playersNumber !== 2)
     function changePlayers(number:PlayersNumber){
         dispatch(changePlayersNumber(number))
+        dispatch(changePlayersNumber2(number))
     }
     function quitGame() {
         if (gameIsOn) {
@@ -25,14 +32,26 @@ export default function useGame() {
     }
     function startGame() {
         if (!gameIsOn) {
+            dispatch(redistribute())
             dispatch(toggleGame());
             dispatch(clearHistory());
             changePreGameTo(false)
         }
     }
+    const restart = ()=>{
+        dispatch(redistribute())
+        dispatch(toggleGame())
+        dispatch(clearHistory())
+    }
     function changePreGameTo(bool:boolean){
         dispatch(setIsPreGame(bool))
     }
+    function toggleModalShortcut(){
+        dispatch(toggleModal())
+    }
+
+
+
     return {
         difficulty,
         gameIsOn,
@@ -44,6 +63,9 @@ export default function useGame() {
         changePreGameTo,
         playersNumber,
         midlePlayerCondition,
-        cornersPlayersCondition
+        cornersPlayersCondition,
+        modalOpen,
+        toggleModalShortcut,
+        restart
     };
 }

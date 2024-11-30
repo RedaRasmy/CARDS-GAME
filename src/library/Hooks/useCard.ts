@@ -1,48 +1,44 @@
-'use client'
 import { useAppDispatch,useAppSelector } from "../redux/store"
 import randomIdFrom from "../functions/randomIdFrom"
 import isIdentical from "../functions/isIdentical"
 import { addCard, removeCard,changeCurrentCard,takeCard, changeCardOrder, changeRequirements, } from "../redux/slices/cardsFlow"
-import { addTurn, toggleModal, toggleTurn } from "../redux/slices/gameFlow"
-import { DragEndEvent } from "@dnd-kit/core"
+import { addTurn, finishTurn, toggleModal } from "../redux/slices/gameFlow"
+import { DragEndEvent, } from "@dnd-kit/core"
 import requirements from "../functions/requirements"
 import capitalize from "../functions/capitalize"
-import { useState } from "react"
+// import { useState } from "react"
 import { playSound } from "../functions/playSounds"
-// import playCardSound from '/sounds/playCardSound.wav'
-// import { startTakingCard } from "../redux/slices/animations"
+import { useEffect } from "react"
 
 export default function useCard() {
-    // const gameIsOn = useAppSelector(state=>state.gameFlow.gameIsOn)
     const dispatch = useAppDispatch()
     const cardsFlow = useAppSelector((state)=>state.cardsFlow)
+    const {sorting,dragging} = useAppSelector(state=>state.settings)
+    const {currentPlayer} = useAppSelector(state=>state.gameFlow)
+    ///
     const currentCardId = cardsFlow.currentCardId
     const cardsLeft = cardsFlow.cardsLeft
-    const playerCards = cardsFlow.playerCards
-    const botCards = cardsFlow.botCards
+    const hands = cardsFlow.hands
     const requirementsValue = cardsFlow.requirements
-    const {sorting,dragging} = useAppSelector(state=>state.settings)
-    const playerTurn = useAppSelector(state=>state.gameFlow.playerTurn)
-    const [scrollIntoView,setscrollIntoView] = useState(false)
     const goodCards:number[] = []
-    for(const card of playerCards) {
+    for(const card of hands[0]) {
         if (isIdentical(card,requirementsValue)){
             goodCards.push(card)
         }
     }
 
-    //// FUNCTIONS
+    /// FUNCTIONS
     function chooseColor(color:string){
         dispatch(changeRequirements([capitalize(color)]))
-        dispatch(toggleTurn())
+        dispatch(finishTurn())
     }
 
     function playWithClick(id:number){
-        if(isIdentical(id,requirementsValue)){
+        if(isIdentical(id,requirementsValue) && (currentPlayer ===0)){
             playSound('/sounds/playCardSound.wav')
             // save turn's data
             dispatch(addTurn({
-                player: 'player',
+                player: 0,
                 action: '-Card',
                 cardId: id,
             }))
@@ -50,20 +46,20 @@ export default function useCard() {
                 dispatch(changeCurrentCard(id))
                 console.log('requirements :',requirementsValue)
                 dispatch(changeRequirements(requirements(id)))
-                dispatch(removeCard({cardId:id,player:'player'}))
+                dispatch(removeCard({cardId:id,playerId:0}))
                 // +3 Card
                 if (id % 10 === 7){
-                    Add3CardsTo("bot")
+                    Add3CardsTo(1)
                 }
-                if (id % 10 === 9) { // if BLOCK card (dont toggle turn)
+                if (id % 10 === 9) { // if BLOCK card (dont finish turn)
                     return;
                 }
-                dispatch(toggleTurn())
+                dispatch(finishTurn())
             }
             else { // if JUDGE card
-                dispatch(removeCard({cardId:id,player:'player'}))
+                dispatch(removeCard({cardId:id,playerId:0}))
                 dispatch(changeCurrentCard(id))
-                if (playerCards.length >1){
+                if (hands[0].length > 1 ){
                     dispatch(toggleModal())
                 }else {
                     dispatch(changeRequirements(requirements(id)))
@@ -71,29 +67,34 @@ export default function useCard() {
             }
         }
     }
+    
+    useEffect(()=>{
+        const timer = setTimeout(()=>{
+            dispatch(finishTurn())
+        },10000)
+        return () => clearTimeout(timer);
+    },[currentPlayer,dispatch])
 
-    function Add3CardsTo(name:('player'|'bot')){
+    function Add3CardsTo(playerId:number){
         const cardsToAdd = randomIdFrom(cardsLeft,3) as number[]
         for (let i=0 ; i<3 ; i++) {
             dispatch(takeCard(cardsToAdd[i]))
-            dispatch(addCard({cardId:cardsToAdd[i],player:name}))
+            dispatch(addCard({cardId:cardsToAdd[i],playerId:playerId}))
         }
     }
     // function handleTakeCard(){
     //     dispatch(startTakeCard(true))
     // }
     function playerTakeCard(){
-        const randomId = randomIdFrom(cardsLeft) as number
-        if (cardsLeft.length>0) {
+        if ((cardsLeft.length > 0) && (currentPlayer ===0)) {
+            const randomId = randomIdFrom(cardsLeft) as number
             playSound('/sounds/takeCardSound.wav')
-            // dispatch(startTakingCard())
-            setscrollIntoView(true)
-            dispatch(addCard({cardId:randomId,player:'player'}))
+            dispatch(addCard({cardId:randomId,playerId:0}))
             dispatch(takeCard(randomId))
-            dispatch(toggleTurn())
+            dispatch(finishTurn())
             // save turn's data
             dispatch(addTurn({
-                player: 'player',
+                player: 0,
                 action: '+Card',
                 cardId: randomId,
             }))
@@ -101,7 +102,8 @@ export default function useCard() {
         }
         return null
     }
-    const getCardIndex = (id:number) => playerCards.findIndex(cardId=> cardId === id)
+
+    const getCardIndex = (id:number) => hands[0].findIndex(cardId=> cardId === id)
 
     const handleDragEnd = (event:DragEndEvent)=>{
         // Sorting Logic
@@ -119,7 +121,7 @@ export default function useCard() {
             if(isIdentical(id,requirementsValue)){
                 // save turn's data
                 dispatch(addTurn({
-                    player: 'player',
+                    player: 0,
                     action: '-Card',
                     cardId: id,
                 }))
@@ -127,20 +129,20 @@ export default function useCard() {
                     dispatch(changeCurrentCard(id))
                     console.log('requirements :',requirementsValue)
                     dispatch(changeRequirements(requirements(id)))
-                    dispatch(removeCard({cardId:id,player:'player'}))
+                    dispatch(removeCard({cardId:id,playerId:0}))
                     // +3 Card
                     if (id % 10 === 7){
-                        Add3CardsTo("bot")
+                        Add3CardsTo(1)
                     }
                     if (id % 10 === 9) { // if BLOCK card (dont toggle turn)
                         return;
                     }
-                    dispatch(toggleTurn())
+                    dispatch(finishTurn())
                 }
                 else { // if JUDGE card
-                    dispatch(removeCard({cardId:id,player:'player'}))
+                    dispatch(removeCard({cardId:id,playerId:0}))
                     dispatch(changeCurrentCard(id))
-                    if (playerCards.length >1){
+                    if (hands[0].length > 1 ){
                         dispatch(toggleModal())
                     }else {
                         dispatch(changeRequirements(requirements(id)))
@@ -150,22 +152,19 @@ export default function useCard() {
         }
     }
 
-
     return {
         // infos
-            scrollIntoView,
             cardsLeft,
-            playerCards,
-            botCards,
+            hands,
             currentCardId,
             requirementsValue,
-            playerTurn,
+            currentPlayer,
             goodCards,
         // functions
             Add3CardsTo,
             playerTakeCard,
             playWithClick,
             handleDragEnd,
-            chooseColor
+            chooseColor,
     }
 }

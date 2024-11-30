@@ -11,7 +11,7 @@ export default function ChooseAColor({onClose}:{onClose:()=>void}) {
     return (
         <dialog
         open
-        className='shadow-xl rounded-lg grid bg-transparent grid-cols-2 grid-rows-2 w-[300px] h-[300px] gap-2 z-50'
+        className='shadow-xl absolute top-1/2 -translate-y-1/2  rounded-lg grid bg-transparent grid-cols-2 grid-rows-2 w-[300px] h-[300px] gap-2 z-50'
         >
             <div
             onClick={()=>handleChoose('red')}

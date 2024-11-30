@@ -12,7 +12,9 @@ export default function page() {
 
     return (
         <div className="">
-            <div className=" bg-[url('/images/game-field.jpg')]  mx-auto bg-center bg-cover max-w-[1600px]  bg-no-repeat h-[100dvh] w-full">
+            <div 
+            id="grid"
+            className=" bg-[url('/images/game-field.jpg')]  mx-auto bg-center bg-cover max-w-[1600px]  bg-no-repeat h-[100dvh] w-full">
                 <div className="flex flex-col justify-center items-center h-full z-10 overflow-hidden">    
                     <Provider store={store}>
                         <ReturnToHome/>
@@ -42,7 +44,7 @@ function IconsContainer({children}:{
     children:ReactNode
 }){
     return (
-        <div className="absolute top-2 right-2">
+        <div className="absolute top-2 right-2 z-[1000]">
             <div 
             className="flex justify-end w-full flex-col items-center">
                 {children}

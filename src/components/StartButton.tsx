@@ -2,7 +2,9 @@ export default function StartButton({handleClick,text}:{handleClick:()=>void,tex
     return (
         <button 
         onClick={handleClick}
-        className=" btn btn-outline btn-secondary px-7 w-[50%]">
+        className=" btn max-w-[20%] z-10  btn-warning px-7 w-[50%] absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
+        cursor-pointer
+        ">
             {text}
         </button>
     )

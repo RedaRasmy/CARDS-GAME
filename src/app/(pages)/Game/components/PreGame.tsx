@@ -2,11 +2,10 @@ import Letter from '@/components/Letter'
 import { Difficulty } from '@/library/functions/bot'
 import useGame from '@/library/Hooks/useGame'
 import { PlayersNumber } from '@/library/redux/slices/gameFlow'
-import { AnimatePresence } from 'motion/react'
-import React, { ChangeEvent, useState } from 'react'
+import { ChangeEvent, } from 'react'
 
 export default function PreGame() {
-    const {changeDifficulty,changePlayers,startGame,difficulty,playersNumber,isPreGame} = useGame()
+    const {changeDifficulty,changePlayers,startGame,difficulty,playersNumber,} = useGame()
     function handleChangeDiff(event:ChangeEvent<HTMLInputElement>) {
         changeDifficulty(event.target.value as Difficulty)
     }
@@ -15,13 +14,11 @@ export default function PreGame() {
     }
     function handleStart() {
         startGame()
-        setIsOpen(false)
     }
-    const [isOpen, setIsOpen] = useState(isPreGame);
 
     return (
         <div className='backdrop-blur-[10px] w-full h-full flex justify-center items-center' >
-            { isOpen && <Letter >
+            <Letter >
                 <div className='text-center space-y-3'>
                     <div className=' bg-black bg-opacity-20 rounded-md p-3'>
                         <h1 className='text-xl text-black font-semibold uppercase'>Difficulty</h1>
@@ -43,7 +40,7 @@ export default function PreGame() {
                     className='btn btn-warning text-2xl w-full' 
                     onClick={handleStart} >START</button>
                 </div>
-            </Letter>}
+            </Letter>
         </div>
     )
 }

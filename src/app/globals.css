@@ -2,25 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-@import 'boxicons/css/boxicons.min.css';
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=DynaPuff:wght@400..700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=DynaPuff:wght@400..700&family=Germania+One&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=DynaPuff:wght@400..700&family=Germania+One&family=Sevillana&display=swap');
+@import "boxicons/css/boxicons.min.css";
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=DynaPuff:wght@400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=DynaPuff:wght@400..700&family=Germania+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=DynaPuff:wght@400..700&family=Germania+One&family=Sevillana&display=swap");
 
 :root {
-  --font-dancing-script : 'Dancing Sript' ;
-  --font-germania-one : 'Germania One'
+  --font-dancing-script: "Dancing Sript";
+  --font-germania-one: "Germania One";
   /* font-family: "Sevillana", cursive;
   font-style: normal; */
 }
 
-
-html ,body {
-  font-family:  cursive ;
+html,
+body {
+  font-family: cursive;
   font-style: normal;
   height: 100vh;
-  height:100dvh;
+  height: 100dvh;
   background-color: black;
   /* background-image: url('/images/background.png'); */
   /* color: white; */
@@ -35,26 +35,24 @@ html ,body {
   transform: rotateZ(90deg)
 } */
 
-body,.scrollbar-hide{
+body,
+.scrollbar-hide {
   /* overflow: auto; */
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
 }
-body::-webkit-scrollbar,.scrollbar-hide::-webkit-scrollbar {
+body::-webkit-scrollbar,
+.scrollbar-hide::-webkit-scrollbar {
   height: 0px;
   display: none; /* Chrome, Safari, Edge */
 }
-
 
 /* *::before,*::after,* {
   box-sizing: border-box;
   outline: 2px green solid;
 } */
 
-/* * {
-  outline: 2px green solid;
-} */
-@media (min-width:640px) {
+@media (min-width: 640px) {
   .board {
     grid-template-columns: 1fr 160px 1fr;
   }
@@ -110,7 +108,7 @@ body::-webkit-scrollbar,.scrollbar-hide::-webkit-scrollbar {
 
 /* ...................................... */
 .coolBorder {
-  position: relative ;
+  position: relative;
   /* background-color: #31393c; */
 }
 @property --angle {
@@ -119,16 +117,17 @@ body::-webkit-scrollbar,.scrollbar-hide::-webkit-scrollbar {
   inherits: false;
 }
 .coolBorder::after {
-  --animatin-color : rgb(0, 174, 255);
-  content: '';
+  --animatin-color: rgb(0, 174, 255);
+  content: "";
   width: 102%;
   height: 105%;
   background-image: conic-gradient(
-      from var(--angle), 
-      var(--animatin-color) 30deg,
-      transparent 30deg 180deg,
-      var(--animatin-color) 180deg 210deg,
-      transparent 210deg 360deg ) ;
+    from var(--angle),
+    var(--animatin-color) 30deg,
+    transparent 30deg 180deg,
+    var(--animatin-color) 180deg 210deg,
+    transparent 210deg 360deg
+  );
   border-radius: inherit;
   position: absolute;
   left: 50%;
@@ -139,9 +138,30 @@ body::-webkit-scrollbar,.scrollbar-hide::-webkit-scrollbar {
 }
 @keyframes spin {
   from {
-      --angle :0deg
+    --angle: 0deg;
   }
   to {
-      --angle:360deg
-   }
+    --angle: 360deg;
+  }
+}
+@property --timer-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.timer {
+  --animatin-color: rgb(53, 183, 10);
+  background-image: conic-gradient(
+    var(--animatin-color) var(--timer-angle),
+    black 0deg 360deg
+  );
+  animation: timer 10s linear infinite;
+}
+@keyframes timer {
+  from {
+    --timer-angle : 0deg
+  }
+  to {
+    --timer-angle : 360deg
+  }
 }

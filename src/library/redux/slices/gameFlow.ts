@@ -9,13 +9,26 @@ const gameFlow = createSlice({
     initialState:{
         isPreGame: true,
         gameIsOn:false, // true only bewteen starting the game and win/lose
-        playerTurn:true, // if true : player turn , if false : bot turn
+        currentPlayer: 0 ,
         modalOpen:false, // if true the player can choose color (JUDGE)
         turns:[] as Turn[] ,
         difficulty: 'easy' as Difficulty,
         playersNumber: 2 as PlayersNumber,
     },
     reducers:{
+        finishTurn :(state)=>{
+            if (state.currentPlayer < state.playersNumber-1) {
+                return {
+                    ...state,
+                    currentPlayer: state.currentPlayer +1
+                }
+            }else {
+                return {
+                    ...state,
+                    currentPlayer: 0
+                }
+            }
+        },
         changePlayersNumber : (state,action:PayloadAction<PlayersNumber>)=>{
             return {
                 ...state,
@@ -32,12 +45,6 @@ const gameFlow = createSlice({
             return {
                 ...state,
                 gameIsOn:!state.gameIsOn
-            }
-        },
-        toggleTurn:(state)=>{
-            return {
-                ...state,
-                playerTurn:!state.playerTurn
             }
         },
         toggleModal:(state)=>{
@@ -72,7 +79,7 @@ export default gameFlow.reducer
 export const {
     toggleGame,
     toggleModal,
-    toggleTurn,
+    finishTurn,
     addTurn,
     clearHistory,
     changeDiff,

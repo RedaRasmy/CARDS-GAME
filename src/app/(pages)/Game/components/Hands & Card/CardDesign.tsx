@@ -18,7 +18,7 @@ export default function CardDesign({id,className}:{
 
     return (
         <div
-        className={`${className} ${backgroundColor}  p-[2px] w-[72px] h-[104px] 
+        className={`${className} ${backgroundColor}  p-[2px] lg:w-[72px] lg:h-[104px] w-[54px] h-[78px]
         rounded-[4px] flex justify-center items-center flex-col 
         shadow-slate-800 border-[3px] border-black border-opacity-15 shrink-0
         `}>
@@ -38,22 +38,22 @@ function Number({children}:{children:number|undefined}){
     return(
         <div className=" bg-opacity-15 border-[3px] border-white border-opacity-5 
         rounded-full
-        w-14 h-[70px] flex justify-center items-center">
-            <h1 className="font-extrabold opacity-50 text-[50px] font-mono select-none">{children}</h1>
+        lg:w-14 w-12 lg:h-[70px] h-[60px] flex justify-center items-center">
+            <h1 className="font-extrabold opacity-50 lg:text-[50px] text-[40px] font-mono select-none">{children}</h1>
         </div>
     )
 }
 
 function Power({power}:{power:PowerType|undefined}) {
     if (power === 'JUDGE') return <Judge/>
-    if (power === 'SKIP') return <i className='bx bx-block text-[60px] opacity-50 rotate-90 font-bold text-black'/>
-    if (power === '+3') return <h1 className="font-bold text-4xl text-black  text-opacity-50 -rotate-3 select-none">+3</h1>
+    if (power === 'SKIP') return <i className='bx bx-block lg:text-[60px] text-[45px] opacity-50 rotate-90 font-bold text-black'/>
+    if (power === '+3') return <h1 className="font-bold lg:text-4xl text-3xl text-black  text-opacity-50 -rotate-3 select-none">+3</h1>
 }
 
 
 function Judge(){
     return (
-        <div className="border-2 rounded-[2px] border-black border-opacity-20 w-12 h-12 grid grid-cols-2 grid-rows-2">
+        <div className="border-2 rounded-[2px] border-black border-opacity-20 lg:w-12 w-10 lg:h-12 h-10 grid grid-cols-2 grid-rows-2">
             <div className="bg-red-900 w-full h-full"></div>
             <div className="bg-blue-900 w-full h-full"></div>
             <div className="bg-yellow-700 w-full h-full"></div>

@@ -23,7 +23,6 @@ export default function CardBack({toTake=true}) {
     const style = (goodCards.length === 0 && toTake && gameIsOn && !modalOpen && indicators) && 'my-card-border'
     return (
         <div
-        id="stack"
         onClick={handleTake}
         className={`${style}  bg-card-back bg-cover bg-center box-border w-[72px] h-[104px]
         rounded-[4px] border-[3px] 

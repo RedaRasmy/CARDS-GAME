@@ -1,70 +1,67 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Card from './Card'
 import { VertedCard } from '../Stack'
 import {motion} from 'motion/react'
 
-export default function Hand({cardsIds,num=0}:{
-    cardsIds?:number[],
-    num?:number
+export default function Hand({cardsIds}:{
+    cardsIds:number[],
 }) {
-    const cards =  cardsIds || []
-    const midle = cards.length > 0 ? Math.floor(cards.length/2) : Math.floor(num/2)
-    const gapX = cards.length > 0 ? 20/cards.length : 100/num
-    const gapY = cards.length > 0 ? 10/cards.length : 10/num
-    console.log(midle,gapX)
-    const initialPos = {
-        gapX:gapX,
-        gapY:gapY,
-        deg:2,
-    }
-    const [position,setPosition] = useState(initialPos)
-    function handleHover(){
-        setPosition(prev => ({
-            gapX:prev.gapX*10,
-            gapY:prev.gapY*-15,
-            deg:prev.deg
-        }))
-    }
-    return (
-        <div className='relative h-full w-full flex justify-center items-center'>
-            <motion.div
-            onHoverStart={handleHover}
-            onHoverEnd={()=>setPosition(initialPos)}
-            whileHover={{
+    const midle =  Math.floor(cardsIds.length/2) 
+    // const gapX = cardsIds.length > 0 ? 200/cardsIds.length : 0
+    const gapX = window.matchMedia('(min-width: 1024px)').matches ? 50 : 38
+    // const gapY = cardsIds.length > 0 ? 10/cardsIds.length :0
+    const gapY = 1
 
-            }}
+    return (
+        <>
+            <motion.div
+            className='relative flex  w-full h-full'
+            transition={{duration:1}}
             >
             {
-                cards.map((id,i)=>(
+                cardsIds.map((id,i)=>(
                     <Card 
                     key={i}
                     id={id} 
                     style={{
-                        x:(i - midle) * position.gapX,
-                        y:Math.abs(midle-i)*position.gapY,
-                        d:(i-midle) * position.deg
+                        x:(i - midle) * gapX,
+                        y:Math.abs(midle-i)*gapY,
+                        // d:5,
+                        d:(i-midle) * 0.5,
+                        delay:i/100
                     }}
                     />
                 ))
             }
             </motion.div>
-            {
-                Array.from({length:num},(e,i)=>i).map((e)=>(
-                    <VertedCard 
-                    style={{
-                        display:'absolute',
-                        transformOrigin:'50% 100%',
-                        transform:`
-                            translate(
-                                ${(e - midle) * gapX}px ,
-                                ${Math.abs(midle-e)*gapY}px
-                            )
-                            rotate(${(e-midle) * 10}deg)
-                        `
-                    }}
-                    key={e}/>
-                ))
-            }
-        </div>
+        </>
+    )
+}
+
+
+export function OpponentHand({num}:{
+    num:number
+}) {
+    const midle = Math.floor(num/2)
+    const gapX = 100/num
+    const gapY = 10/num
+    return (
+        <>
+            { Array.from({length:num},(e,i)=>i).map((e)=>(
+                <VertedCard 
+                style={{
+                    display:'absolute',
+                    transformOrigin:'50% 100%',
+                    transform:`
+                        translate(
+                            ${(e - midle) * gapX}px ,
+                            ${Math.abs(midle-e)*gapY}px
+                        )
+                        rotate(${(e-midle) * 10}deg)
+                    `
+                }}
+                key={e}/>
+            ))}
+        </>
     )
 }

@@ -10,7 +10,7 @@ export type CardType ={
 }
 
 export type Turn = {
-    player : 'player' | 'bot',
+    player : 0 | 1 | 2 | 3 ,
     action: '-Card' | '+Card'
     cardId : number ,
 }
