@@ -42,19 +42,20 @@ function Game() {
         playersNumber,
         difficulty
     } = useGame()
-    const  BotPlay = useBot(difficulty)
+    useBot(difficulty)
     const {
         currentCardId,
         hands,
-        handleDragEnd,
-        currentPlayer
+        currentPlayer,
+        requirementsValue,
+        cardsLeft
     } = useCard()
     const {win,lose,isVisible} = useWinOrLose()
     return (
         <DndContext
         collisionDetection={closestCenter}
         // onDragStart={handleDragStart}
-        onDragEnd={handleDragEnd}
+        // onDragEnd={handleDragEnd}
         >
             <GameContainer>
                 {modalOpen && <ChooseAColor onClose={toggleModalShortcut} />}
@@ -72,11 +73,11 @@ function Game() {
                         <>
                             <MidleName>
                                 <Label 
-                                timer={
+                                timer={ gameIsOn &&
                                     ((currentPlayer===1)&&(playersNumber===2))||
                                     ((currentPlayer===2)&&(playersNumber===4))
                                 }
-                                name="3ambula" 
+                                name="bommimo" 
                                 image="/images/dog1.jpg"
                                 cardsNumber={
                                     playersNumber===2 
@@ -98,8 +99,9 @@ function Game() {
                 <LeftName>
                     {cornersPlayersCondition && 
                     <Label 
-                    timer={
-                        ((currentPlayer===3)&&(playersNumber===4))
+                    timer={ gameIsOn &&
+                        ((currentPlayer===3)&&(playersNumber===4)) || 
+                        ((currentPlayer===2)&&(playersNumber===3))
                     }
                     name="sta9zo" 
                     image="/images/dog2.jpg"
@@ -118,12 +120,17 @@ function Game() {
                             <CardDesign className="lg:scale-150 scale-110" id={currentCardId} />        
                         </Droppable>
                     </Center>
+                    <div className="flex justify-center items-center">
+                        {requirementsValue}
+                        <br/>
+                        {cardsLeft.length}
+                    </div>
                 </Table>
                 <RightName>
                     {cornersPlayersCondition && 
                     <Label 
-                    timer={
-                        ((currentPlayer===1)&&(playersNumber===4))
+                    timer={  gameIsOn &&
+                        (currentPlayer===1)&&cornersPlayersCondition
                     }
                     name="ta99adom" 
                     image="/images/dog3.jpg"
@@ -136,8 +143,8 @@ function Game() {
                 </Player>
                 <FourthCorner>
                     <Label  
-                    name="reda"
-                    timer={
+                    name="you"
+                    timer={ gameIsOn &&
                         ((currentPlayer===0))
                     }
                     cardsNumber={hands[0].length} 

@@ -5,7 +5,7 @@ import { arrayMove } from "@dnd-kit/sortable";
 import requirements, { Requirements } from "@/library/functions/requirements";
 import { PlayersNumber } from "./gameFlow";
 
-console.log("hello");
+
 
 const { initialCurrentCard, initialCardsLeft } = startTheGame();
 

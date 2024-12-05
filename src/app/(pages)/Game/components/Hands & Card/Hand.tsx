@@ -21,7 +21,7 @@ export default function Hand({cardsIds}:{
             {
                 cardsIds.map((id,i)=>(
                     <Card 
-                    key={i}
+                    key={id}
                     id={id} 
                     style={{
                         x:(i - midle) * gapX,

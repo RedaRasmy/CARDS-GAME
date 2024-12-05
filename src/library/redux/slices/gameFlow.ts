@@ -17,6 +17,7 @@ const gameFlow = createSlice({
     },
     reducers:{
         finishTurn :(state)=>{
+            if (!state.gameIsOn) return;
             if (state.currentPlayer < state.playersNumber-1) {
                 return {
                     ...state,
@@ -27,6 +28,12 @@ const gameFlow = createSlice({
                     ...state,
                     currentPlayer: 0
                 }
+            }
+        },
+        resetCurrentPlayer:(state)=>{
+            return {
+                ...state,
+                currentPlayer:0
             }
         },
         changePlayersNumber : (state,action:PayloadAction<PlayersNumber>)=>{
@@ -41,10 +48,16 @@ const gameFlow = createSlice({
                 isPreGame :action.payload
             }
         },
-        toggleGame:(state)=>{
+        gameOn:(state)=>{
             return {
                 ...state,
-                gameIsOn:!state.gameIsOn
+                gameIsOn:true
+            }
+        },
+        gameOff:(state)=>{
+            return {
+                ...state,
+                gameIsOn:false
             }
         },
         toggleModal:(state)=>{
@@ -77,12 +90,14 @@ const gameFlow = createSlice({
 
 export default gameFlow.reducer
 export const {
-    toggleGame,
+    gameOn,
+    gameOff,
     toggleModal,
     finishTurn,
     addTurn,
     clearHistory,
     changeDiff,
     changePlayersNumber,
-    setIsPreGame
+    setIsPreGame,
+    resetCurrentPlayer
 } = gameFlow.actions

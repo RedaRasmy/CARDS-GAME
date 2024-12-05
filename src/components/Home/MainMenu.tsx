@@ -13,7 +13,6 @@ export default function MainMenu() {
         // if no : register/sign in pop up
         signRef.current?.showModal()
         // else : go to profile page
-        console.log('clicked')
     }
     function handleSettings() {
         (document.getElementById('settingsModal') as HTMLDialogElement).showModal()

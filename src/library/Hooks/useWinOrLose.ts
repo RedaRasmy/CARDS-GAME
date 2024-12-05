@@ -1,7 +1,7 @@
 import  { useEffect, useState } from 'react'
 import useCard from './useCard'
 import { useAppDispatch } from '../redux/store'
-import { toggleGame } from '../redux/slices/gameFlow'
+import { gameOff } from '../redux/slices/gameFlow'
 import getMin from '../functions/getMin'
 
 export default function useWinOrLose() {
@@ -21,17 +21,20 @@ export default function useWinOrLose() {
             }else{
                 setWin(true)
             }
-            dispatch(toggleGame())
+            dispatch(gameOff())
+            console.log('game toggled')
         }
         if(hands[0].length === 0 ){
             setWin(true)
-            dispatch(toggleGame())
+            dispatch(gameOff())
+            console.log('game toggled')
         }
         if((min === 0) && (hands[0].length !== 0) ){
             setLose(true)
-            dispatch(toggleGame())
+            dispatch(gameOff())
+            console.log('game toggled')
         }
-    },[hands,cardsLeft.length,dispatch,min])
+    },[hands,cardsLeft])
 
     useEffect(() => {
         const timer = setTimeout(() => {

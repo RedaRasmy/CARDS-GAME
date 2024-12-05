@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../redux/store";
 import { changePlayersNumber2, redistribute } from "../redux/slices/cardsFlow";
-import { changeDiff, changePlayersNumber, clearHistory, PlayersNumber, setIsPreGame, toggleGame, toggleModal } from "../redux/slices/gameFlow";
+import { changeDiff, changePlayersNumber, clearHistory, PlayersNumber, resetCurrentPlayer, setIsPreGame, gameOn , gameOff, toggleModal } from "../redux/slices/gameFlow";
 import { Difficulty } from "../functions/bot";
 
 export default function useGame() {
@@ -24,7 +24,7 @@ export default function useGame() {
     }
     function quitGame() {
         if (gameIsOn) {
-            dispatch(toggleGame());
+            dispatch(gameOff());
             dispatch(clearHistory());
             dispatch(redistribute());
             changePreGameTo(true)
@@ -33,15 +33,18 @@ export default function useGame() {
     function startGame() {
         if (!gameIsOn) {
             dispatch(redistribute())
-            dispatch(toggleGame());
+            dispatch(gameOn());
             dispatch(clearHistory());
             changePreGameTo(false)
+            console.log('game started')
         }
     }
     const restart = ()=>{
         dispatch(redistribute())
-        dispatch(toggleGame())
+        dispatch(gameOn())
         dispatch(clearHistory())
+        dispatch(resetCurrentPlayer())
+        console.log('game resarted')
     }
     function changePreGameTo(bool:boolean){
         dispatch(setIsPreGame(bool))

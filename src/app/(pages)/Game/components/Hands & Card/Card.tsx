@@ -5,6 +5,8 @@ import useCard from '@/library/Hooks/useCard'
 // import Draggable from '@/library/dnd-kit/draggable'
 import isIdentical from '@/library/functions/isIdentical'
 import requirements from '@/library/functions/requirements'
+import useGame from '@/library/Hooks/useGame'
+import getStackPos from '@/library/functions/getStackPos'
 
 export default function Card({id,className,style}:{
     id:number,
@@ -17,17 +19,20 @@ export default function Card({id,className,style}:{
     }
 }) {
     const {playWithClick,currentCardId} = useCard()
-    const stackPos = document.getElementById('stack')?.getBoundingClientRect()
+    const {gameIsOn} = useGame()
+    // const stackPos = document.getElementById('stack')?.getBoundingClientRect()
     const grid = document.getElementById('grid')?.getBoundingClientRect()
     const center = grid && {y : -grid.height*0.35}
-    const Y = (stackPos && grid) &&  (-stackPos.y +grid.height*0.15 -104 ) 
-    const X = (grid) &&  (-  grid.width/6 -36) 
-    const [isVisible, setIsVisible] = useState(true); 
+    // const Y = (stackPos && grid) &&  (-stackPos.y +grid.height*0.15 -104 ) 
+    // const X = (grid) &&  (-  grid.width/6 -36)
+    const {X,Y} = getStackPos()
+    const [isVisible, setIsVisible] = useState(true);
     const handlePlay = () => {
-        playWithClick(id)
-        const isGood = isIdentical(id,requirements(currentCardId))
-        console.log(isGood)
-        setIsVisible(!isGood)
+        if (gameIsOn) {
+            playWithClick(id)
+            const isGood = isIdentical(id,requirements(currentCardId))
+            // setIsVisible(!isGood)
+        }
     }
     return (
         // i think i should use presense to animate play card while exit
@@ -35,6 +40,7 @@ export default function Card({id,className,style}:{
             {isVisible && 
             // <Draggable id={id}>
                 <motion.div 
+                key={id}
                 whileHover={{zIndex:1000,scale:1.1,}}
                 onClick={handlePlay}
                 exit={{

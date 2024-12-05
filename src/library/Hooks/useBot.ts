@@ -9,13 +9,23 @@ import { addTurn, finishTurn,  } from "../redux/slices/gameFlow"
 import { useAppDispatch} from "../redux/store"
 import useCard from "./useCard"
 import { playSound } from "../functions/playSounds"
+import useGame from "./useGame"
 
 export default function useBot(diff:Difficulty) {
+    const {gameIsOn,playersNumber} = useGame()
     const dispatch = useAppDispatch()
-    const {Add3CardsTo,hands,cardsLeft,currentPlayer,requirementsValue} = useCard()
+    const {
+        Add3CardsTo,
+        hands,
+        cardsLeft,
+        currentPlayer,
+        requirementsValue,
+        
+    } = useCard()
 
 
     function BotPlay(requ:Requirements,botId:number){
+        if (!gameIsOn) return;
         const botCards = hands[botId]
         const card = bot(botCards,requ,diff,hands[0].length)
         if (card===undefined){
@@ -43,7 +53,8 @@ export default function useBot(diff:Difficulty) {
             }))
             /// if +3 Card
             if (card%10 === 7){
-            Add3CardsTo(botId+1)
+            const victim = (botId === playersNumber-1) ? 0 : botId+1
+            Add3CardsTo(victim)
             }
             /// if Judge Card
             else if (card%10 === 8){
@@ -52,33 +63,28 @@ export default function useBot(diff:Difficulty) {
             }
             // skip Card
             else if (card % 10 === 9) {
-                BotPlay(requirements(card),botId)
+                dispatch(finishTurn())
             }
             dispatch(finishTurn())
             return;
         }
     }
-    useEffect(()=>{
-        const play = setTimeout(()=>{
-            if(currentPlayer !== 0) {
-                BotPlay(requirementsValue,currentPlayer)
-            }
-        },5000)
-        return () => clearTimeout(play);
-    },[currentPlayer,BotPlay])
+
 
     useEffect(()=>{
-        console.log('current player :',currentPlayer)
+        if (!gameIsOn) return ;
         if(currentPlayer !== 0) {
+            const rarity = Math.random() < 0.01
+            const delay = Math.random()*(rarity ? 8500 : 2000) + 1000
             setTimeout(() => {
                 BotPlay(requirementsValue,currentPlayer)
-            }, (2000));
+            }, (delay));
         }
         const timer = setTimeout(()=>{
             dispatch(finishTurn())
         },10000)
         return () => clearTimeout(timer);
-    },[currentPlayer,dispatch,BotPlay])
+    },[currentPlayer,dispatch,BotPlay,gameIsOn])
 
     return {
         BotPlay,

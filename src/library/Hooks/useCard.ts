@@ -1,21 +1,22 @@
 import { useAppDispatch,useAppSelector } from "../redux/store"
 import randomIdFrom from "../functions/randomIdFrom"
 import isIdentical from "../functions/isIdentical"
-import { addCard, removeCard,changeCurrentCard,takeCard, changeCardOrder, changeRequirements, } from "../redux/slices/cardsFlow"
+import { addCard, removeCard,changeCurrentCard,takeCard, changeRequirements, } from "../redux/slices/cardsFlow"
 import { addTurn, finishTurn, toggleModal } from "../redux/slices/gameFlow"
-import { DragEndEvent, } from "@dnd-kit/core"
+// import { DragEndEvent, } from "@dnd-kit/core"
 import requirements from "../functions/requirements"
 import capitalize from "../functions/capitalize"
 // import { useState } from "react"
 import { playSound } from "../functions/playSounds"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 export default function useCard() {
     const dispatch = useAppDispatch()
     const cardsFlow = useAppSelector((state)=>state.cardsFlow)
-    const {sorting,dragging} = useAppSelector(state=>state.settings)
-    const {currentPlayer} = useAppSelector(state=>state.gameFlow)
+    // const {sorting,dragging} = useAppSelector(state=>state.settings)
+    const {currentPlayer,gameIsOn} = useAppSelector(state=>state.gameFlow)
     ///
+    const [modalIsOpen,setModalIsOpen] = useState(false)
     const currentCardId = cardsFlow.currentCardId
     const cardsLeft = cardsFlow.cardsLeft
     const hands = cardsFlow.hands
@@ -34,7 +35,8 @@ export default function useCard() {
     }
 
     function playWithClick(id:number){
-        if(isIdentical(id,requirementsValue) && (currentPlayer ===0)){
+        if (!gameIsOn) return;
+        if(isIdentical(id,requirementsValue) && (currentPlayer === 0)){
             playSound('/sounds/playCardSound.wav')
             // save turn's data
             dispatch(addTurn({
@@ -44,7 +46,6 @@ export default function useCard() {
             }))
             if (id % 10 !== 8) {
                 dispatch(changeCurrentCard(id))
-                console.log('requirements :',requirementsValue)
                 dispatch(changeRequirements(requirements(id)))
                 dispatch(removeCard({cardId:id,playerId:0}))
                 // +3 Card
@@ -52,7 +53,7 @@ export default function useCard() {
                     Add3CardsTo(1)
                 }
                 if (id % 10 === 9) { // if BLOCK card (dont finish turn)
-                    return;
+                    dispatch(finishTurn())
                 }
                 dispatch(finishTurn())
             }
@@ -61,6 +62,7 @@ export default function useCard() {
                 dispatch(changeCurrentCard(id))
                 if (hands[0].length > 1 ){
                     dispatch(toggleModal())
+                    setModalIsOpen(true)
                 }else {
                     dispatch(changeRequirements(requirements(id)))
                 }
@@ -69,11 +71,18 @@ export default function useCard() {
     }
     
     useEffect(()=>{
+        if (!gameIsOn) return;
         const timer = setTimeout(()=>{
-            dispatch(finishTurn())
+            if (modalIsOpen) {
+                dispatch(toggleModal())
+                dispatch(changeRequirements(requirements(currentCardId)))
+            } else {
+                playerTakeCard()
+                console.log('card taked by time')
+            }
         },10000)
         return () => clearTimeout(timer);
-    },[currentPlayer,dispatch])
+    },[currentPlayer,gameIsOn,currentCardId,dispatch,modalIsOpen,])
 
     function Add3CardsTo(playerId:number){
         const cardsToAdd = randomIdFrom(cardsLeft,3) as number[]
@@ -82,10 +91,8 @@ export default function useCard() {
             dispatch(addCard({cardId:cardsToAdd[i],playerId:playerId}))
         }
     }
-    // function handleTakeCard(){
-    //     dispatch(startTakeCard(true))
-    // }
     function playerTakeCard(){
+        if (!gameIsOn) return;
         if ((cardsLeft.length > 0) && (currentPlayer ===0)) {
             const randomId = randomIdFrom(cardsLeft) as number
             playSound('/sounds/takeCardSound.wav')
@@ -103,54 +110,54 @@ export default function useCard() {
         return null
     }
 
-    const getCardIndex = (id:number) => hands[0].findIndex(cardId=> cardId === id)
+    // const getCardIndex = (id:number) => hands[0].findIndex(cardId=> cardId === id)
 
-    const handleDragEnd = (event:DragEndEvent)=>{
-        // Sorting Logic
-        const {active,over} = event
-        const i1 = getCardIndex(Number(active.id))
-        const i2 = getCardIndex(Number(over?.id))
+    // const handleDragEnd = (event:DragEndEvent)=>{
+    //     // Sorting Logic
+    //     const {active,over} = event
+    //     const i1 = getCardIndex(Number(active.id))
+    //     const i2 = getCardIndex(Number(over?.id))
         
-        if (sorting && (active.id !== over?.id)){
-            dispatch(changeCardOrder({index1:i1,index2:i2}))
-        }
-        // Dropping Logic
-        if (over && dragging && (over.id === 'droppable')){
-            // Test
-            const id = Number(active.id)
-            if(isIdentical(id,requirementsValue)){
-                // save turn's data
-                dispatch(addTurn({
-                    player: 0,
-                    action: '-Card',
-                    cardId: id,
-                }))
-                if (id % 10 !== 8) {
-                    dispatch(changeCurrentCard(id))
-                    console.log('requirements :',requirementsValue)
-                    dispatch(changeRequirements(requirements(id)))
-                    dispatch(removeCard({cardId:id,playerId:0}))
-                    // +3 Card
-                    if (id % 10 === 7){
-                        Add3CardsTo(1)
-                    }
-                    if (id % 10 === 9) { // if BLOCK card (dont toggle turn)
-                        return;
-                    }
-                    dispatch(finishTurn())
-                }
-                else { // if JUDGE card
-                    dispatch(removeCard({cardId:id,playerId:0}))
-                    dispatch(changeCurrentCard(id))
-                    if (hands[0].length > 1 ){
-                        dispatch(toggleModal())
-                    }else {
-                        dispatch(changeRequirements(requirements(id)))
-                    }
-                }
-            }
-        }
-    }
+    //     if (sorting && (active.id !== over?.id)){
+    //         dispatch(changeCardOrder({index1:i1,index2:i2}))
+    //     }
+    //     // Dropping Logic
+    //     if (over && dragging && (over.id === 'droppable')){
+    //         // Test
+    //         const id = Number(active.id)
+    //         if(isIdentical(id,requirementsValue)){
+    //             // save turn's data
+    //             dispatch(addTurn({
+    //                 player: 0,
+    //                 action: '-Card',
+    //                 cardId: id,
+    //             }))
+    //             if (id % 10 !== 8) {
+    //                 dispatch(changeCurrentCard(id))
+    //                 console.log('requirements :',requirementsValue)
+    //                 dispatch(changeRequirements(requirements(id)))
+    //                 dispatch(removeCard({cardId:id,playerId:0}))
+    //                 // +3 Card
+    //                 if (id % 10 === 7){
+    //                     Add3CardsTo(1)
+    //                 }
+    //                 if (id % 10 === 9) { // if BLOCK card (dont toggle turn)
+    //                     return;
+    //                 }
+    //                 dispatch(finishTurn())
+    //             }
+    //             else { // if JUDGE card
+    //                 dispatch(removeCard({cardId:id,playerId:0}))
+    //                 dispatch(changeCurrentCard(id))
+    //                 if (hands[0].length > 1 ){
+    //                     dispatch(toggleModal())
+    //                 }else {
+    //                     dispatch(changeRequirements(requirements(id)))
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
 
     return {
         // infos
@@ -164,7 +171,7 @@ export default function useCard() {
             Add3CardsTo,
             playerTakeCard,
             playWithClick,
-            handleDragEnd,
+            // handleDragEnd,
             chooseColor,
     }
 }
