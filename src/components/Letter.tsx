@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import {motion,AnimatePresence} from 'motion/react'
+import {motion,} from 'motion/react'
 
 
 export default function Letter({children}:{
