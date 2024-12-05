@@ -1,7 +1,7 @@
 import useCard from "@/library/Hooks/useCard"
 import {  CSSProperties } from "react"
 import {motion} from 'motion/react'
-import getStackPos from "@/library/functions/getStackPos"
+// import getStackPos from "@/library/functions/getStackPos"
 
 export default function Stack() {
     const {cardsLeft,playerTakeCard} = useCard()
@@ -24,7 +24,7 @@ export default function Stack() {
 export function VertedCard({style}:{
     style?:CSSProperties
 }) {
-    const {X,Y} = getStackPos()
+    // const {X,Y} = getStackPos()
     return (
         <motion.div
         // initial={{x:X,y:Y}}

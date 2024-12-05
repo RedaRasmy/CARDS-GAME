@@ -3,8 +3,8 @@ import CardDesign from './CardDesign'
 import {AnimatePresence, motion} from 'motion/react'
 import useCard from '@/library/Hooks/useCard'
 // import Draggable from '@/library/dnd-kit/draggable'
-import isIdentical from '@/library/functions/isIdentical'
-import requirements from '@/library/functions/requirements'
+// import isIdentical from '@/library/functions/isIdentical'
+// import requirements from '@/library/functions/requirements'
 import useGame from '@/library/Hooks/useGame'
 import getStackPos from '@/library/functions/getStackPos'
 
@@ -18,7 +18,7 @@ export default function Card({id,className,style}:{
         delay:number
     }
 }) {
-    const {playWithClick,currentCardId} = useCard()
+    const {playWithClick,} = useCard()
     const {gameIsOn} = useGame()
     // const stackPos = document.getElementById('stack')?.getBoundingClientRect()
     const grid = document.getElementById('grid')?.getBoundingClientRect()
@@ -26,11 +26,11 @@ export default function Card({id,className,style}:{
     // const Y = (stackPos && grid) &&  (-stackPos.y +grid.height*0.15 -104 ) 
     // const X = (grid) &&  (-  grid.width/6 -36)
     const {X,Y} = getStackPos()
-    const [isVisible, setIsVisible] = useState(true);
+    const [isVisible, ] = useState(true);
     const handlePlay = () => {
         if (gameIsOn) {
             playWithClick(id)
-            const isGood = isIdentical(id,requirements(currentCardId))
+            // const isGood = isIdentical(id,requirements(currentCardId))
             // setIsVisible(!isGood)
         }
     }
