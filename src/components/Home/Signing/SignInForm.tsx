@@ -1,11 +1,15 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { Input } from './RegisterForm'
+import {app} from '../../../library/firebase/firebaseConfig'
+import {getAuth,signInWithEmailAndPassword,GoogleAuthProvider,signInWithPopup} from 'firebase/auth'
 
 export default function SignInForm({onToggle}:{
     onToggle:()=>void
 }
 ) {
     // values state
+    const auth = getAuth(app)
+    const googleProvider = new GoogleAuthProvider();
     const [formValues,setFormValues] = useState({
         email:'',
         password:'',
@@ -16,8 +20,16 @@ export default function SignInForm({onToggle}:{
     // handle submit
     const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        signInWithEmailAndPassword(
+            auth,
+            formValues.email,
+            formValues.password
+        )
         // I must check if the username have been already used
         // I must return a notification (toast) about the response,errors
+    }
+    const handleGoogle = () =>{
+        signInWithPopup(auth,googleProvider)
     }
     return (
         <form 
@@ -30,11 +42,12 @@ export default function SignInForm({onToggle}:{
                     Register
                 </button>
             </div>
-            <div className='flex items-center flex-col gap-4 w-[clamp(250px,50%,500px)]'>
+            <div className='flex items-center flex-col gap-4 w-[85%]'>
                 <Input  required type='email' name='email' placeholder='Email' onChange={handleChange} value={formValues.email}/>
                 <Input required type='password' name='password' placeholder='Password' onChange={handleChange} value={formValues.password}/>
-                <button className='btn btn-accent btn-outline w-full'>Sign In</button>
+                <button className='btn btn-accent w-full'>Sign In</button>
             </div>
+            <button onClick={handleGoogle}>Google</button>
         </form>
     )
 }

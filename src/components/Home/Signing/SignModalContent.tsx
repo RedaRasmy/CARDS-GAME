@@ -12,11 +12,12 @@ export default function SignModalContent() {
         }
     }
     return (
-        <div className="flex flex-col p-[20px]">
+        <div className="flex flex-col p-[0px]">
             {status === 'sign-in'
             ? <SignInForm onToggle={handleToggle}/>
             : <RegisterForm onToggle={handleToggle}/>
             }
+
         </div>
     )
 }

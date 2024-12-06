@@ -1,5 +1,5 @@
 'use client'
-import SettingsButton from "@/components/settings/SettingsButton";
+// import SettingsButton from "@/components/settings/SettingsButton";
 import { Provider } from "react-redux";
 import { store } from "@/library/redux/store";
 // import GameField from "@/components/GameField";
@@ -19,7 +19,7 @@ export default function page() {
                     <Provider store={store}>
                         <ReturnToHome/>
                         <IconsContainer>
-                            <SettingsButton/>
+                            {/* <SettingsButton/> */}
                             <ExitButton/>
                         </IconsContainer>
                         <Field/>

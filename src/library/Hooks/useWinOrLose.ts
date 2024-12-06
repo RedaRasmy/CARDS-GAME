@@ -3,6 +3,9 @@ import useCard from './useCard'
 import { useAppDispatch } from '../redux/store'
 import { gameOff } from '../redux/slices/gameFlow'
 import getMin from '../functions/getMin'
+import {updateDoc,doc, increment} from 'firebase/firestore'
+import {getAuth} from 'firebase/auth'
+import {database} from '../../library/firebase/firebaseConfig'
 
 export default function useWinOrLose() {
     const dispatch = useAppDispatch()
@@ -13,6 +16,8 @@ export default function useWinOrLose() {
 
     const {hands,cardsLeft} = useCard()
     const [min,] = getMin(hands)
+
+
 
     useEffect(()=>{
         if(cardsLeft.length===0){
@@ -45,6 +50,25 @@ export default function useWinOrLose() {
         // Clean up the timer when the component unmounts
         return () => clearTimeout(timer);
     }, [lose,win]);
+
+    useEffect(()=>{
+        const updateData = () =>{
+            const auth = getAuth()
+            if(auth.currentUser && (win || lose)) {
+                const docToUpdate = doc(database,'users',auth.currentUser.uid)
+                updateDoc(docToUpdate,{
+                    gamesPlayed: increment(1),
+                    wins: win && increment(1)
+                }).then(()=>{
+                    console.log('data updated')
+                }).catch ((err)=>{
+                    console.log(err.message)
+                })
+            }
+        }
+        updateData()
+    },[lose,win])
+
     return {
         win,
         lose,

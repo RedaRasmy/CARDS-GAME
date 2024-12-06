@@ -1,12 +1,18 @@
 import Image from 'next/image'
 import React, { ChangeEvent, FormEvent, InputHTMLAttributes, useState } from 'react'
+import {app,database} from '../../../library/firebase/firebaseConfig'
+import {getAuth,createUserWithEmailAndPassword,} from 'firebase/auth'
+import {  setDoc, doc } from 'firebase/firestore'
 
 export default function RegisterForm({onToggle}:{
     onToggle:()=>void
 }) {
     // values state
+    const auth = getAuth(app)
+    // const collectionRef = collection(database,'users')
+
     const [formValues,setFormValues] = useState({
-        avatar: null as null | string,
+        avatar: null as null | File,
         username:'',
         email:'',
         password:'',
@@ -18,12 +24,14 @@ export default function RegisterForm({onToggle}:{
     //     password?:string,
     // }>({})
     // handle values's changing
+    const [avatarSrc,setAvatarSrc] =useState('')
     const handleImageChange = (event:ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file) {
+            setFormValues({...formValues, avatar : file});
             const reader = new FileReader();
             reader.onloadend = () => {
-                setFormValues({...formValues, avatar : reader.result as string});
+                setAvatarSrc(reader.result as string)
             };
             reader.readAsDataURL(file);
         }
@@ -34,6 +42,46 @@ export default function RegisterForm({onToggle}:{
     // handle submit
     const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        createUserWithEmailAndPassword(
+            auth,
+            formValues.email,
+            formValues.password
+        ).then((res)=>{
+            console.log(res.user)
+            // upload to database
+            setDoc(doc(database,'users',res.user.uid), {
+                uid:res.user.uid,
+                username : formValues.username,
+                avatar : formValues.avatar
+            }).then(()=>{
+                console.log('username and avatar added')
+            }).catch((err)=>{
+                alert(err.message)
+            })
+            // upload avatar file to storage
+            if (formValues.avatar) {
+                // const avatarRef = ref(storage,formValues.avatar.name)
+                // const uploadTask = uploadBytesResumable(avatarRef,formValues.avatar)
+                // uploadTask.on('state_changed',
+                //     (snapshot)=>{
+                //         const progress = (snapshot.bytesTransferred/snapshot.totalBytes)*100
+                //         console.log("Upload is "+progress+'% done')
+                //     },
+                //     (err) =>{
+                //         console.log(err.message)
+                //     },
+                //     ()=>{
+                //         getDownloadURL(uploadTask.snapshot.ref)
+                //         .then((downloadUrl)=>{
+                //             console.log('File available at',downloadUrl)
+                //         })
+                //     }
+                // )
+            }
+        }).catch((err)=>{
+            alert(err.message)
+        })
+
         // I must check if the username have been already used
         // I must return a notification (toast) about the response,errors
     }
@@ -49,14 +97,14 @@ export default function RegisterForm({onToggle}:{
                     Sign In
                 </button>
             </div>
-            <div className='flex items-center flex-col gap-4 w-[clamp(250px,50%,500px)]'>
+            <div className='flex items-center flex-col gap-4 w-[85%]'>
                 <div className='flex items-center gap-2 w-full -mb-3'>
-                    <ImageInput name='avatar' onChange={handleImageChange} img={formValues.avatar}/>
+                    <ImageInput name='avatar' onChange={handleImageChange} img={avatarSrc}/>
                     <Input required name='username' placeholder='Username' onChange={handleChange} value={formValues.username}/>
                 </div>
                 <Input  required type='email' name='email' placeholder='Email' onChange={handleChange} value={formValues.email}/>
                 <Input required type='password' name='password' placeholder='Password' onChange={handleChange} value={formValues.password}/>
-                <button className='btn btn-accent btn-outline w-full'>register</button>
+                <button className='btn btn-accent btn- w-full'>register</button>
             </div>
         </form>
     )
@@ -88,7 +136,7 @@ function ImageInput({img,...props}:{img:string|null} & InputHTMLAttributes<HTMLI
 export function Input(props:InputHTMLAttributes<HTMLInputElement>) {
     return (
         <input 
-        className='input w-full '
+        className='input w-full input-accent'
         {...props} />
     )
 }

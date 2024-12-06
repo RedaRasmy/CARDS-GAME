@@ -14,6 +14,7 @@ import useWinOrLose from "@/library/Hooks/useWinOrLose"
 import StartButton from "@/components/StartButton"
 import Label from "./Label"
 import useBot from "@/library/Hooks/useBot"
+import useEffectGetData from "@/library/firebase/useEffectGetData"
 
 export default function Field() {
     // const {landscape} = useDevice()
@@ -51,6 +52,7 @@ function Game() {
         cardsLeft
     } = useCard()
     const {win,lose,isVisible} = useWinOrLose()
+    const userInfos = useEffectGetData()
     return (
         <DndContext
         collisionDetection={closestCenter}
@@ -142,8 +144,8 @@ function Game() {
                     <Hand  cardsIds={hands[0]} />
                 </Player>
                 <FourthCorner>
-                    <Label  
-                    name="you"
+                    <Label
+                    name={userInfos.username}
                     timer={ gameIsOn &&
                         ((currentPlayer===0))
                     }
