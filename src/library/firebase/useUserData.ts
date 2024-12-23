@@ -1,19 +1,27 @@
-import { getAuth } from "firebase/auth"
+import { onAuthStateChanged, User } from "firebase/auth"
 import { doc, getDoc } from "firebase/firestore"
 import { useEffect, useState } from "react"
-import { database } from "./firebaseConfig"
+import { database ,auth} from "./firebaseConfig"
+import { reset} from "../redux/slices/userInfos"
+import { UserInfos } from "../types"
+import { useAppDispatch } from "../redux/store"
 
 
-export default function useEffectGetData() {
-    const user = getAuth().currentUser
-    const [userInfos,setUserInfos] = useState<
-    {username:string,avatar?:string,gamesPlayed:number,wins:number}
-    >({
+
+export default function useUserData() {
+    const dispatch = useAppDispatch()
+    const [user,setUser] = useState<User|null>(null)
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {setUser(user)}); 
+    }, []);
+
+    const [userInfos,setUserInfos] = useState<UserInfos>({
         username:'player',
         avatar:'',
         gamesPlayed:0,
         wins:0
     })
+
     useEffect(()=>{
         async function getData() {
             console.log('getting data...')
@@ -25,11 +33,13 @@ export default function useEffectGetData() {
                     if (docSnap.exists()) {
                         const userData = docSnap.data()
                         console.log('data fetched : ',userData)
-                        setUserInfos({
+                        const dataToStore = {
                             username:userData.username,
                             gamesPlayed:userData.gamesPlayed,
                             wins:userData.wins
-                        })
+                        }
+                        setUserInfos(dataToStore)
+                        dispatch(reset(dataToStore))
                     }else {
                         console.log('document dont exist')
                     }
@@ -39,7 +49,7 @@ export default function useEffectGetData() {
             }else {console.log('user dont exist')}
         }
         getData()
-    },[user])
+    },[user,dispatch])
 
     return userInfos
 }

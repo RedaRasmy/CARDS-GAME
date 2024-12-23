@@ -1,18 +1,27 @@
 
-
 import Link from "next/link"
-import { ReactNode, useRef } from "react"
+import { ReactNode, useEffect, useRef, useState } from "react"
 import SignModalContent from "./Signing/SignModalContent"
+import {onAuthStateChanged, User} from 'firebase/auth'
+import {auth} from '../../library/firebase/firebaseConfig'
+import { useRouter } from "next/navigation"
 
 
 export default function MainMenu() {
     const signRef = useRef<HTMLDialogElement>(null)
+    const [user,setUser] = useState<User|null>(null)
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => { setUser(user); }); 
+    }, []);
+    const router = useRouter()
     function handleAccount(){
         // check if already signed in
-
-        // if no : register/sign in pop up
-        signRef.current?.showModal()
-        // else : go to profile page
+        if (user) {
+            router.push('/Profile')
+        } else {
+            // if no : register/sign in pop up
+            signRef.current?.showModal()
+        }
     }
     function handleSettings() {
         (document.getElementById('settingsModal') as HTMLDialogElement).showModal()

@@ -1,5 +1,5 @@
 import { PowerType } from "@/library/types";
-import { cards } from "../../../../../../public/cards";
+import { cards } from "../../../public/cards";
 
 
 export default function CardDesign({id,className}:{

@@ -3,6 +3,7 @@ import cardsFlow from "./slices/cardsFlow"
 import settings from './slices/settings'
 import gameFlow from './slices/gameFlow'
 import animations from './slices/animations'
+import userInfos from './slices/animations'
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 
@@ -14,6 +15,7 @@ export const store = configureStore({
         settings,
         gameFlow,
         animations,
+        userInfos
     }
 })
 

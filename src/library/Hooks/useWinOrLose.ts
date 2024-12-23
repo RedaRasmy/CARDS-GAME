@@ -4,8 +4,7 @@ import { useAppDispatch } from '../redux/store'
 import { gameOff } from '../redux/slices/gameFlow'
 import getMin from '../functions/getMin'
 import {updateDoc,doc, increment} from 'firebase/firestore'
-import {getAuth} from 'firebase/auth'
-import {database} from '../../library/firebase/firebaseConfig'
+import {auth, database} from '../../library/firebase/firebaseConfig'
 
 export default function useWinOrLose() {
     const dispatch = useAppDispatch()
@@ -39,7 +38,7 @@ export default function useWinOrLose() {
             dispatch(gameOff())
             console.log('game toggled')
         }
-    },[hands,cardsLeft])
+    },[hands,cardsLeft,dispatch])
 
     useEffect(() => {
         const timer = setTimeout(() => {
@@ -53,7 +52,6 @@ export default function useWinOrLose() {
 
     useEffect(()=>{
         const updateData = () =>{
-            const auth = getAuth()
             if(auth.currentUser && (win || lose)) {
                 const docToUpdate = doc(database,'users',auth.currentUser.uid)
                 updateDoc(docToUpdate,{

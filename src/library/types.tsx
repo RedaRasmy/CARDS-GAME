@@ -14,3 +14,10 @@ export type Turn = {
     action: '-Card' | '+Card'
     cardId : number ,
 }
+
+export type UserInfos = {
+    username:string,
+    avatar?:string,
+    gamesPlayed:number,
+    wins:number
+}
