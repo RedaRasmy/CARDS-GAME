@@ -17,7 +17,8 @@ export type Turn = {
 
 export type UserInfos = {
     username:string,
-    avatar?:string,
     gamesPlayed:number,
-    wins:number
+    wins:number,
+    lvl:number,
+    xp:number,
 }

@@ -17,7 +17,6 @@ export default function SignModalContent() {
             ? <SignInForm onToggle={handleToggle}/>
             : <RegisterForm onToggle={handleToggle}/>
             }
-
         </div>
     )
 }

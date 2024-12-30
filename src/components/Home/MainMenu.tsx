@@ -9,14 +9,14 @@ import { useRouter } from "next/navigation"
 
 export default function MainMenu() {
     const signRef = useRef<HTMLDialogElement>(null)
-    const [user,setUser] = useState<User|null>(null)
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => { setUser(user); }); 
-    }, []);
+    // const [user,setUser] = useState<User|null>(null)
+    // useEffect(() => {
+    //     onAuthStateChanged(auth, (user) => { setUser(user); });
+    // }, []);
     const router = useRouter()
     function handleAccount(){
         // check if already signed in
-        if (user) {
+        if (auth.currentUser) {
             router.push('/Profile')
         } else {
             // if no : register/sign in pop up
@@ -26,6 +26,7 @@ export default function MainMenu() {
     function handleSettings() {
         (document.getElementById('settingsModal') as HTMLDialogElement).showModal()
     }
+    
     return (
         <div className=''>
             <dialog 

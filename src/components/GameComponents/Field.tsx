@@ -1,6 +1,6 @@
 import useGame from "@/library/Hooks/useGame";
 import PreGame from "./PreGame";
-import Hand , { OpponentHand } from "./Hand";
+import Hand, { OpponentHand } from "./Hand";
 import CardDesign from "./CardDesign";
 import useCard from "@/library/Hooks/useCard";
 import GameContainer, {
@@ -27,15 +27,9 @@ import useWinOrLose from "@/library/Hooks/useWinOrLose";
 import StartButton from "@/components/StartButton";
 import Label from "./Label";
 import useBot from "@/library/Hooks/useBot";
-import useEffectGetData from "@/library/firebase/useUserData";
+import useUserData from "@/library/Hooks/useUserData";
 
 export default function Field() {
-  // const {landscape} = useDevice()
-  // if (!landscape) {
-  //     return (
-  //         <h1>RETURN YOUR DEVICE</h1>
-  //     )
-  // }
   const { isPreGame } = useGame();
   return (
     <div className="w-full h-full flex justify-center items-center ">
@@ -59,7 +53,7 @@ function Game() {
   const { currentCardId, hands, currentPlayer, requirementsValue, cardsLeft } =
     useCard();
   const { win, lose, isVisible } = useWinOrLose();
-  const userInfos = useEffectGetData();
+  const {data} = useUserData()
   return (
     <DndContext
       collisionDetection={closestCenter}
@@ -155,7 +149,7 @@ function Game() {
         </Player>
         <FourthCorner>
           <Label
-            name={userInfos.username}
+            name={data.username}
             timer={gameIsOn && currentPlayer === 0}
             cardsNumber={hands[0].length}
             direction="bottom"

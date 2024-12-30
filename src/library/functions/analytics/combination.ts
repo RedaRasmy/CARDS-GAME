@@ -6,3 +6,4 @@ export default function C(n: number, k: number): number {
     if (k > n) return 0;
     return factorial(n) / (factorial(k) * factorial(n - k));
 }
+
