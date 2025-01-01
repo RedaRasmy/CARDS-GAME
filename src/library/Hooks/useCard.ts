@@ -3,10 +3,8 @@ import randomIdFrom from "../functions/randomIdFrom"
 import isIdentical from "../functions/isIdentical"
 import { addCard, removeCard,changeCurrentCard,takeCard, changeRequirements, } from "../redux/slices/cardsFlow"
 import { addTurn, finishTurn, toggleModal } from "../redux/slices/gameFlow"
-// import { DragEndEvent, } from "@dnd-kit/core"
 import requirements from "../functions/requirements"
 import capitalize from "../functions/capitalize"
-// import { useState } from "react"
 import { playSound } from "../functions/playSounds"
 import { useEffect, useState } from "react"
 
@@ -109,55 +107,6 @@ export default function useCard() {
         }
         return null
     }
-
-    // const getCardIndex = (id:number) => hands[0].findIndex(cardId=> cardId === id)
-
-    // const handleDragEnd = (event:DragEndEvent)=>{
-    //     // Sorting Logic
-    //     const {active,over} = event
-    //     const i1 = getCardIndex(Number(active.id))
-    //     const i2 = getCardIndex(Number(over?.id))
-        
-    //     if (sorting && (active.id !== over?.id)){
-    //         dispatch(changeCardOrder({index1:i1,index2:i2}))
-    //     }
-    //     // Dropping Logic
-    //     if (over && dragging && (over.id === 'droppable')){
-    //         // Test
-    //         const id = Number(active.id)
-    //         if(isIdentical(id,requirementsValue)){
-    //             // save turn's data
-    //             dispatch(addTurn({
-    //                 player: 0,
-    //                 action: '-Card',
-    //                 cardId: id,
-    //             }))
-    //             if (id % 10 !== 8) {
-    //                 dispatch(changeCurrentCard(id))
-    //                 console.log('requirements :',requirementsValue)
-    //                 dispatch(changeRequirements(requirements(id)))
-    //                 dispatch(removeCard({cardId:id,playerId:0}))
-    //                 // +3 Card
-    //                 if (id % 10 === 7){
-    //                     Add3CardsTo(1)
-    //                 }
-    //                 if (id % 10 === 9) { // if BLOCK card (dont toggle turn)
-    //                     return;
-    //                 }
-    //                 dispatch(finishTurn())
-    //             }
-    //             else { // if JUDGE card
-    //                 dispatch(removeCard({cardId:id,playerId:0}))
-    //                 dispatch(changeCurrentCard(id))
-    //                 if (hands[0].length > 1 ){
-    //                     dispatch(toggleModal())
-    //                 }else {
-    //                     dispatch(changeRequirements(requirements(id)))
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
 
     return {
         // infos

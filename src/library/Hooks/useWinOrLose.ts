@@ -5,6 +5,7 @@ import { gameOff } from '../redux/slices/gameFlow'
 import getMin from '../functions/getMin'
 import {updateDoc,doc, increment} from 'firebase/firestore'
 import {auth, database} from '../../library/firebase/firebaseConfig'
+import { updateUserData } from '../redux/slices/userInfos'
 
 export default function useWinOrLose() {
     const dispatch = useAppDispatch()
@@ -16,14 +17,14 @@ export default function useWinOrLose() {
     const {hands,cardsLeft} = useCard()
     const [min,] = getMin(hands)
 
-
-
     useEffect(()=>{
         if(cardsLeft.length===0){
             if(hands[0].length > min){
                 setLose(true)
+                dispatch(updateUserData({win:false}))
             }else{
                 setWin(true)
+                dispatch(updateUserData({win:true}))
             }
             dispatch(gameOff())
             console.log('game toggled')
@@ -31,11 +32,13 @@ export default function useWinOrLose() {
         if(hands[0].length === 0 ){
             setWin(true)
             dispatch(gameOff())
+            dispatch(updateUserData({win:true}))
             console.log('game toggled')
         }
         if((min === 0) && (hands[0].length !== 0) ){
             setLose(true)
             dispatch(gameOff())
+            dispatch(updateUserData({win:false}))
             console.log('game toggled')
         }
     },[hands,cardsLeft,dispatch])

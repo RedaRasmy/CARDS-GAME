@@ -1,7 +1,4 @@
-"use client";
-// import SettingsButton from "@/components/settings/SettingsButton";
-// import { Provider } from "react-redux";
-// import { store } from "@/library/redux/store";
+
 import ExitButton from "@/components/ExitButton";
 import { ReactNode } from "react";
 import Link from "next/link";

@@ -50,7 +50,7 @@ function Game() {
     difficulty,
   } = useGame();
   useBot(difficulty);
-  const { currentCardId, hands, currentPlayer, requirementsValue, cardsLeft } =
+  const { currentCardId, hands, currentPlayer, } =
     useCard();
   const { win, lose, isVisible } = useWinOrLose();
   const {data} = useUserData()
