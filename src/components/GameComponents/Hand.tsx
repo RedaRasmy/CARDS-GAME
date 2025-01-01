@@ -2,6 +2,7 @@ import React from "react";
 import Card from "./Card";
 import { VertedCard } from "./Stack";
 import { motion } from "motion/react";
+import useDevice from "@/library/Hooks/useDevice";
 
 export default function Hand({ cardsIds }: { cardsIds: number[] }) {
   const midle = Math.floor(cardsIds.length / 2);
@@ -38,8 +39,10 @@ export function OpponentHand({ num }: { num: number }) {
   const midle = Math.floor(num / 2);
   const gapX = 100 / num;
   const gapY = 10 / num;
+  const {screenRatio} = useDevice()
+  const extraStyle = (screenRatio && screenRatio < 1.6) ? "hidden" : ""
   return (
-    <>
+    <div className={`${extraStyle}`}>
       {Array.from({ length: num }, (e, i) => i).map((e) => (
         <VertedCard
           style={{
@@ -56,6 +59,6 @@ export function OpponentHand({ num }: { num: number }) {
           key={e}
         />
       ))}
-    </>
+    </div>
   );
 }

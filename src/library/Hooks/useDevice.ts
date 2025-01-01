@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react'
 export default function useDevice() {
     const [touchDevice,setTouchDevice] = useState(false)
     const [landscape ,setLandscape] = useState(false)
-
-    // const [letterHidden,setLetterHidden] = useState(false)
+    const [screen,setScreen] = useState<undefined | {width:number,height:number}>(undefined)
+    const [screenRatio,setScreenRatio] = useState<number|undefined>(undefined)
 
     useEffect(()=>{
         const updateOrientation = () => {
+            setScreenRatio(window.innerWidth/window.innerHeight)
+            setScreen({width:window.innerWidth,height:window.innerHeight})
             if (window.innerHeight < window.innerWidth) {
                 setLandscape(true);
             } else {
@@ -32,6 +34,8 @@ export default function useDevice() {
 
     return {
         touchDevice,
-        landscape
+        landscape,
+        screenRatio,
+        screen
     }
 }

@@ -126,11 +126,11 @@ function Game() {
               />
             </Droppable>
           </Center>
-          <div className="flex justify-center items-center">
+          {/* <div className="flex justify-center items-center">
             {requirementsValue}
             <br />
             {cardsLeft.length}
-          </div>
+          </div> */}
         </Table>
         <RightName>
           {cornersPlayersCondition && (

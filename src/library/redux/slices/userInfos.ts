@@ -51,6 +51,8 @@ export const updateUserData = createAsyncThunk('userData/updateUserData',async (
         return rejectWithValue("No authenticated user found")
     }
     const userRef = doc(database,'users',user.uid)
+    // const userSnap = await getDoc(userRef)
+
     if (win) {
         await updateDoc(userRef,{
             wins:increment(1),

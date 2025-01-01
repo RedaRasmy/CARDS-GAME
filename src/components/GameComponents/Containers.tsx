@@ -41,7 +41,7 @@ export function SecondCorner({children}:{children?:ReactNode}) {
 ///////////// SECOND ROW
 export function LeftName({children}:{children?:ReactNode}) {
     return (
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center xl:items-center items-start">
             {children}
         </div>
     )
@@ -71,7 +71,7 @@ export function Center({children}:{children?:ReactNode}) {
 }
 export function RightName({children}:{children?:ReactNode}) {
     return (
-        <div className=" flex justify-center items-center">
+        <div className=" flex  justify-center xl:items-center items-start">
             {children}
         </div>
     )
