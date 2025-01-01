@@ -1,23 +1,23 @@
 
 import Link from "next/link"
-import { ReactNode, useEffect, useRef, useState } from "react"
+import { ReactNode,  useRef} from "react"
 import SignModalContent from "./Signing/SignModalContent"
-import {onAuthStateChanged, User} from 'firebase/auth'
-import {auth} from '../../library/firebase/firebaseConfig'
 import { useRouter } from "next/navigation"
+import useFirebaseAuth from "@/library/Hooks/useFirebaseAuth"
 
 
 export default function MainMenu() {
     const signRef = useRef<HTMLDialogElement>(null)
-    // const [user,setUser] = useState<User|null>(null)
-    // useEffect(() => {
-    //     onAuthStateChanged(auth, (user) => { setUser(user); });
-    // }, []);
+    const {user} = useFirebaseAuth()
     const router = useRouter()
     function handleAccount(){
         // check if already signed in
-        if (auth.currentUser) {
-            router.push('/Profile')
+        if (user) {
+            try {
+                router.push('/Profile')
+            } catch (err) {
+                console.log('failed to navigate to user profile : ',err)
+            }
         } else {
             // if no : register/sign in pop up
             signRef.current?.showModal()
@@ -26,7 +26,7 @@ export default function MainMenu() {
     function handleSettings() {
         (document.getElementById('settingsModal') as HTMLDialogElement).showModal()
     }
-    
+
     return (
         <div className=''>
             <dialog 
@@ -96,7 +96,7 @@ function MainMenuButton({children,onClick}:MainMenuButtonProps) {
     return (
         <button 
         onClick={onClick}
-        className="btn btn-outline btn-info btn-wide ">
+        className="btn border-black border-2 btn-warning btn-wide ">
             {children}
         </button>
     )

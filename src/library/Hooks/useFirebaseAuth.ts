@@ -1,9 +1,14 @@
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth"
-import { ChangeEvent, FormEvent, useState } from "react"
-import { auth, database } from "../firebase/firebaseConfig"
-import { doc, setDoc } from "firebase/firestore"
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, User,signOut, getAuth } from "firebase/auth"
+import { ChangeEvent, FormEvent, useEffect, useState } from "react"
+import {  auth, database } from "../firebase/firebaseConfig"
+import { doc, getDoc, setDoc } from "firebase/firestore"
+import { useRouter } from "next/navigation"
+import { useAppDispatch } from "../redux/store"
+import { fetchUserData } from "../redux/slices/userInfos"
 
 export default function useFirebaseAuth() {
+    const router = useRouter()
+    const dispatch = useAppDispatch()
     // Status States
     const [registerStatus,setRegisterStatus] = useState<'idle'|'loading'|'failed'|'succeeded'>('idle')
     const [signInStatus,setSignInStatus] = useState<'idle'|'loading'|'failed'|'succeeded'>('idle')
@@ -54,6 +59,7 @@ export default function useFirebaseAuth() {
             )
             setRegisterStatus('succeeded')
             setRegisterData(initialRegisterState)
+            router.push('/Profile')
         } catch(err) {
             setRegisterStatus('failed')
             setError(setRegisterError,err)
@@ -69,6 +75,7 @@ export default function useFirebaseAuth() {
                 signInData.email,
                 signInData.password
             )
+            router.push('/Profile')
             setSignInStatus('succeeded')
             setSignInData(initialSignInState)
         } catch(err) {
@@ -78,10 +85,50 @@ export default function useFirebaseAuth() {
     }
     // Handle SignIn With Google
     const googleProvider = new GoogleAuthProvider();
-    const handleGoogle = () =>{
-        signInWithPopup(auth,googleProvider)
+    const handleGoogle = async () =>{
+        try {
+            setSignInStatus('loading')
+            const userCredential = await signInWithPopup(auth,googleProvider)
+            const userRef = doc(database,'users',userCredential.user.uid)
+            const userSnapshot = await getDoc(userRef)
+            if (!userSnapshot.exists()) {
+                await setDoc(doc(database,'users',userCredential.user.uid), {
+                    uid: userCredential.user.uid,
+                    username : userCredential.user.displayName || 'player',
+                })
+            }
+            dispatch(fetchUserData())
+            router.push('/Profile')
+            setSignInStatus('succeeded')
+        } catch(err) {
+            setSignInStatus('failed')
+            setError(setSignInError,err)
+        }
     }
-    
+    // Check the User
+    const [user, setUser] = useState<User|null>(null);
+    useEffect(() => {
+        const auth2 = getAuth()
+        const unsubscribe = onAuthStateChanged(auth2, (currentUser) => {
+            setUser(currentUser);
+        }); 
+        return () => unsubscribe(); 
+    }, []);
+
+    // After SignIn/Register Fetch userData to sync the redux and firestore
+    // useEffect(()=>{
+    //     if(user){
+    //         dispatch(fetchUserData())
+    //     }
+    // },[dispatch])
+
+    // Logout 
+    const logout = () => {
+        if (user){signOut(auth).then(()=>{
+            // localStorage.clear()
+        })}
+        router.push('/')
+    }
     ///////////////////////////////////
     ///////////////////////////////////
 
@@ -96,7 +143,9 @@ export default function useFirebaseAuth() {
         registerData,
         signIn,
         signInData,
-        handleGoogle
+        handleGoogle,
+        user,
+        logout
     }
 }
 

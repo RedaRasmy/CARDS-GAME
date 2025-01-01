@@ -17,27 +17,27 @@ export default function PreGame() {
     }
 
     return (
-        <div className='backdrop-blur-[10px] w-full h-full flex justify-center items-center' >
+        <div className='backdrop-blur-[10px]  w-full h-full flex justify-center items-center' >
             <Letter >
-                <div className='text-center space-y-3'>
+                <div className='text-center  space-y-3 lg:scale-100 scale-75'>
                     <div className=' bg-black bg-opacity-20 rounded-md p-3'>
-                        <h1 className='text-xl text-black font-semibold uppercase'>Difficulty</h1>
-                        <div className='flex justify-around gap-4   w-full '>
+                        <h1 className='lg:text-xl text-lg text-black font-semibold uppercase'>Difficulty</h1>
+                        <div className='flex justify-around lg:text-lg text-sm gap-4  w-full '>
                             <Option label='easy' checked={difficulty === 'easy'} onChange={handleChangeDiff}/>
                             <Option label='medium' checked={difficulty === 'medium'} onChange={handleChangeDiff}/>
                             <Option label='hard' disabled checked={difficulty === 'hard'} onChange={handleChangeDiff}/>
                         </div>
                     </div>
                     <div className=' bg-black bg-opacity-20 rounded-md p-3 '>
-                        <h1 className='text-xl text-black font-semibold'>PLAYERS NUMBER</h1>
-                        <div className='flex justify-around gap-4 w-full '>
+                        <h1 className='lg:text-xl text-lg text-black font-semibold'>PLAYERS NUMBER</h1>
+                        <div className='flex justify-around lg:text-lg text-sm  gap-4 w-full '>
                             <Option label='2' checked={playersNumber === 2} onChange={handleChangeNumber}/>
                             <Option label='3' checked={playersNumber === 3} onChange={handleChangeNumber}/>
                             <Option label='4' checked={playersNumber === 4} onChange={handleChangeNumber}/>
                         </div>
                     </div>
                     <button 
-                    className='btn btn-warning text-2xl w-full' 
+                    className='btn btn-warning lg:text-2xl text-md w-full' 
                     onClick={handleStart} >START</button>
                 </div>
             </Letter>

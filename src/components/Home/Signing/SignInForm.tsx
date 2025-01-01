@@ -1,6 +1,7 @@
 
 import useFirebaseAuth from '@/library/Hooks/useFirebaseAuth'
 import { Input } from './RegisterForm'
+import Image from 'next/image'
 
 export default function SignInForm({onToggle}:{
     onToggle:()=>void
@@ -24,7 +25,10 @@ export default function SignInForm({onToggle}:{
                 <Input required type='password' name='password' placeholder='Password' onChange={handleChangeSignInData} value={signInData.password}/>
                 <button disabled={signInStatus==='loading'} className='btn btn-accent w-full'>Sign In</button>
             </div>
-            <button onClick={handleGoogle}>Google</button>
+            <button onClick={handleGoogle} className='border w-[85%] h-[3rem] mt-4 rounded-md bg-white flex justify-center items-center'>
+                <Image src={'/images/google.png'} alt='' width={40} height={30} />
+                {/* <p>Sign In With Google</p> */}
+            </button>
         </form>
     )
 }

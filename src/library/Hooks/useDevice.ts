@@ -4,6 +4,8 @@ export default function useDevice() {
     const [touchDevice,setTouchDevice] = useState(false)
     const [landscape ,setLandscape] = useState(false)
 
+    // const [letterHidden,setLetterHidden] = useState(false)
+
     useEffect(()=>{
         const updateOrientation = () => {
             if (window.innerHeight < window.innerWidth) {
@@ -25,9 +27,8 @@ export default function useDevice() {
         }
     },[])
 
-    console.log('landscape:',landscape)
-    console.log('touch:',touchDevice)
-
+    // console.log('landscape:',landscape)
+    // console.log('touch:',touchDevice)
 
     return {
         touchDevice,

@@ -4,9 +4,10 @@ import { UserInfos } from "@/library/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { doc, getDoc, increment, updateDoc } from "firebase/firestore";
 import { RootState } from "../store";
+import useFirebaseAuth from "@/library/Hooks/useFirebaseAuth";
 
 export const fetchUserData = createAsyncThunk('userData/fetchUserData',async (_,{rejectWithValue}) => {
-    const user = auth.currentUser
+    const {user} = useFirebaseAuth()
     if (!user) {
         return rejectWithValue("No authenticated user found")
     }
@@ -17,6 +18,30 @@ export const fetchUserData = createAsyncThunk('userData/fetchUserData',async (_,
     }
     return userSnapshot.data()
 })
+
+export const changeUsername = createAsyncThunk('username/updateUsername',async (
+    {newUsername}:{newUsername:string}, {rejectWithValue}
+) =>{
+    try {
+        const user = auth.currentUser
+        if(!user) {
+            rejectWithValue('user not found')
+        } else {
+            const userRef = doc(database,'users',user.uid)
+            await updateDoc(userRef,{
+                username:newUsername
+            })
+        }
+    } catch(err) {
+        if (err instanceof Error) {
+            rejectWithValue(err.message)
+        } else {
+            rejectWithValue('Unknown Error Happend')
+        }
+    }
+    return newUsername
+})
+
 
 export const updateUserData = createAsyncThunk('userData/updateUserData',async (
     {win}:{win:boolean} ,{rejectWithValue}
@@ -39,18 +64,28 @@ export const updateUserData = createAsyncThunk('userData/updateUserData',async (
     return win
 })
 
+// let storedData
+
+// if (typeof window !== 'undefined') {
+//     const stringData = localStorage.getItem('userData');
+//     storedData = stringData && JSON.parse(stringData) 
+// }
+
+const initialUserData = {
+    username:'',
+    gamesPlayed:0,
+    wins:0,
+    lvl:1,
+    xp:0,
+}
+
+
 const userInfos = createSlice({
     name:"userInfos",
     initialState:{
-        data : {
-            username:'player',
-            gamesPlayed:0,
-            wins:0,
-            lvl:1,
-            xp:0,
-        },
+        data : initialUserData ,
         status: 'idle',
-        error: undefined as string | undefined 
+        error: null as string | null
     },
     reducers :{},
     extraReducers(builder) {
@@ -59,12 +94,14 @@ const userInfos = createSlice({
                 state.status = 'loading'
             })
             .addCase(fetchUserData.fulfilled,(state,action)=>{
+                const userData = action.payload as UserInfos
                 state.status = 'succeeded'
-                state.data = action.payload as UserInfos
+                state.data = userData
+                // localStorage.setItem('userData', JSON.stringify(userData));
             })
             .addCase(fetchUserData.rejected,(state,action)=>{
                 state.status = 'failed'
-                state.error = action.payload as string | undefined
+                state.error = action.payload as string | null
             })
             .addCase(updateUserData.pending,(state)=>{
                 state.status = 'loading'
@@ -78,10 +115,23 @@ const userInfos = createSlice({
                 } else {
                     state.data.gamesPlayed++
                 }
+                // localStorage.setItem('userData', JSON.stringify(state.data));
             })
             .addCase(updateUserData.rejected,(state,action)=>{
                 state.status = 'failed'
-                state.error = action.payload as string | undefined
+                state.error = action.payload as string | null
+            })
+            .addCase(changeUsername.pending,(state)=>{
+                state.status = 'loading'
+            })
+            .addCase(changeUsername.fulfilled,(state,action)=>{
+                state.status = 'succeeded'
+                state.data.username = action.payload 
+                // localStorage.setItem('userData', JSON.stringify(state.data));
+            })
+            .addCase(changeUsername.rejected,(state,action)=>{
+                state.status = 'failed'
+                state.error = action.payload as string | null
             })
     },
 })

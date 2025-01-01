@@ -6,8 +6,10 @@ import ExitButton from "@/components/ExitButton";
 import { ReactNode } from "react";
 import Link from "next/link";
 import Field from "../components/GameComponents/Field";
+import useAuthListener from "@/library/Hooks/useAuthListener";
 
 export default function page() {
+  useAuthListener()
   return (
     <div className="">
       <div
